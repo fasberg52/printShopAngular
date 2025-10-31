@@ -6,8 +6,9 @@ import { AuthService } from '../../../../core/auth/services/auth.service';
 @Component({
   selector: 'app-layout',
   standalone: true,
-  imports: [RouterOutlet, RouterLink, ButtonModule], // Add
+  imports: [RouterOutlet, RouterLink, ButtonModule],
   templateUrl: './layout.component.html',
+  styleUrls: ['./layout.component.css'],
 })
 export class LayoutComponent {
   private authService = inject(AuthService);

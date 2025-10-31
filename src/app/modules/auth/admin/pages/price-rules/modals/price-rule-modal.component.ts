@@ -18,11 +18,12 @@ import { z } from 'zod';
 
 // PrimeNG imports
 import { ButtonModule } from 'primeng/button';
-import { CheckboxModule } from 'primeng/checkbox';
 import { DialogModule } from 'primeng/dialog';
 import { InputNumberModule } from 'primeng/inputnumber';
 import { InputTextModule } from 'primeng/inputtext';
 import { SelectModule } from 'primeng/select';
+import { ToggleSwitchModule } from 'primeng/toggleswitch';
+
 
 import {
   Breakpoint,
@@ -79,8 +80,8 @@ const priceRuleSchema = z.object({
     DialogModule,
     InputTextModule,
     InputNumberModule,
+    ToggleSwitchModule,
     SelectModule,
-    CheckboxModule,
   ],
   providers: [MessageService],
   templateUrl: './price-rule-modal.component.html',

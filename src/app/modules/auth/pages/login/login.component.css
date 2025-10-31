@@ -460,3 +460,105 @@ ng-container {
     transform: translateX(0);
   }
 }
+
+/* Replacements for Tailwind utility classes */
+.form-stage-container {
+  display: flex;
+  flex-direction: column;
+  gap: 1.5rem;
+  padding-top: 1rem;
+}
+
+.info-text {
+  text-align: center;
+  font-size: 0.875rem;
+  color: #374151;
+}
+
+.info-text-bold {
+  font-weight: 700;
+}
+
+.info-link {
+  font-size: 0.75rem;
+  padding-right: 0.5rem;
+}
+
+.otp-container {
+  width: 100%;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 1rem;
+}
+
+.otp-label {
+  font-size: 0.875rem;
+  color: #374151;
+  font-weight: 500;
+}
+
+.otp-input-wrapper {
+  width: 100%;
+  display: flex;
+  justify-content: center;
+}
+
+.otp-error {
+  font-size: 0.75rem;
+  color: #ef4444;
+  min-height: 1rem;
+}
+
+.otp-resend-container {
+  margin-top: 0.25rem;
+  font-size: 0.875rem;
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+}
+
+.countdown-badge {
+  color: #6b7280;
+  background-color: #f3f4f6;
+  padding: 0.25rem 0.5rem;
+  border-radius: 0.375rem;
+}
+
+.resend-button {
+  padding: 0.25rem 0.75rem;
+  border-radius: 0.375rem;
+  background-color: #eff6ff;
+  color: #2563eb;
+  border: none;
+  cursor: pointer;
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+  transition: all 0.2s ease;
+  font-size: 0.875rem;
+}
+
+.resend-button:hover:not(:disabled) {
+  background-color: #dbeafe;
+}
+
+.resend-button:disabled {
+  opacity: 0.5;
+}
+
+.resend-icon {
+  font-size: 0.875rem;
+}
+
+.otp-loading-text {
+  text-align: center;
+  padding: 1rem;
+  color: #4b5563;
+}
+
+.footer-text {
+  border-top: 1px solid #e5e7eb;
+  margin-top: 1rem;
+  padding-top: 1rem;
+}

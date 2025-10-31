@@ -19,7 +19,7 @@
           pInputText
           formControlName="name"
           placeholder="مثال: چاپ A4 - سیاه سفید"
-          class="w-full"
+          class="full-width-input"
         />
         @if (validationErrors()['name']) {
         <small class="error-text">{{ validationErrors()["name"] }}</small>
@@ -36,7 +36,7 @@
           optionLabel="label"
           optionValue="value"
           placeholder="انتخاب کنید"
-          class="w-full"
+          class="full-width-input"
         ></p-select>
         @if (validationErrors()['productType']) {
         <small class="error-text">{{
@@ -55,7 +55,7 @@
           [min]="0"
           [maxFractionDigits]="0"
           placeholder="مثال: 4200"
-          class="w-full"
+          class="full-width-input"
         ></p-inputNumber>
         @if (validationErrors()['price']) {
         <small class="error-text">{{ validationErrors()["price"] }}</small>
@@ -63,9 +63,12 @@
       </div>
 
       <!-- Is Active -->
-      <div class="form-field checkbox-field">
-        <p-checkbox formControlName="isActive" inputId="isActive"></p-checkbox>
+      <div class="form-field switch-field">
         <label for="isActive">قانون فعال باشد</label>
+        <p-toggleswitch
+          formControlName="isActive"
+          inputId="isActive"
+        ></p-toggleswitch>
       </div>
 
       <!-- Match Conditions -->

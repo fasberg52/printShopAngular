@@ -13,7 +13,7 @@
       </div>
 
       <ng-container *ngIf="loginStage() === 'check-phone'" [@slideInUp]>
-        <div class="flex flex-col gap-6 pt-4">
+        <div class="form-stage-container">
           <div class="flex-column">
             <label for="check_phone">شماره تلفن</label>
             <div
@@ -69,11 +69,11 @@
       </ng-container>
 
       <ng-container *ngIf="loginStage() === 'password'" [@slideInUp]>
-        <div class="flex flex-col gap-6 pt-4">
-          <div class="text-center text-sm text-gray-700">
+        <div class="form-stage-container">
+          <div class="info-text">
             ورود برای شماره:
-            <span class="font-bold">{{ loginForm.get("phone")?.value }}</span>
-            <a (click)="goBackToCheckPhone()" class="span text-xs pr-2"
+            <span class="info-text-bold">{{ loginForm.get("phone")?.value }}</span>
+            <a (click)="goBackToCheckPhone()" class="span info-link"
               >(تغییر شماره)</a
             >
           </div>
@@ -151,22 +151,22 @@
       </ng-container>
 
       <ng-container *ngIf="loginStage() === 'otp'" [@slideInUp]>
-        <div class="flex flex-col gap-6 pt-4">
-          <div class="text-center text-sm text-gray-700">
+        <div class="form-stage-container">
+          <div class="info-text">
             کد تایید برای شماره:
-            <span class="font-bold">{{ loginForm.get("phone")?.value }}</span>
-            <a (click)="goBackToCheckPhone()" class="span text-xs pr-2"
+            <span class="info-text-bold">{{ loginForm.get("phone")?.value }}</span>
+            <a (click)="goBackToCheckPhone()" class="span info-link"
               >(تغییر شماره)</a
             >
           </div>
 
           <ng-container *ngIf="otpStage() === 'verify'">
-            <div class="w-full flex flex-col items-center gap-4 otp-box">
-              <label class="text-sm text-gray-700 font-medium"
+            <div class="otp-container otp-box">
+              <label class="otp-label"
                 >کد ۵ رقمی ارسال شده را وارد کنید</label
               >
 
-              <div dir="ltr" class="w-full flex justify-center">
+              <div dir="ltr" class="otp-input-wrapper">
                 <p-inputotp
                   formControlName="code"
                   [length]="5"
@@ -176,7 +176,7 @@
 
               <div
                 id="code-error"
-                class="text-xs text-red-500 min-h-4"
+                class="otp-error"
                 role="alert"
                 *ngIf="
                   loginForm.get('code')?.touched &&
@@ -186,10 +186,10 @@
                 کد باید دقیقا ۵ رقم عددی باشد.
               </div>
 
-              <div class="mt-1 text-sm flex items-center gap-2">
+              <div class="otp-resend-container">
                 <span
                   *ngIf="countdown() > 0"
-                  class="text-gray-500 bg-gray-100 px-2 py-1 rounded-md"
+                  class="countdown-badge"
                 >
                   ارسال مجدد در {{ countdown() }} ثانیه
                 </span>
@@ -197,13 +197,13 @@
                   *ngIf="countdown() === 0"
                   (click)="requestOtp()"
                   [disabled]="otpLoading()"
-                  class="px-3 py-1 rounded-md bg-blue-50 text-blue-600 hover:bg-blue-100 disabled:opacity-50 flex items-center gap-2 transition-all duration-200"
+                  class="resend-button"
                 >
                   <i
                     *ngIf="otpLoading()"
-                    class="pi pi-spin pi-spinner text-sm"
+                    class="pi pi-spin pi-spinner resend-icon"
                   ></i>
-                  <i *ngIf="!otpLoading()" class="pi pi-refresh text-sm"></i>
+                  <i *ngIf="!otpLoading()" class="pi pi-refresh resend-icon"></i>
                   <span>{{
                     otpLoading() ? "درحال ارسال..." : "ارسال دوباره کد"
                   }}</span>
@@ -220,14 +220,14 @@
           </ng-container>
 
           <ng-container *ngIf="otpStage() === 'request'">
-            <div class="text-center p-4 text-gray-600">
+            <div class="otp-loading-text">
               درحال ارسال کد تایید...
             </div>
           </ng-container>
         </div>
       </ng-container>
 
-      <p class="p border-t border-gray-200 mt-4 pt-4">
+      <p class="p footer-text">
         حساب کاربری ندارید؟
         <a routerLink="/auth/register" class="span"> همین حالا ثبت نام کنید </a>
       </p>

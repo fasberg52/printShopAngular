@@ -1,29 +1,33 @@
-<div class="admin-layout flex h-screen">
-  <aside class="w-64 bg-gray-800 text-white p-4 shadow-lg">
-    <h2 class="text-2xl font-bold mb-6">پنل ادمین</h2>
-    <nav class="space-y-1">
+<div class="admin-layout">
+  <aside class="admin-sidebar">
+    <h2 class="sidebar-title">پنل ادمین</h2>
+    <nav class="sidebar-nav">
       <a
         routerLink="/admin/dashboard"
-        routerLinkActive="bg-gray-700"
-        class="block py-2 px-4 rounded hover:bg-gray-700 transition-colors"
+        routerLinkActive="nav-link-active"
+        class="nav-link"
       >
-        <i class="pi pi-home mr-2"></i>
+        <i class="pi pi-home nav-icon"></i>
         داشبورد
       </a>
       <a
         routerLink="/admin/price-rules"
-        routerLinkActive="bg-gray-700"
-        class="block py-2 px-4 rounded hover:bg-gray-700 transition-colors"
+        routerLinkActive="nav-link-active"
+        class="nav-link"
       >
-        <i class="pi pi-dollar mr-2"></i>
+        <i class="pi pi-dollar nav-icon"></i>
         قوانین قیمت
       </a>
     </nav>
+    <button type="button" class="nav-link" aria-label="خروج" (click)="logout()">
+      <i class="pi pi-sign-out nav-icon"></i>
+      خروج
+    </button>
   </aside>
 
-  <main class="flex-1 flex flex-col overflow-hidden">
-    <header class="bg-white shadow p-4 flex justify-between items-center">
-      <h1 class="text-xl font-semibold">به پنل ادمین خوش آمدید</h1>
+  <main class="admin-main">
+    <header class="admin-header">
+      <h1 class="header-title">به پنل ادمین خوش آمدید</h1>
       <p-button
         label="خروج"
         icon="pi pi-sign-out"
@@ -32,7 +36,7 @@
       ></p-button>
     </header>
 
-    <div class="flex-1 overflow-y-auto p-6 bg-gray-50">
+    <div class="admin-content">
       <router-outlet></router-outlet>
     </div>
   </main>
