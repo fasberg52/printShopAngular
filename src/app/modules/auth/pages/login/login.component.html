@@ -1,0 +1,236 @@
+<div class="login-container">
+  <div class="login-background"></div>
+
+  <div class="form-wrapper">
+    <form class="form" [formGroup]="loginForm">
+      <!-- Header -->
+      <div class="form-header">
+        <div class="logo-container">
+          <i class="pi pi-print"></i>
+        </div>
+        <h1 class="form-title">پنل ادمین چاپ‌خانه</h1>
+        <p class="form-subtitle">ورود به حساب کاربری</p>
+      </div>
+
+      <ng-container *ngIf="loginStage() === 'check-phone'" [@slideInUp]>
+        <div class="flex flex-col gap-6 pt-4">
+          <div class="flex-column">
+            <label for="check_phone">شماره تلفن</label>
+            <div
+              class="inputForm"
+              [class.error]="
+                loginForm.get('phone')?.invalid &&
+                loginForm.get('phone')?.touched
+              "
+            >
+              <input
+                id="check_phone"
+                type="tel"
+                class="input"
+                formControlName="phone"
+                placeholder="09123456789"
+                dir="ltr"
+                pattern="09[0-9]{9}"
+                maxlength="11"
+                aria-label="شماره تلفن همراه"
+                aria-required="true"
+                [attr.aria-invalid]="
+                  loginForm.get('phone')?.invalid &&
+                  loginForm.get('phone')?.touched
+                "
+                [attr.aria-describedby]="
+                  loginForm.get('phone')?.invalid &&
+                  loginForm.get('phone')?.touched
+                    ? 'phone-error'
+                    : null
+                "
+              />
+            </div>
+            <div
+              id="phone-error"
+              class="error-message"
+              role="alert"
+              *ngIf="
+                loginForm.get('phone')?.invalid &&
+                loginForm.get('phone')?.touched
+              "
+            >
+              شماره تلفن باید 11 رقم و با 09 شروع شود
+            </div>
+          </div>
+
+          <app-loading-button
+            label="ادامه"
+            [loading]="phoneLoading()"
+            [disabled]="loginForm.get('phone')?.invalid || phoneLoading()"
+            (buttonClick)="onCheckPhone()"
+          ></app-loading-button>
+        </div>
+      </ng-container>
+
+      <ng-container *ngIf="loginStage() === 'password'" [@slideInUp]>
+        <div class="flex flex-col gap-6 pt-4">
+          <div class="text-center text-sm text-gray-700">
+            ورود برای شماره:
+            <span class="font-bold">{{ loginForm.get("phone")?.value }}</span>
+            <a (click)="goBackToCheckPhone()" class="span text-xs pr-2"
+              >(تغییر شماره)</a
+            >
+          </div>
+
+          <div class="flex-column">
+            <label for="password">رمز عبور</label>
+            <div
+              class="inputForm inputForm-password"
+              [class.error]="
+                loginForm.get('password')?.invalid &&
+                loginForm.get('password')?.touched
+              "
+            >
+              <input
+                pInputText
+                id="password"
+                [type]="showPassword() ? 'text' : 'password'"
+                class="input"
+                formControlName="password"
+                placeholder="رمز عبور خود را وارد کنید"
+                (keyup.enter)="onPasswordSubmit()"
+                aria-label="رمز عبور"
+                aria-required="true"
+                [attr.aria-invalid]="
+                  loginForm.get('password')?.invalid &&
+                  loginForm.get('password')?.touched
+                "
+                [attr.aria-describedby]="
+                  loginForm.get('password')?.invalid &&
+                  loginForm.get('password')?.touched
+                    ? 'password-error'
+                    : null
+                "
+              />
+              <button
+                type="button"
+                class="password-toggle-btn"
+                (click)="togglePasswordVisibility()"
+                [attr.aria-label]="
+                  showPassword() ? 'مخفی کردن رمز عبور' : 'نمایش رمز عبور'
+                "
+                aria-pressed="false"
+              >
+                <i
+                  [class]="showPassword() ? 'pi pi-eye-slash' : 'pi pi-eye'"
+                ></i>
+              </button>
+            </div>
+            <div
+              id="password-error"
+              class="error-message"
+              role="alert"
+              *ngIf="
+                loginForm.get('password')?.invalid &&
+                loginForm.get('password')?.touched
+              "
+            >
+              رمز عبور باید حداقل 6 کاراکتر باشد
+            </div>
+          </div>
+
+          <app-loading-button
+            label="ورود"
+            [loading]="passwordLoading()"
+            [disabled]="loginForm.get('password')?.invalid || passwordLoading()"
+            (buttonClick)="onPasswordSubmit()"
+          ></app-loading-button>
+
+          <div class="text-center">
+            <a (click)="switchToOtp()" class="span">
+              ورود با کد یکبار مصرف (OTP)
+            </a>
+          </div>
+        </div>
+      </ng-container>
+
+      <ng-container *ngIf="loginStage() === 'otp'" [@slideInUp]>
+        <div class="flex flex-col gap-6 pt-4">
+          <div class="text-center text-sm text-gray-700">
+            کد تایید برای شماره:
+            <span class="font-bold">{{ loginForm.get("phone")?.value }}</span>
+            <a (click)="goBackToCheckPhone()" class="span text-xs pr-2"
+              >(تغییر شماره)</a
+            >
+          </div>
+
+          <ng-container *ngIf="otpStage() === 'verify'">
+            <div class="w-full flex flex-col items-center gap-4 otp-box">
+              <label class="text-sm text-gray-700 font-medium"
+                >کد ۵ رقمی ارسال شده را وارد کنید</label
+              >
+
+              <div dir="ltr" class="w-full flex justify-center">
+                <p-inputotp
+                  formControlName="code"
+                  [length]="5"
+                  aria-label="کد تایید ۵ رقمی"
+                />
+              </div>
+
+              <div
+                id="code-error"
+                class="text-xs text-red-500 min-h-4"
+                role="alert"
+                *ngIf="
+                  loginForm.get('code')?.touched &&
+                  loginForm.get('code')?.invalid
+                "
+              >
+                کد باید دقیقا ۵ رقم عددی باشد.
+              </div>
+
+              <div class="mt-1 text-sm flex items-center gap-2">
+                <span
+                  *ngIf="countdown() > 0"
+                  class="text-gray-500 bg-gray-100 px-2 py-1 rounded-md"
+                >
+                  ارسال مجدد در {{ countdown() }} ثانیه
+                </span>
+                <button
+                  *ngIf="countdown() === 0"
+                  (click)="requestOtp()"
+                  [disabled]="otpLoading()"
+                  class="px-3 py-1 rounded-md bg-blue-50 text-blue-600 hover:bg-blue-100 disabled:opacity-50 flex items-center gap-2 transition-all duration-200"
+                >
+                  <i
+                    *ngIf="otpLoading()"
+                    class="pi pi-spin pi-spinner text-sm"
+                  ></i>
+                  <i *ngIf="!otpLoading()" class="pi pi-refresh text-sm"></i>
+                  <span>{{
+                    otpLoading() ? "درحال ارسال..." : "ارسال دوباره کد"
+                  }}</span>
+                </button>
+              </div>
+            </div>
+
+            <app-loading-button
+              label="تایید و ورود"
+              [loading]="otpLoading()"
+              [disabled]="loginForm.get('code')?.invalid || otpLoading()"
+              (buttonClick)="verifyOtp()"
+            ></app-loading-button>
+          </ng-container>
+
+          <ng-container *ngIf="otpStage() === 'request'">
+            <div class="text-center p-4 text-gray-600">
+              درحال ارسال کد تایید...
+            </div>
+          </ng-container>
+        </div>
+      </ng-container>
+
+      <p class="p border-t border-gray-200 mt-4 pt-4">
+        حساب کاربری ندارید؟
+        <a routerLink="/auth/register" class="span"> همین حالا ثبت نام کنید </a>
+      </p>
+    </form>
+  </div>
+</div>

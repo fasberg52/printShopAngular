@@ -1,0 +1,133 @@
+<p-dialog
+  header="جزئیات قانون قیمت"
+  [modal]="true"
+  [style]="{ width: '600px' }"
+  [draggable]="false"
+  [resizable]="false"
+  [closable]="true"
+  [visible]="visible()"
+  (visibleChange)="onVisibleChange($event)"
+>
+  <div class="detail-content">
+    <!-- Header Info -->
+    <div class="detail-section">
+      <div class="detail-row">
+        <span class="label">نام قانون:</span>
+        <span class="value">{{ priceRule().name }}</span>
+      </div>
+
+      <div class="detail-row">
+        <span class="label">نوع محصول:</span>
+        <p-tag
+          [value]="getProductTypeLabel(priceRule().productType)"
+          [severity]="priceRule().productType === 'print' ? 'success' : 'info'"
+        ></p-tag>
+      </div>
+
+      <div class="detail-row">
+        <span class="label">قیمت پایه:</span>
+        <span class="value price-value"
+          >{{ formatPrice(priceRule().price) }} تومان</span
+        >
+      </div>
+
+      <div class="detail-row">
+        <span class="label">وضعیت:</span>
+        <p-tag
+          [value]="priceRule().isActive ? 'فعال' : 'غیرفعال'"
+          [severity]="priceRule().isActive ? 'success' : 'danger'"
+        ></p-tag>
+      </div>
+    </div>
+
+    <p-divider></p-divider>
+
+    <!-- Match Conditions -->
+    <div class="detail-section">
+      <h4 class="section-title">شرایط تطابق</h4>
+      @if (priceRule().match.length > 0) {
+      <div class="match-list">
+        @for (match of priceRule().match; track match.attributeKey) {
+        <div class="match-item">
+          <span class="attribute">{{ match.attributeKey }}:</span>
+          <span class="value-badge">{{ match.value }}</span>
+        </div>
+        }
+      </div>
+      } @else {
+      <p class="empty-state">هیچ شرطی تعریف نشده است</p>
+      }
+    </div>
+
+    <p-divider></p-divider>
+
+    <!-- Breakpoints -->
+    <div class="detail-section">
+      <h4 class="section-title">نقطه‌شکن‌های قیمت</h4>
+      @if (priceRule().breakpoints.length > 0) {
+      <div class="breakpoint-list">
+        @for (bp of priceRule().breakpoints; track bp.at) {
+        <div class="breakpoint-item">
+          <div class="breakpoint-info">
+            <span class="breakpoint-label"
+              >از تعداد {{ formatPrice(bp.at) }}:</span
+            >
+            <span class="price-value">{{ formatPrice(bp.price) }} تومان</span>
+          </div>
+        </div>
+        }
+      </div>
+      } @else {
+      <p class="empty-state">هیچ نقطه شکنی تعریف نشده است</p>
+      }
+    </div>
+
+    <p-divider></p-divider>
+
+    <!-- Dates -->
+    <div class="detail-section">
+      <div class="detail-row">
+        <span class="label">تاریخ ایجاد:</span>
+        <span class="value">{{ formatDate(priceRule().createdAt) }}</span>
+      </div>
+
+      @if (priceRule().updatedAt) {
+      <div class="detail-row">
+        <span class="label">آخرین به‌روزرسانی:</span>
+        <span class="value">{{ formatDate(priceRule().updatedAt) }}</span>
+      </div>
+      } @if (priceRule()._id) {
+      <div class="detail-row">
+        <span class="label">شناسه:</span>
+        <span
+          class="value"
+          style="font-family: monospace; font-size: 0.875rem"
+          >{{ priceRule()._id }}</span
+        >
+      </div>
+      }
+    </div>
+  </div>
+
+  <ng-template pTemplate="footer">
+    <p-button
+      label="حذف"
+      icon="pi pi-trash"
+      severity="danger"
+      [outlined]="true"
+      (onClick)="onDelete()"
+    ></p-button>
+    <div style="margin-right: auto"></div>
+    <p-button
+      label="انصراف"
+      icon="pi pi-times"
+      [text]="true"
+      (onClick)="onClose()"
+    ></p-button>
+    <p-button
+      label="ویرایش"
+      icon="pi pi-pencil"
+      (onClick)="onEdit()"
+    ></p-button>
+  </ng-template>
+</p-dialog>

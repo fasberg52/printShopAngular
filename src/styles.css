@@ -1,0 +1,677 @@
+/* You can add global styles to this file, and also import other style files */
+/* Import Tailwind with PrimeNG compatibility */
+@import "tailwindcss";
+@import "primeicons/primeicons.css";
+
+/* Prevent Tailwind from resetting PrimeNG button styles */
+@layer base {
+  /* Exclude PrimeNG components from Tailwind's button reset */
+  button:not(.p-button):not([class*="p-"]) {
+    @apply bg-transparent border-0 p-0;
+  }
+}
+
+/* Custom styles for PrimeNG Toast */
+.p-toast {
+  z-index: 9999 !important;
+}
+
+/* Toast container styling */
+.p-toast .p-toast-message {
+  min-width: 300px !important;
+  max-width: 500px !important;
+  margin: 0 0 16px 0 !important;
+  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.15), 0 4px 16px rgba(0, 0, 0, 0.1) !important;
+  border-radius: 12px !important;
+  border-left-width: 4px !important;
+  border-left-style: solid !important;
+  overflow: hidden !important;
+}
+
+/* Error Toast - Danger/Severe style */
+.p-toast .p-toast-message.p-toast-message-error {
+  background: linear-gradient(135deg, #fee2e2 0%, #fecaca 100%) !important;
+  border-left-color: #dc2626 !important;
+  border: 1px solid #fca5a5 !important;
+}
+
+.p-toast .p-toast-message.p-toast-message-error .p-toast-message-icon,
+.p-toast .p-toast-message.p-toast-message-error .p-toast-icon-close {
+  color: #dc2626 !important;
+}
+
+.p-toast
+  .p-toast-message.p-toast-message-error
+  .p-toast-message-text
+  .p-toast-summary {
+  color: #991b1b !important;
+  font-weight: 700 !important;
+}
+
+.p-toast
+  .p-toast-message.p-toast-message-error
+  .p-toast-message-text
+  .p-toast-detail {
+  color: #7f1d1d !important;
+}
+
+/* Success Toast */
+.p-toast .p-toast-message.p-toast-message-success {
+  background: linear-gradient(135deg, #dcfce7 0%, #bbf7d0 100%) !important;
+  border-left-color: #16a34a !important;
+  border: 1px solid #86efac !important;
+}
+
+.p-toast .p-toast-message.p-toast-message-success .p-toast-message-icon,
+.p-toast .p-toast-message.p-toast-message-success .p-toast-icon-close {
+  color: #16a34a !important;
+}
+
+.p-toast
+  .p-toast-message.p-toast-message-success
+  .p-toast-message-text
+  .p-toast-summary {
+  color: #166534 !important;
+  font-weight: 700 !important;
+}
+
+.p-toast
+  .p-toast-message.p-toast-message-success
+  .p-toast-message-text
+  .p-toast-detail {
+  color: #14532d !important;
+}
+
+/* Info Toast */
+.p-toast .p-toast-message.p-toast-message-info {
+  background: linear-gradient(135deg, #dbeafe 0%, #bfdbfe 100%) !important;
+  border-left-color: #2563eb !important;
+  border: 1px solid #93c5fd !important;
+}
+
+.p-toast .p-toast-message.p-toast-message-info .p-toast-message-icon,
+.p-toast .p-toast-message.p-toast-message-info .p-toast-icon-close {
+  color: #2563eb !important;
+}
+
+.p-toast
+  .p-toast-message.p-toast-message-info
+  .p-toast-message-text
+  .p-toast-summary {
+  color: #1e40af !important;
+  font-weight: 700 !important;
+}
+
+.p-toast
+  .p-toast-message.p-toast-message-info
+  .p-toast-message-text
+  .p-toast-detail {
+  color: #1e3a8a !important;
+}
+
+/* Warning Toast */
+.p-toast .p-toast-message.p-toast-message-warn {
+  background: linear-gradient(135deg, #fef3c7 0%, #fde68a 100%) !important;
+  border-left-color: #d97706 !important;
+  border: 1px solid #fde047 !important;
+}
+
+.p-toast .p-toast-message.p-toast-message-warn .p-toast-message-icon,
+.p-toast .p-toast-message.p-toast-message-warn .p-toast-icon-close {
+  color: #d97706 !important;
+}
+
+.p-toast
+  .p-toast-message.p-toast-message-warn
+  .p-toast-message-text
+  .p-toast-summary {
+  color: #92400e !important;
+  font-weight: 700 !important;
+}
+
+.p-toast
+  .p-toast-message.p-toast-message-warn
+  .p-toast-message-text
+  .p-toast-detail {
+  color: #78350f !important;
+}
+
+/* Toast content padding */
+.p-toast .p-toast-message-content {
+  padding: 1rem 1.5rem !important;
+}
+
+.p-toast .p-toast-icon-close {
+  opacity: 0.7 !important;
+  transition: opacity 0.2s ease !important;
+}
+
+.p-toast .p-toast-icon-close:hover {
+  opacity: 1 !important;
+}
+
+/* ========= Price Rules actions menu (global, stronger than theme/Tailwind) ========= */
+.p-connected-overlay {
+  /* Force all PrimeNG connected overlays (menus, dropdowns, calendars) above tables/layout */
+  z-index: 10050 !important;
+}
+
+.price-rule-menu.p-menu {
+  z-index: 10050 !important;
+  width: 200px;
+  background: #ffffff !important;
+  border-radius: 8px;
+  box-shadow: 0 10px 25px rgba(0, 0, 0, 0.15), 0 4px 10px rgba(0, 0, 0, 0.1);
+  border: 1px solid rgba(0, 0, 0, 0.08);
+  padding: 0.5rem;
+}
+
+.price-rule-menu .p-menuitem-link,
+.price-rule-menu .p-menu-item-link {
+  padding: 0.875rem 1rem !important;
+  border-radius: 6px !important;
+  transition: all 0.2s ease;
+  color: #1f2937 !important; /* override Tailwind link/reset */
+  font-weight: 500;
+  background-color: transparent !important;
+  border: none !important;
+  cursor: pointer !important;
+  pointer-events: auto !important;
+  display: flex !important;
+  align-items: center !important;
+  text-decoration: none !important;
+}
+
+.price-rule-menu .p-menuitem-text {
+  color: #1f2937 !important;
+  opacity: 1 !important;
+}
+
+.price-rule-menu .p-menu-item-label,
+.price-rule-menu .p-menuitem-label {
+  color: #1f2937 !important;
+  opacity: 1 !important;
+}
+
+.price-rule-menu .p-menuitem-link:hover,
+.price-rule-menu .p-menu-item-link:hover {
+  background-color: #f3f4f6 !important;
+  color: #111827 !important;
+  cursor: pointer !important;
+}
+
+.price-rule-menu .p-menuitem-link:hover .p-menu-item-label,
+.price-rule-menu .p-menuitem-link:hover .p-menuitem-label,
+.price-rule-menu .p-menu-item-link:hover .p-menu-item-label,
+.price-rule-menu .p-menu-item-link:hover .p-menuitem-label {
+  color: #111827 !important;
+}
+
+.price-rule-menu .p-menuitem-icon,
+.price-rule-menu .p-menu-item-icon,
+.price-rule-menu [class*="p-menu-item-icon"],
+.price-rule-menu [class*="p-menuitem-icon"] {
+  color: #6b7280 !important;
+  margin-left: 0.5rem;
+  opacity: 1 !important;
+  visibility: visible !important;
+}
+
+.price-rule-menu .p-menuitem-link:hover .p-menuitem-icon,
+.price-rule-menu .p-menuitem-link:hover .p-menu-item-icon,
+.price-rule-menu .p-menuitem-link:hover [class*="p-menu-item-icon"],
+.price-rule-menu .p-menuitem-link:hover [class*="p-menuitem-icon"] {
+  color: #374151 !important;
+}
+
+/* Danger action coloring */
+.price-rule-menu .p-menuitem-link.text-red-500,
+.price-rule-menu .p-menu-item-link.text-red-500 {
+  color: #ef4444 !important;
+}
+
+.price-rule-menu .p-menuitem-link.text-red-500:hover,
+.price-rule-menu .p-menu-item-link.text-red-500:hover {
+  color: #dc2626 !important;
+  background-color: #fef2f2 !important;
+  cursor: pointer !important;
+}
+
+.price-rule-menu .p-menuitem-link.text-red-500 .p-menuitem-icon,
+.price-rule-menu .p-menuitem-link.text-red-500 .p-menu-item-icon,
+.price-rule-menu .p-menu-item-link.text-red-500 .p-menuitem-icon,
+.price-rule-menu .p-menu-item-link.text-red-500 .p-menu-item-icon,
+.price-rule-menu .p-menuitem-link.text-red-500 [class*="p-menu-item-icon"],
+.price-rule-menu .p-menuitem-link.text-red-500 [class*="p-menuitem-icon"],
+.price-rule-menu .p-menu-item-link.text-red-500 [class*="p-menu-item-icon"],
+.price-rule-menu .p-menu-item-link.text-red-500 [class*="p-menuitem-icon"] {
+  color: inherit !important;
+}
+
+.price-rule-menu .p-menuitem-link.text-red-500:active .p-menuitem-icon,
+.price-rule-menu .p-menuitem-link.text-red-500:active .p-menu-item-icon,
+.price-rule-menu .p-menu-item-link.text-red-500:active .p-menuitem-icon,
+.price-rule-menu .p-menu-item-link.text-red-500:active .p-menu-item-icon,
+.price-rule-menu
+  .p-menuitem-link.text-red-500:active
+  [class*="p-menu-item-icon"],
+.price-rule-menu
+  .p-menuitem-link.text-red-500:active
+  [class*="p-menuitem-icon"],
+.price-rule-menu
+  .p-menu-item-link.text-red-500:active
+  [class*="p-menu-item-icon"],
+.price-rule-menu
+  .p-menu-item-link.text-red-500:active
+  [class*="p-menuitem-icon"] {
+  color: #dc2626 !important;
+}
+
+/* src/styles.css (این را به انتهای فایل اضافه کنید) */
+
+/* --- استایل سفارشی برای منوی عملیات جدول (Price Rules Menu) --- */
+/* (باید سراسری باشد چون از appendTo="body" استفاده شده) */
+
+/* ۱. بدنه اصلی منو و فاصله استاندارد آیتم‌ها */
+.p-menu.price-rule-menu {
+  width: 200px; /* عرض منو */
+  background: #ffffff !important;
+  border-radius: 8px;
+  box-shadow: 0 10px 25px rgba(0, 0, 0, 0.15), 0 4px 10px rgba(0, 0, 0, 0.1);
+  border: 1px solid rgba(0, 0, 0, 0.08);
+  padding: 0.5rem; /* ایجاد فاصله در کل منو */
+  margin-top: 0.5rem;
+}
+
+.p-menu.price-rule-menu .p-menuitem {
+  margin-bottom: 0.25rem; /* فاصله بین هر آیتم */
+}
+.p-menu.price-rule-menu .p-menuitem:last-child {
+  margin-bottom: 0;
+}
+
+/* ۳. بک‌گراند هاور کمرنگ (حل شد) */
+.p-menu.price-rule-menu .p-menuitem-link,
+.p-menu.price-rule-menu .p-menu-item-link {
+  padding: 0.875rem 1rem !important; /* پدینگ داخلی هر آیتم */
+  border-radius: 6px !important;
+  transition: all 0.2s ease;
+  color: #1f2937 !important; /* رنگ متن پیش‌فرض */
+  font-weight: 500;
+  background-color: transparent !important;
+  border: none !important;
+  display: flex !important;
+  align-items: center !important;
+  gap: 0.5rem !important; /* فاصله استاندارد بین آیکون و متن */
+  cursor: pointer !important;
+  pointer-events: auto !important;
+  text-decoration: none !important;
+}
+
+.p-menu.price-rule-menu .p-menuitem-link:hover,
+.p-menu.price-rule-menu .p-menu-item-link:hover {
+  background-color: #f3f4f6 !important; /* پس‌زمینه هاور */
+  color: #111827 !important;
+  cursor: pointer !important;
+}
+
+/* ۲. فاصله آیکون از متن (حل شد) */
+.p-menu.price-rule-menu .p-menuitem-icon,
+.p-menu.price-rule-menu .p-menu-item-icon,
+.p-menu.price-rule-menu [class*="p-menu-item-icon"],
+.p-menu.price-rule-menu [class*="p-menuitem-icon"] {
+  color: #6b7280 !important;
+  margin-left: 0.5rem; /* فاصله آیکون از متن */
+  opacity: 1 !important;
+  visibility: visible !important;
+}
+
+.p-menu.price-rule-menu .p-menuitem-link:hover .p-menuitem-icon,
+.p-menu.price-rule-menu .p-menuitem-link:hover .p-menu-item-icon,
+.p-menu.price-rule-menu .p-menuitem-link:hover [class*="p-menu-item-icon"],
+.p-menu.price-rule-menu .p-menuitem-link:hover [class*="p-menuitem-icon"] {
+  color: #374151 !important; /* رنگ آیکون در هاور */
+}
+
+/* استایل‌های مربوط به آیتم قرمز (حذف) */
+.p-menu.price-rule-menu .p-menuitem-link.text-red-500,
+.p-menu.price-rule-menu .p-menu-item-link.text-red-500 {
+  color: #ef4444 !important;
+}
+.p-menu.price-rule-menu .p-menuitem-link.text-red-500 .p-menuitem-icon,
+.p-menu.price-rule-menu .p-menuitem-link.text-red-500 .p-menu-item-icon,
+.p-menu.price-rule-menu .p-menu-item-link.text-red-500 .p-menuitem-icon,
+.p-menu.price-rule-menu .p-menu-item-link.text-red-500 .p-menu-item-icon,
+.p-menu.price-rule-menu
+  .p-menuitem-link.text-red-500
+  [class*="p-menu-item-icon"],
+.p-menu.price-rule-menu
+  .p-menuitem-link.text-red-500
+  [class*="p-menuitem-icon"],
+.p-menu.price-rule-menu
+  .p-menu-item-link.text-red-500
+  [class*="p-menu-item-icon"],
+.p-menu.price-rule-menu
+  .p-menu-item-link.text-red-500
+  [class*="p-menuitem-icon"] {
+  color: inherit !important;
+}
+.p-menu.price-rule-menu .p-menuitem-link.text-red-500:hover,
+.p-menu.price-rule-menu .p-menu-item-link.text-red-500:hover {
+  color: #dc2626 !important;
+  background-color: #fef2f2 !important; /* پس‌زمینه هاور قرمز */
+  cursor: pointer !important;
+}
+
+/* PrimeNG Button Styles - Ensure buttons have proper backgrounds */
+/* These styles override Tailwind's reset and ensure PrimeNG buttons work */
+@layer components {
+  .p-button {
+    display: inline-flex !important;
+    align-items: center !important;
+    justify-content: center !important;
+    cursor: pointer !important;
+    user-select: none !important;
+    border: 1px solid transparent !important;
+    font-weight: 500 !important;
+    text-align: center !important;
+    vertical-align: middle !important;
+    position: relative !important;
+    overflow: hidden !important;
+    padding: 0.625rem 1.25rem !important;
+    border-radius: 0.375rem !important;
+    transition: all 0.2s ease !important;
+  }
+
+  /* Primary Button - Blue background */
+  .p-button.p-button-primary {
+    background-color: #2196f3 !important;
+    border-color: #2196f3 !important;
+    color: #ffffff !important;
+  }
+
+  .p-button.p-button-primary:hover:not(:disabled) {
+    background-color: #1976d2 !important;
+    border-color: #1976d2 !important;
+  }
+
+  .p-button.p-button-primary:focus:not(:disabled) {
+    box-shadow: 0 0 0 0.2rem rgba(33, 150, 243, 0.3) !important;
+  }
+
+  /* Secondary Button - Gray background */
+  .p-button.p-button-secondary {
+    background-color: #6c757d !important;
+    border-color: #6c757d !important;
+    color: #ffffff !important;
+  }
+
+  .p-button.p-button-secondary:hover:not(:disabled) {
+    background-color: #5a6268 !important;
+    border-color: #5a6268 !important;
+  }
+
+  /* Outlined Secondary Button */
+  .p-button.p-button-secondary.p-button-outlined {
+    background-color: transparent !important;
+    border-color: #6c757d !important;
+    color: #6c757d !important;
+  }
+
+  .p-button.p-button-secondary.p-button-outlined:hover:not(:disabled) {
+    background-color: #6c757d !important;
+    color: #ffffff !important;
+  }
+
+  /* Text Button */
+  .p-button.p-button-text {
+    background-color: transparent !important;
+    border-color: transparent !important;
+    color: #6b7280 !important;
+  }
+
+  .p-button.p-button-text:hover:not(:disabled) {
+    background-color: #f3f4f6 !important;
+    color: #374151 !important;
+  }
+
+  /* Disabled state */
+  .p-button:disabled {
+    opacity: 0.6 !important;
+    cursor: not-allowed !important;
+  }
+
+  /* Button Icons - RTL support */
+  .p-button .p-button-icon-left {
+    margin-left: 0.5rem !important;
+    margin-right: 0 !important;
+  }
+
+  .p-button .p-button-icon-right {
+    margin-right: 0.5rem !important;
+    margin-left: 0 !important;
+  }
+}
+
+/* Ensure buttons in dialog footer have proper backgrounds - Higher specificity */
+.dialog-footer .p-button.p-button-primary {
+  background-color: #2196f3 !important;
+  border-color: #2196f3 !important;
+  color: #ffffff !important;
+  min-width: 120px;
+}
+
+.dialog-footer .p-button.p-button-secondary.p-button-outlined {
+  background-color: transparent !important;
+  border-color: #6c757d !important;
+  color: #6c757d !important;
+  min-width: 120px;
+}
+
+/* ========= PrimeNG Input Components Protection & Styling ========= */
+/* Ensure all PrimeNG input components work correctly with Tailwind */
+
+/* PrimeNG InputText protection */
+@layer components {
+  .p-inputtext,
+  input.p-inputtext {
+    display: block !important;
+    width: 100% !important;
+    appearance: auto !important;
+    -webkit-appearance: auto !important;
+    background-color: #ffffff !important;
+    color: #1f2937 !important;
+    border: 1px solid #d1d5db !important;
+    border-radius: 6px !important;
+    padding: 0.625rem 0.875rem !important;
+    font-size: 0.875rem !important;
+    line-height: 1.5 !important;
+    transition: all 0.2s ease !important;
+  }
+
+  .p-inputtext:enabled:hover {
+    border-color: #9ca3af !important;
+  }
+
+  .p-inputtext:enabled:focus {
+    outline: none !important;
+    border-color: #2196f3 !important;
+    box-shadow: 0 0 0 3px rgba(33, 150, 243, 0.1) !important;
+  }
+
+  .p-inputtext:disabled {
+    opacity: 0.6 !important;
+    cursor: not-allowed !important;
+    background-color: #f3f4f6 !important;
+  }
+}
+
+/* PrimeNG InputNumber protection */
+@layer components {
+  .p-inputnumber,
+  .p-inputnumber-input {
+    display: block !important;
+    width: 100% !important;
+    appearance: auto !important;
+    -webkit-appearance: auto !important;
+  }
+
+  .p-inputnumber .p-inputnumber-input {
+    background-color: #ffffff !important;
+    color: #1f2937 !important;
+    border: 1px solid #d1d5db !important;
+    border-radius: 6px !important;
+    padding: 0.625rem 0.875rem !important;
+    font-size: 0.875rem !important;
+    line-height: 1.5 !important;
+    transition: all 0.2s ease !important;
+    width: 100% !important;
+  }
+
+  .p-inputnumber .p-inputnumber-input:enabled:hover {
+    border-color: #9ca3af !important;
+  }
+
+  .p-inputnumber .p-inputnumber-input:enabled:focus {
+    outline: none !important;
+    border-color: #2196f3 !important;
+    box-shadow: 0 0 0 3px rgba(33, 150, 243, 0.1) !important;
+  }
+}
+
+/* PrimeNG Select/Dropdown protection and styling */
+@layer components {
+  .p-select {
+    display: block !important;
+    width: 100% !important;
+    position: relative !important;
+  }
+
+  .p-select.p-component {
+    background-color: #ffffff !important;
+    border: 1px solid #d1d5db !important;
+    border-radius: 6px !important;
+    transition: all 0.2s ease !important;
+    min-height: 42px !important;
+    display: flex !important;
+    align-items: center !important;
+    position: relative !important;
+  }
+
+  .p-select.p-component:not(.p-disabled):hover {
+    border-color: #9ca3af !important;
+  }
+
+  .p-select.p-component:not(.p-disabled).p-focus {
+    border-color: #2196f3 !important;
+    box-shadow: 0 0 0 3px rgba(33, 150, 243, 0.1) !important;
+  }
+
+  .p-select .p-select-label {
+    color: #1f2937 !important;
+    padding: 0.625rem 2.5rem 0.625rem 0.875rem !important;
+    font-size: 0.875rem !important;
+    line-height: 1.5 !important;
+    flex: 1 !important;
+    text-align: right !important;
+    display: block !important;
+    width: 100% !important;
+  }
+
+  .p-select .p-select-label.p-placeholder {
+    color: #9ca3af !important;
+  }
+
+  .p-select .p-select-trigger {
+    color: #6b7280 !important;
+    width: 2.5rem !important;
+    position: absolute !important;
+    left: 0 !important;
+    top: 50% !important;
+    transform: translateY(-50%) !important;
+    display: flex !important;
+    align-items: center !important;
+    justify-content: center !important;
+    pointer-events: none !important;
+  }
+
+  .p-select.p-disabled {
+    opacity: 0.6 !important;
+    cursor: not-allowed !important;
+    background-color: #f3f4f6 !important;
+  }
+
+  /* Select overlay (dropdown panel) */
+  .p-select-overlay {
+    border-radius: 8px !important;
+    box-shadow: 0 10px 25px rgba(0, 0, 0, 0.15), 0 4px 10px rgba(0, 0, 0, 0.1) !important;
+    border: 1px solid #e5e7eb !important;
+    margin-top: 0.25rem !important;
+    background-color: #ffffff !important;
+    z-index: 1000 !important;
+  }
+
+  .p-select-overlay .p-select-list {
+    padding: 0.5rem !important;
+  }
+
+  .p-select-overlay .p-select-item {
+    padding: 0.625rem 0.875rem !important;
+    border-radius: 6px !important;
+    margin-bottom: 0.25rem !important;
+    color: #1f2937 !important;
+    font-size: 0.875rem !important;
+    transition: all 0.2s ease !important;
+    cursor: pointer !important;
+    text-align: right !important;
+  }
+
+  .p-select-overlay .p-select-item:last-child {
+    margin-bottom: 0 !important;
+  }
+
+  .p-select-overlay .p-select-item:hover {
+    background-color: #f3f4f6 !important;
+    color: #111827 !important;
+  }
+
+  .p-select-overlay .p-select-item.p-highlight {
+    background-color: #2196f3 !important;
+    color: #ffffff !important;
+  }
+
+  .p-select-overlay .p-select-item.p-highlight:hover {
+    background-color: #1976d2 !important;
+  }
+}
+
+/* PrimeNG Checkbox protection */
+@layer components {
+  .p-checkbox {
+    display: inline-flex !important;
+    align-items: center !important;
+    cursor: pointer !important;
+  }
+
+  .p-checkbox .p-checkbox-box {
+    width: 1.25rem !important;
+    height: 1.25rem !important;
+    border: 2px solid #d1d5db !important;
+    border-radius: 4px !important;
+    background-color: #ffffff !important;
+    transition: all 0.2s ease !important;
+  }
+
+  .p-checkbox .p-checkbox-box:hover {
+    border-color: #2196f3 !important;
+  }
+
+  .p-checkbox.p-checkbox-checked .p-checkbox-box {
+    background-color: #2196f3 !important;
+    border-color: #2196f3 !important;
+  }
+
+  .p-checkbox .p-checkbox-icon {
+    color: #ffffff !important;
+  }
+}

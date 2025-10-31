@@ -1,0 +1,104 @@
+---
+alwaysApply: true
+---
+
+You are an expert in **CSS design systems** and front-end theming for educational and printing websites.  
+Always apply the following **color palette** and **usage rules** consistently across all CSS and HTML files in this project.
+
+## 🎨 Color Palette
+
+| Role            | Description                                            | HEX       |
+| --------------- | ------------------------------------------------------ | --------- |
+| Primary         | Main brand color (header, navbar, links)               | `#2196F3` |
+| Secondary       | Secondary color (success messages, secondary buttons)  | `#4CAF50` |
+| CTA             | Call-to-action color (main buttons like “Order Print”) | `#FF9800` |
+| Accent          | Decorative or highlight color (icons, badges)          | `#BA68C8` |
+| Background      | Main page background                                   | `#FFFFFF` |
+| Card Background | Section or product card background                     | `#F5F5F5` |
+| Text            | Default text color                                     | `#333333` |
+| Hover           | Hover state for links or buttons                       | `#1976D2` |
+| Footer          | Footer background                                      | `#1565C0` |
+
+---
+
+## 🧩 CSS Best Practices
+
+- Define the above colors inside a `:root` block as CSS variables.
+- Use semantic variable names, e.g. `--color-primary`, `--color-cta`.
+- Always use these variables instead of hardcoded color values.
+- Maintain strong contrast between text and background (WCAG 2.1 compliant).
+- Avoid using more than 2 bright colors in one section.
+- Keep spacing, borders, and shadows subtle to focus on printed items.
+
+---
+
+## 🪄 Usage Guidelines
+
+### Header / Navbar
+
+- Use **primary** (`#2196F3`) background with **white** text.
+- Links hover color: **hover** (`#1976D2`).
+
+### Buttons
+
+- Main buttons (e.g. “Order Print”, “Upload File”): **cta** (`#FF9800`).
+- Secondary buttons (e.g. “View Details”): **secondary** (`#4CAF50`).
+- Button text: **white**, with hover state slightly darker.
+
+### Backgrounds & Cards
+
+- Page background: **background** (`#FFFFFF`).
+- Card or section boxes: **card background** (`#F5F5F5`).
+- Accent details (icons, highlights): **accent** (`#BA68C8`).
+
+### Text
+
+- Always use **text color** (`#333333`) for readability.
+- Use white text only on dark or colored backgrounds.
+
+### Footer
+
+- Footer background: **footer** (`#1565C0`), text: **white** or **light gray**.
+
+---
+
+## 🧠 Example CSS Template
+
+```css
+:root {
+  --color-primary: #2196f3;
+  --color-secondary: #4caf50;
+  --color-cta: #ff9800;
+  --color-accent: #ba68c8;
+  --color-background: #ffffff;
+  --color-card-bg: #f5f5f5;
+  --color-text: #333333;
+  --color-hover: #1976d2;
+  --color-footer: #1565c0;
+}
+
+body {
+  background: var(--color-background);
+  color: var(--color-text);
+}
+
+header {
+  background: var(--color-primary);
+  color: #fff;
+}
+
+button.primary {
+  background: var(--color-cta);
+  color: #fff;
+}
+
+button.secondary {
+  background: var(--color-secondary);
+  color: #fff;
+}
+
+footer {
+  background: var(--color-footer);
+  color: #fff;
+}
+```

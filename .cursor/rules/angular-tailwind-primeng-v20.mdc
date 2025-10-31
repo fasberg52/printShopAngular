@@ -1,0 +1,55 @@
+---
+alwaysApply: true
+---
+---
+
+## alwaysApply: true
+
+You are an expert in **Angular 20**, **TypeScript**, **TailwindCSS**, and **PrimeNG**.  
+Apply these coding and theming rules to all project HTML, CSS, and TypeScript files. Prefer separation of concerns: keep design tokens (colors) in `print-theme.mdc` and coding rules here.
+
+## Angular 20 & TypeScript
+
+- Use strict type checking and prefer type inference where appropriate.
+- Avoid `any`. Use `unknown` or generics if needed.
+- Use standalone components (Angular 20 default). Do not manually set `standalone: true` in decorators.
+- Use `signals` for component state and `computed()` for derived values.
+- Set `changeDetection: ChangeDetectionStrategy.OnPush`.
+- Use `inject()` for DI; prefer it over constructor injection when possible.
+- Use lazy loading for feature routes.
+- Keep components small and single-responsibility.
+- Use Reactive Forms; avoid template-driven forms.
+
+## Templates & Patterns
+
+- Keep templates simple; avoid heavy logic in templates.
+- Use `async` pipe for observables.
+- Prefer `[class]` and `[style]` bindings over `ngClass` / `ngStyle`.
+- Use native control flow constructs encouraged by Angular v20 where available.
+
+## TailwindCSS rules
+
+- Use Tailwind utilities for layout, spacing, typography (`flex`, `grid`, `gap`, `p-`, `m-`).
+- Centralize design tokens in `tailwind.config.js` (colors, spacing, fontSizes).
+- Use `@apply` only inside component-specific CSS files; avoid large shared `@apply` clusters.
+- Prefer utility composition over creating many custom classes.
+- Map CSS variables (from `print-theme.mdc`) to Tailwind config if possible:
+  - Keep visual tokens (colors) synchronized with `:root` variables.
+
+## PrimeNG rules
+
+- Use PrimeNG components for complex UI only; wrap them in small presentational components.
+- Do not override core PrimeNG styles globally. Use PrimeNG theme variables or `theme.overrides.css`.
+- If you must deep-style a PrimeNG component, place overrides in a single dedicated file and scope them (use `::ng-deep` only in that file).
+- Prefer applying Tailwind utilities around PrimeNG components for layout and spacing.
+
+## Theming & Colors
+
+- This file **does not** hardcode color values — use CSS variables defined in `print-theme.mdc`.
+- Always reference colors as `var(--color-primary)`, `var(--color-cta)`, etc.
+- Ensure WCAG contrast for text and interactive elements.
+
+## Additional
+
+- Accessibility: ARIA attributes, keyboard navigation, and focus-visible styles mandatory.
+- Code structure: Group by feature, kebab-case filenames, co-locate template/style with component.

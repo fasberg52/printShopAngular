@@ -1,0 +1,462 @@
+/* Modern Print Shop Theme */
+.login-container {
+  position: relative;
+  min-height: 100vh;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: 20px;
+  background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+  overflow: hidden;
+}
+
+.login-background {
+  position: absolute;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  background: radial-gradient(
+      circle at 20% 50%,
+      rgba(120, 119, 198, 0.3) 0%,
+      transparent 50%
+    ),
+    radial-gradient(
+      circle at 80% 80%,
+      rgba(255, 119, 198, 0.3) 0%,
+      transparent 50%
+    ),
+    radial-gradient(
+      circle at 40% 20%,
+      rgba(120, 219, 255, 0.3) 0%,
+      transparent 50%
+    );
+  animation: gradientShift 15s ease infinite;
+}
+
+@keyframes gradientShift {
+  0%,
+  100% {
+    opacity: 1;
+  }
+  50% {
+    opacity: 0.8;
+  }
+}
+
+.form-wrapper {
+  position: relative;
+  z-index: 1;
+  width: 100%;
+  max-width: 480px;
+}
+
+.form {
+  display: flex;
+  flex-direction: column;
+  gap: 24px;
+  background: rgba(255, 255, 255, 0.98);
+  backdrop-filter: blur(10px);
+  padding: 40px;
+  border-radius: 24px;
+  box-shadow: 0 20px 60px rgba(0, 0, 0, 0.15),
+    0 0 0 1px rgba(255, 255, 255, 0.5);
+  font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Oxygen,
+    Ubuntu, Cantarell, "Open Sans", "Helvetica Neue", sans-serif;
+}
+
+.form-header {
+  text-align: center;
+  margin-bottom: 8px;
+}
+
+.logo-container {
+  width: 64px;
+  height: 64px;
+  margin: 0 auto 20px;
+  background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+  border-radius: 16px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  box-shadow: 0 8px 20px rgba(102, 126, 234, 0.3);
+}
+
+.logo-container i {
+  font-size: 32px;
+  color: white;
+}
+
+.form-title {
+  font-size: 28px;
+  font-weight: 700;
+  color: #1a202c;
+  margin: 0 0 8px 0;
+  letter-spacing: -0.5px;
+}
+
+.form-subtitle {
+  font-size: 15px;
+  color: #718096;
+  margin: 0;
+}
+
+@media (max-width: 500px) {
+  .form {
+    padding: 28px 20px;
+    border-radius: 20px;
+  }
+
+  .form-title {
+    font-size: 24px;
+  }
+
+  .logo-container {
+    width: 56px;
+    height: 56px;
+  }
+
+  .logo-container i {
+    font-size: 28px;
+  }
+}
+
+::placeholder {
+  font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Oxygen,
+    Ubuntu, Cantarell, "Open Sans", "Helvetica Neue", sans-serif;
+}
+
+.form button {
+  align-self: flex-end;
+}
+
+.flex-column > label {
+  color: #2d3748;
+  font-weight: 600;
+  margin-bottom: 10px;
+  display: block;
+  font-size: 14px;
+  letter-spacing: -0.2px;
+}
+
+.inputForm {
+  border: 2px solid #e2e8f0;
+  border-radius: 12px;
+  height: 52px;
+  display: flex;
+  align-items: center;
+  padding-left: 16px;
+  padding-right: 16px;
+  transition: all 0.2s ease;
+  background: #f7fafc;
+}
+
+.inputForm:hover {
+  border-color: #cbd5e0;
+  background: #edf2f7;
+}
+
+.input {
+  margin-left: 10px;
+  border-radius: 10px;
+  border: none;
+  width: 100%;
+  height: 100%;
+  padding: 0;
+  font-size: 15px;
+  color: #2d3748;
+  background: transparent;
+  font-weight: 500;
+}
+
+/* Password input specific styling */
+.inputForm-password {
+  position: relative;
+}
+
+.password-toggle-btn {
+  background: none;
+  border: none;
+  cursor: pointer;
+  padding: 8px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  color: #718096;
+  transition: all 0.2s ease;
+  margin-right: 8px;
+  border-radius: 8px;
+  margin-bottom: 5px;
+}
+
+.password-toggle-btn:hover {
+  background-color: rgba(0, 0, 0, 0.05);
+  color: #667eea;
+}
+
+.password-toggle-btn:active {
+  transform: scale(0.95);
+}
+
+.password-toggle-btn i {
+  font-size: 18px;
+}
+
+/* Input wrapper for LTR support */
+.inputForm input[dir="ltr"] {
+  direction: ltr !important;
+  text-align: left !important;
+  color: #000 !important;
+}
+
+.input:focus {
+  outline: none;
+}
+
+.inputForm:focus-within {
+  border: 2px solid #667eea;
+  background: #ffffff;
+  box-shadow: 0 0 0 4px rgba(102, 126, 234, 0.1);
+}
+
+.inputForm.error {
+  border-color: #fc8181;
+  background: #fff5f5;
+}
+
+.inputForm.error:focus-within {
+  border-color: #fc8181;
+  box-shadow: 0 0 0 4px rgba(252, 129, 129, 0.1);
+}
+
+.error-message {
+  color: #e53e3e;
+  font-size: 13px;
+  margin-top: 6px;
+  margin-left: 16px;
+  font-weight: 500;
+}
+
+/* Enhanced LTR support for phone input */
+input[type="tel"] {
+  direction: ltr !important;
+  text-align: left !important;
+  color: #000 !important;
+}
+
+/* Ensure proper placeholder alignment for LTR */
+input[type="tel"]::placeholder {
+  direction: ltr !important;
+  text-align: left !important;
+  color: #999 !important;
+}
+
+.flex-row {
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+  gap: 10px;
+  justify-content: space-between;
+}
+
+.flex-row > div > label {
+  font-size: 14px;
+  color: black;
+  font-weight: 400;
+}
+
+.span {
+  font-size: 14px;
+  margin-left: 5px;
+  color: #667eea;
+  font-weight: 600;
+  cursor: pointer;
+  transition: all 0.2s ease;
+}
+
+.span:hover {
+  color: #764ba2;
+  text-decoration: underline;
+}
+
+.button-submit {
+  margin: 20px 0 10px 0;
+  background-color: #151717;
+  border: none;
+  color: white;
+  font-size: 15px;
+  font-weight: 500;
+  border-radius: 10px;
+  height: 50px;
+  width: 100%;
+  cursor: pointer;
+}
+
+.button-submit:hover {
+  background-color: #252727;
+}
+
+.p {
+  text-align: center;
+  color: black;
+  font-size: 14px;
+  margin: 5px 0;
+}
+
+/* این کلاس‌ها برای دکمه‌های سوشال بودند که فعلا استفاده نشدند */
+.btn {
+  margin-top: 10px;
+  width: 100%;
+  height: 50px;
+  border-radius: 10px;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  font-weight: 500;
+  gap: 10px;
+  border: 1px solid #ededef;
+  background-color: white;
+  cursor: pointer;
+  transition: 0.2s ease-in-out;
+}
+
+.btn:hover {
+  border: 1px solid #2d79f3;
+}
+
+/* --- OTP UI Enhancements --- */
+.otp-box {
+  width: 100%;
+  background: #f7fafc;
+  border: 2px solid #e2e8f0;
+  border-radius: 16px;
+  padding: 28px;
+  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.04);
+}
+
+/* Override PrimeNG InputOtp inside this component */
+
+/* :host ::ng-deep .otp-input -> .p-inputotp */
+:host ::ng-deep .p-inputotp {
+  display: flex;
+  justify-content: center;
+}
+
+:host ::ng-deep .p-inputotp .p-inputotp-inputs {
+  gap: 12px;
+  justify-content: center;
+}
+
+/* :host ::ng-deep .otp-cell -> .p-inputotp-input */
+:host ::ng-deep .p-inputotp-input {
+  width: 52px !important;
+  height: 52px !important;
+  text-align: center !important;
+  font-size: 22px !important;
+  font-weight: 600 !important;
+  border-radius: 8px !important;
+  border: 2px solid #cbd5e0 !important;
+  /* === اصلاحیه: تغییر پس‌زمینه به سفید === */
+  background-color: #ffffff !important;
+  transition: all 0.2s ease !important;
+  color: #2d3748 !important;
+  box-shadow: 0 1px 2px rgba(0, 0, 0, 0.08) !important;
+}
+
+:host ::ng-deep .p-inputotp-input:hover {
+  border-color: #a0aec0 !important;
+  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1) !important;
+}
+
+:host ::ng-deep .p-inputotp-input:focus {
+  border-color: #878991 !important;
+  box-shadow: 0 0 0 3px rgba(102, 126, 234, 0.15) !important;
+  outline: none !important;
+  background-color: #ffffff !important;
+  margin-right: 10px !important;
+}
+
+/* Style for filled cells */
+:host ::ng-deep .p-inputotp-input:not(:placeholder-shown) {
+  border-color: #b6b7bd !important;
+  background-color: #ffffff !important;
+  margin-right: 10px !important;
+}
+
+/* Active/focused cell with value */
+:host ::ng-deep .p-inputotp-input:focus:not(:placeholder-shown) {
+  border-color: #787879 !important;
+  box-shadow: 0 0 0 3px rgba(212, 212, 212, 0.15) !important;
+}
+
+/* Resend OTP Button Styles */
+button:has(.pi-refresh) {
+  transition: all 0.2s ease;
+}
+
+button:has(.pi-refresh):hover:not(:disabled) {
+  transform: translateY(-1px);
+  box-shadow: 0 2px 4px rgba(59, 130, 246, 0.2);
+}
+
+button:has(.pi-refresh):disabled .pi-spinner {
+  animation: spin 0.8s linear infinite;
+}
+
+@keyframes spin {
+  from {
+    transform: rotate(0deg);
+  }
+  to {
+    transform: rotate(360deg);
+  }
+}
+
+/* --- Page Transition Animations --- */
+/* Container for form stages with transition */
+:host .flex-column {
+  animation: slideInUp 0.3s ease-out;
+}
+
+/* Animation for sliding up from bottom */
+@keyframes slideInUp {
+  from {
+    opacity: 0;
+    transform: translateY(20px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+/* Fade in animation for form wrapper */
+.form-wrapper {
+  animation: fadeIn 0.3s ease-in;
+}
+
+@keyframes fadeIn {
+  from {
+    opacity: 0;
+  }
+  to {
+    opacity: 1;
+  }
+}
+
+/* Smooth transition for ng-container changes */
+ng-container {
+  display: block;
+  animation: slideInRight 0.3s ease-out;
+}
+
+@keyframes slideInRight {
+  from {
+    opacity: 0;
+    transform: translateX(-20px);
+  }
+  to {
+    opacity: 1;
+    transform: translateX(0);
+  }
+}

@@ -1,0 +1,198 @@
+.price-rules-container {
+  padding: 1.5rem;
+  background: #ffffff;
+  border-radius: 8px;
+  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
+}
+
+.toolbar {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 1.5rem;
+  padding-bottom: 1rem;
+  border-bottom: 2px solid #e5e7eb;
+}
+
+.toolbar-left .title {
+  font-size: 1.5rem;
+  font-weight: 700;
+  color: #1f2937;
+  margin: 0;
+}
+
+.toolbar-right {
+  display: flex;
+  gap: 0.5rem;
+}
+
+.price-cell {
+  font-weight: 600;
+  color: #059669;
+  font-size: 1.1rem;
+}
+
+.actions {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+.action-button {
+  width: 32px;
+  height: 32px;
+  padding: 0;
+}
+
+.action-button:hover {
+  background-color: #f3f4f6;
+}
+
+/* Table styling */
+::ng-deep .p-datatable .p-datatable-thead > tr > th {
+  background-color: #f9fafb;
+  color: #1f2937;
+  font-weight: 600;
+  padding: 1rem;
+  border-bottom: 2px solid #e5e7eb;
+  text-align: right;
+}
+
+::ng-deep .p-datatable .p-datatable-tbody > tr > td {
+  padding: 1rem;
+  border-bottom: 1px solid #e5e7eb;
+  text-align: right;
+  color: #374151;
+}
+
+::ng-deep .p-datatable .p-datatable-tbody > tr:hover {
+  background-color: #f9fafb;
+}
+
+::ng-deep .p-datatable-striped .p-datatable-tbody > tr:nth-child(even) {
+  background-color: #fafafa;
+}
+
+::ng-deep .p-datatable-striped .p-datatable-tbody > tr:nth-child(even):hover {
+  background-color: #f3f4f6;
+}
+
+/* Pagination */
+::ng-deep .p-paginator {
+  background-color: #ffffff;
+  border-top: 1px solid #e5e7eb;
+  padding: 1rem;
+}
+
+/* Toolbar buttons */
+::ng-deep .p-toolbar {
+  background-color: #ffffff;
+  border: none;
+  padding: 0;
+}
+
+/* Menu styling */
+::ng-deep .p-menu {
+  width: 200px;
+  background: #ffffff !important;
+  border-radius: 8px;
+  box-shadow: 0 10px 25px rgba(0, 0, 0, 0.15), 0 4px 10px rgba(0, 0, 0, 0.1);
+  border: 1px solid rgba(0, 0, 0, 0.08);
+  padding: 0.5rem;
+  margin-top: 0.5rem;
+  /* Ensure the popup overlays table rows/headers in RTL and inside stacked contexts */
+  z-index: 2000 !important;
+}
+
+::ng-deep .p-menu .p-menuitem {
+  margin-bottom: 0.25rem;
+}
+
+::ng-deep .p-menu .p-menuitem:last-child {
+  margin-bottom: 0;
+}
+
+::ng-deep .p-menu .p-menuitem-link {
+  padding: 0.875rem 1rem;
+  border-radius: 6px;
+  transition: all 0.2s ease;
+  color: #1f2937 !important;
+  font-weight: 500;
+  background-color: transparent;
+  border: none;
+}
+
+::ng-deep .p-menu .p-menuitem-link:hover {
+  background-color: #f3f4f6;
+  color: #111827 !important;
+}
+
+::ng-deep .p-menu .p-menuitem-link:active {
+  background-color: #e5e7eb;
+}
+
+::ng-deep .p-menu .p-menuitem-icon {
+  color: #6b7280;
+  margin-left: 0.5rem;
+}
+
+::ng-deep .p-menu .p-menuitem-link:hover .p-menuitem-icon {
+  color: #374151;
+}
+
+::ng-deep .text-red-500 {
+  color: #ef4444 !important;
+}
+
+/* Ensure icon inherits the link color when a color class is applied */
+::ng-deep .p-menu .p-menuitem-link.text-red-500 .p-menuitem-icon {
+  color: inherit !important;
+}
+
+::ng-deep .text-red-500:hover {
+  color: #dc2626 !important;
+  background-color: #fef2f2 !important;
+}
+
+/* Keep hover background while preserving icon color inheritance */
+::ng-deep .p-menu .p-menuitem-link.text-red-500:hover .p-menuitem-icon {
+  color: inherit !important;
+}
+
+::ng-deep .p-menu .p-menuitem-link.text-red-500:hover {
+  background-color: #fef2f2 !important;
+}
+
+::ng-deep .p-menu .p-menuitem-link.text-red-500:active .p-menuitem-icon {
+  color: #dc2626 !important;
+}
+
+/* Responsive design */
+@media (max-width: 768px) {
+  .price-rules-container {
+    padding: 1rem;
+  }
+
+  .toolbar {
+    flex-direction: column;
+    gap: 1rem;
+    align-items: flex-start;
+  }
+
+  .toolbar-right {
+    width: 100%;
+  }
+
+  ::ng-deep .p-button {
+    width: 100%;
+  }
+
+  ::ng-deep .p-datatable table {
+    font-size: 0.875rem;
+  }
+
+  ::ng-deep .p-datatable .p-datatable-thead > tr > th,
+  ::ng-deep .p-datatable .p-datatable-tbody > tr > td {
+    padding: 0.5rem;
+  }
+}
