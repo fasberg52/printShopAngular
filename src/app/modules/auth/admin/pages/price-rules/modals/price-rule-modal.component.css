@@ -226,6 +226,14 @@
   font-size: 0.875rem;
 }
 
+.hint-text {
+  color: #6b7280 !important;
+  font-size: 0.8125rem;
+  margin-top: 0.375rem;
+  line-height: 1.6;
+  font-style: italic;
+}
+
 /* Modern Input Fields Styling */
 ::ng-deep .p-inputtext {
   background-color: #ffffff !important;
@@ -383,8 +391,10 @@
   margin-top: 0.5rem !important;
   background-color: #ffffff !important;
   overflow: hidden !important;
+  max-height: 320px !important; /* cap panel height */
 }
 
+/* Scrollable list within overlay */
 ::ng-deep .p-select-overlay .p-select-list {
   padding: 0.5rem !important;
 }

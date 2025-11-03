@@ -101,6 +101,9 @@ export class LoginComponent implements OnDestroy {
     code: [''],
   });
 
+  private phoneAutoSubmitExecuted = false;
+  private lastSubmittedPhone = '';
+
   constructor() {
     // Format phone input to only allow numbers and auto-format
     this.loginForm.get('phone')?.valueChanges.subscribe((value) => {
@@ -113,7 +116,71 @@ export class LoginComponent implements OnDestroy {
           this.loginForm
             .get('phone')
             ?.setValue(formatted, { emitEvent: false });
+          return; // Don't auto-submit on formatting
         }
+
+        // Reset flag if phone is incomplete or changed
+        if (formatted.length < 11) {
+          this.phoneAutoSubmitExecuted = false;
+          this.lastSubmittedPhone = '';
+          return;
+        }
+
+        // Auto-submit ONLY when phone is valid according to validator
+        const phoneControl = this.loginForm.get('phone');
+        
+        // Check if phone is valid (must pass all validators)
+        phoneControl?.updateValueAndValidity({ emitEvent: false });
+        
+        // Only auto-submit if:
+        // 1. Phone is exactly 11 digits
+        // 2. Phone starts with 09
+        // 3. Phone passes validator (valid === true)
+        // 4. Not already submitted this phone number
+        // 5. Not currently loading
+        // 6. We're on the check-phone stage
+        if (
+          formatted.length === 11 &&
+          formatted.startsWith('09') &&
+          phoneControl?.valid === true &&
+          formatted !== this.lastSubmittedPhone &&
+          !this.phoneAutoSubmitExecuted &&
+          !this.phoneLoading() &&
+          this.loginStage() === 'check-phone'
+        ) {
+          // Small delay to ensure validation is complete and stable
+          setTimeout(() => {
+            const phoneControlAfterDelay = this.loginForm.get('phone');
+            const currentValue = phoneControlAfterDelay?.value?.replace(/\D/g, '') || '';
+            
+            // Double check all conditions before submitting
+            if (
+              currentValue.length === 11 &&
+              currentValue.startsWith('09') &&
+              phoneControlAfterDelay?.valid === true &&
+              currentValue !== this.lastSubmittedPhone &&
+              !this.phoneLoading() &&
+              this.loginStage() === 'check-phone' &&
+              !this.phoneAutoSubmitExecuted
+            ) {
+              this.phoneAutoSubmitExecuted = true;
+              this.lastSubmittedPhone = currentValue;
+              this.onCheckPhone();
+            }
+          }, 200);
+        } else if (formatted.length === 11 && !formatted.startsWith('09')) {
+          // Phone is 11 digits but doesn't start with 09 - invalid, don't submit
+          this.phoneAutoSubmitExecuted = false;
+          this.lastSubmittedPhone = '';
+        } else if (phoneControl?.invalid) {
+          // Phone is invalid according to validator - don't submit
+          this.phoneAutoSubmitExecuted = false;
+          this.lastSubmittedPhone = '';
+        }
+      } else {
+        // Reset flags when phone is cleared
+        this.phoneAutoSubmitExecuted = false;
+        this.lastSubmittedPhone = '';
       }
     });
   }
@@ -121,11 +188,20 @@ export class LoginComponent implements OnDestroy {
   onCheckPhone(): void {
     const phoneControl = this.loginForm.get('phone');
     if (!phoneControl?.value || phoneControl.invalid) {
+      this.phoneAutoSubmitExecuted = false;
+      this.lastSubmittedPhone = '';
       return this.showToast(
         'warn',
         'خطا',
         'لطفا شماره تلفن معتبر (11 رقم) وارد کنید.'
       );
+    }
+
+    const cleanedPhone = phoneControl.value.replace(/\D/g, '');
+    
+    // Prevent duplicate submissions for the same phone
+    if (cleanedPhone === this.lastSubmittedPhone && this.phoneLoading()) {
+      return;
     }
 
     this.phoneLoading.set(true);
@@ -138,6 +214,7 @@ export class LoginComponent implements OnDestroy {
         console.log('✅ API Response:', res);
         console.log('✅ userExists value:', res.userExists);
         this.phoneLoading.set(false);
+        this.phoneAutoSubmitExecuted = false; // Reset flag after API call
         phoneControl?.disable(); // شماره تلفن را قفل کن
 
         if (res.userExists) {
@@ -161,6 +238,8 @@ export class LoginComponent implements OnDestroy {
           console.log('❌ User does not exist - showing toast now');
           // اگر کاربر وجود نداشت، خطا بده
           phoneControl?.enable(); // شماره را آزاد کن
+          this.phoneAutoSubmitExecuted = false; // Reset flag on error
+          this.lastSubmittedPhone = ''; // Reset to allow resubmission after error
           console.log('❌ About to call showToast');
           this.showToast(
             'error',
@@ -173,6 +252,8 @@ export class LoginComponent implements OnDestroy {
       error: (err) => {
         console.error('❌ API Error:', err);
         this.phoneLoading.set(false);
+        this.phoneAutoSubmitExecuted = false; // Reset flag on error
+        this.lastSubmittedPhone = ''; // Reset last submitted phone on error
         phoneControl?.enable(); // Enable phone in case of error
         this.showToast('error', 'خطا', this.getBackendErrorMessage(err));
       },
@@ -310,7 +391,10 @@ export class LoginComponent implements OnDestroy {
   // (جدید) بازگشت به مرحله اول
   goBackToCheckPhone(): void {
     this.loginStage.set('check-phone');
+    this.phoneAutoSubmitExecuted = false; // Reset flag when going back
+    this.lastSubmittedPhone = ''; // Reset last submitted phone
     this.loginForm.get('phone')?.enable();
+    this.loginForm.get('phone')?.reset();
     this.loginForm.get('password')?.clearValidators();
     this.loginForm.get('password')?.reset(''); // ریست به مقدار پیش‌فرض
     this.loginForm.get('code')?.clearValidators();

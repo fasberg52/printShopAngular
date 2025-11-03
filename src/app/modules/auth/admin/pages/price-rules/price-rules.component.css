@@ -120,6 +120,14 @@
   font-weight: 500;
   background-color: transparent;
   border: none;
+  cursor: pointer !important;
+  display: flex !important;
+  align-items: center !important;
+  width: 100% !important;
+  text-decoration: none !important;
+  user-select: none !important;
+  position: relative !important;
+  z-index: 1 !important;
 }
 
 ::ng-deep .p-menu .p-menuitem-link:hover {
@@ -134,6 +142,13 @@
 ::ng-deep .p-menu .p-menuitem-icon {
   color: #6b7280;
   margin-left: 0.5rem;
+  flex-shrink: 0;
+  pointer-events: none;
+}
+
+::ng-deep .p-menu .p-menuitem-text {
+  flex: 1;
+  pointer-events: none;
 }
 
 ::ng-deep .p-menu .p-menuitem-link:hover .p-menuitem-icon {
@@ -165,6 +180,47 @@
 
 ::ng-deep .p-menu .p-menuitem-link.text-red-500:active .p-menuitem-icon {
   color: #dc2626 !important;
+}
+
+/* Status Tag Styling */
+/* Active status - Green background with green text */
+::ng-deep .p-tag.p-tag-success {
+  background-color: #62b9101e !important;
+  color: #62b910 !important;
+  padding: 0.5rem 1rem !important;
+  border-radius: 6px !important;
+  font-weight: 600 !important;
+  font-size: 0.875rem !important;
+  border: none !important;
+  display: inline-flex !important;
+  align-items: center !important;
+  justify-content: center !important;
+  min-width: fit-content !important;
+}
+
+::ng-deep .p-tag.p-tag-success .p-tag-label {
+  color: #065f46 !important;
+  font-weight: 600 !important;
+}
+
+/* Inactive status - Red background with red text */
+::ng-deep .p-tag.p-tag-danger {
+  background-color: #fecaca !important;
+  color: #991b1b !important;
+  padding: 0.5rem 1rem !important;
+  border-radius: 6px !important;
+  font-weight: 600 !important;
+  font-size: 0.875rem !important;
+  border: none !important;
+  display: inline-flex !important;
+  align-items: center !important;
+  justify-content: center !important;
+  min-width: fit-content !important;
+}
+
+::ng-deep .p-tag.p-tag-danger .p-tag-label {
+  color: #991b1b !important;
+  font-weight: 600 !important;
 }
 
 /* Responsive design */

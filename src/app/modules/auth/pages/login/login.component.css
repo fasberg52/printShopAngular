@@ -145,8 +145,8 @@
   height: 52px;
   display: flex;
   align-items: center;
-  padding-left: 16px;
-  padding-right: 16px;
+  padding-left: 0;
+  padding-right: 0;
   transition: all 0.2s ease;
   background: #f7fafc;
 }
@@ -157,16 +157,17 @@
 }
 
 .input {
-  margin-left: 10px;
-  border-radius: 10px;
-  border: none;
+  border: none !important;
+  outline: none !important;
+  box-shadow: none !important;
   width: 100%;
-  height: 100%;
-  padding: 0;
+  height: auto;
+  padding: 0 16px;
   font-size: 15px;
   color: #2d3748;
   background: transparent;
   font-weight: 500;
+  flex: 1;
 }
 
 /* Password input specific styling */
@@ -174,7 +175,16 @@
   position: relative;
 }
 
+.inputForm-password .input {
+  padding-left: 56px;
+  padding-right: 16px;
+}
+
 .password-toggle-btn {
+  position: absolute;
+  left: 12px;
+  top: 50%;
+  transform: translateY(-50%);
   background: none;
   border: none;
   cursor: pointer;
@@ -184,9 +194,9 @@
   justify-content: center;
   color: #718096;
   transition: all 0.2s ease;
-  margin-right: 8px;
   border-radius: 8px;
-  margin-bottom: 5px;
+  width: 36px;
+  height: 36px;
 }
 
 .password-toggle-btn:hover {
@@ -210,7 +220,9 @@
 }
 
 .input:focus {
-  outline: none;
+  outline: none !important;
+  border: none !important;
+  box-shadow: none !important;
 }
 
 .inputForm:focus-within {

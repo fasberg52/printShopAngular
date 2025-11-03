@@ -43,6 +43,14 @@
           validationErrors()["productType"]
         }}</small>
         }
+        <small class="hint-text">
+          @if (form.get('productType')?.value === 'print') { برای چاپ: اندازه
+          کاغذ (A3, A4, A5)، رنگ چاپ (سیاه و سفید، رنگی معمولی، تمام رنگ)، و نوع
+          رو (تک رو، دو رو) را انتخاب کنید. } @else if
+          (form.get('productType')?.value === 'binding') { برای صحافی: نوع صحافی
+          (فنری معمولی، فنری پاپکو، منگنه) و اندازه کاغذ (A3, A4, A5) را انتخاب
+          کنید. } @else { ابتدا نوع محصول را انتخاب کنید. }
+        </small>
       </div>
 
       <!-- Price -->
@@ -90,13 +98,15 @@
           <div class="match-item">
             <div class="match-inputs">
               <div class="match-input-wrapper">
-                <input
-                  type="text"
-                  pInputText
+                <p-select
                   [formControl]="$any(match).get('attributeKey')"
-                  placeholder="کلید (مثال: size)"
+                  [options]="attributeOptions()"
+                  optionLabel="label"
+                  optionValue="value"
+                  placeholder="انتخاب کلید"
                   class="small-input"
-                />
+                  [disabled]="!form.get('productType')?.value"
+                ></p-select>
                 @if (validationErrors()['match.' + $index + '.attributeKey']) {
                 <small class="error-text">{{
                   validationErrors()["match." + $index + ".attributeKey"]
@@ -104,13 +114,19 @@
                 }
               </div>
               <div class="match-input-wrapper">
-                <input
-                  type="text"
-                  pInputText
+                <p-select
                   [formControl]="$any(match).get('value')"
-                  placeholder="مقدار (مثال: a4)"
+                  [options]="
+                    getValueOptions(
+                      $any(match).get('attributeKey')?.value || ''
+                    )
+                  "
+                  optionLabel="label"
+                  optionValue="label"
+                  placeholder="انتخاب مقدار"
                   class="small-input"
-                />
+                  [disabled]="!$any(match).get('attributeKey')?.value"
+                ></p-select>
                 @if (validationErrors()['match.' + $index + '.value']) {
                 <small class="error-text">{{
                   validationErrors()["match." + $index + ".value"]
