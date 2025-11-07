@@ -586,3 +586,38 @@
     min-width: auto;
   }
 }
+
+/* Dark Mode - Select Item Base Styles */
+.my-app-dark ::ng-deep .p-select-overlay .p-select-item,
+.my-app-dark ::ng-deep .p-select-overlay .p-select-option {
+  color: #f8fafc !important;
+}
+
+/* Dark Mode - Select Hover & Focus Styles */
+.my-app-dark ::ng-deep .p-select-overlay .p-select-item:hover,
+.my-app-dark ::ng-deep .p-select-overlay .p-select-option:hover,
+.my-app-dark ::ng-deep .p-select-overlay .p-select-item.p-focus,
+.my-app-dark ::ng-deep .p-select-overlay .p-select-option.p-focus,
+.my-app-dark ::ng-deep .p-select-overlay .p-select-item[data-p-focused="true"],
+.my-app-dark ::ng-deep .p-select-overlay .p-select-option[data-p-focused="true"] {
+  background-color: #2196f338 !important;
+  color: #2196f3 !important;
+}
+
+/* Dark Mode - Select Highlight Styles */
+.my-app-dark ::ng-deep .p-select-overlay .p-select-item.p-highlight,
+.my-app-dark ::ng-deep .p-select-overlay .p-select-option.p-highlight,
+.my-app-dark ::ng-deep .p-select-overlay .p-select-item[data-p-highlight="true"],
+.my-app-dark ::ng-deep .p-select-overlay .p-select-option[data-p-highlight="true"] {
+  background-color: #2196f338 !important;
+  color: #2196f3 !important;
+  font-weight: 600 !important;
+}
+
+.my-app-dark ::ng-deep .p-select-overlay .p-select-item.p-highlight:hover,
+.my-app-dark ::ng-deep .p-select-overlay .p-select-option.p-highlight:hover,
+.my-app-dark ::ng-deep .p-select-overlay .p-select-item[data-p-highlight="true"]:hover,
+.my-app-dark ::ng-deep .p-select-overlay .p-select-option[data-p-highlight="true"]:hover {
+  background-color: #2196f350 !important;
+  color: #60a5fa !important;
+}

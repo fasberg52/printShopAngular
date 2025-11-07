@@ -1,32 +1,33 @@
-import { Component, OnInit, OnDestroy, inject } from '@angular/core';
 import { CommonModule } from '@angular/common';
+import { Component, OnDestroy, OnInit, inject } from '@angular/core';
 import {
-  RouterOutlet,
+  Router,
   RouterLink,
   RouterLinkActive,
-  Router,
+  RouterOutlet,
 } from '@angular/router';
 import { Subject, takeUntil } from 'rxjs';
 
 // PrimeNG Components
-import { ButtonModule } from 'primeng/button';
-import { MenuModule } from 'primeng/menu';
+import { ConfirmationService, MessageService } from 'primeng/api';
 import { AvatarModule } from 'primeng/avatar';
 import { BadgeModule } from 'primeng/badge';
-import { TooltipModule } from 'primeng/tooltip';
+import { ButtonModule } from 'primeng/button';
 import { ConfirmDialogModule } from 'primeng/confirmdialog';
+import { MenuModule } from 'primeng/menu';
 import { ToastModule } from 'primeng/toast';
-import { MessageService, ConfirmationService } from 'primeng/api';
+import { TooltipModule } from 'primeng/tooltip';
 
 // Services
 import { AuthService } from '../../../core/auth/services/auth.service';
+import { ThemeService } from '../../../core/services/theme.service';
 import {
-  NavigationService,
   NavigationItem,
+  NavigationService,
 } from '../services/navigation.service';
 import {
-  UserProfileService,
   UserProfile,
+  UserProfileService,
 } from '../services/user-profile.service';
 
 @Component({
@@ -56,6 +57,7 @@ export class UserLayoutComponent implements OnInit, OnDestroy {
   private router = inject(Router);
   private navigationService = inject(NavigationService);
   public userProfileService = inject(UserProfileService); // Public for template access
+  private themeService = inject(ThemeService);
   private destroy$ = new Subject<void>();
 
   // Component State
@@ -229,5 +231,19 @@ export class UserLayoutComponent implements OnInit, OnDestroy {
       summary: 'ویرایش پروفایل',
       detail: 'صفحه ویرایش پروفایل به زودی اضافه خواهد شد',
     });
+  }
+
+  /**
+   * Get current theme state for template
+   */
+  get isDarkMode(): boolean {
+    return this.themeService.isDarkMode;
+  }
+
+  /**
+   * Toggle dark mode
+   */
+  toggleDarkMode(): void {
+    this.themeService.toggleTheme();
   }
 }

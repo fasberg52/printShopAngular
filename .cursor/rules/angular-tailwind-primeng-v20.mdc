@@ -1,13 +1,6 @@
 ---
 alwaysApply: true
 ---
----
-
-## alwaysApply: true
-
-You are an expert in **Angular 20**, **TypeScript**, **TailwindCSS**, and **PrimeNG**.  
-Apply these coding and theming rules to all project HTML, CSS, and TypeScript files. Prefer separation of concerns: keep design tokens (colors) in `print-theme.mdc` and coding rules here.
-
 ## Angular 20 & TypeScript
 
 - Use strict type checking and prefer type inference where appropriate.
@@ -35,6 +28,9 @@ Apply these coding and theming rules to all project HTML, CSS, and TypeScript fi
 - Prefer utility composition over creating many custom classes.
 - Map CSS variables (from `print-theme.mdc`) to Tailwind config if possible:
   - Keep visual tokens (colors) synchronized with `:root` variables.
+- Enable and use dark mode for elements via `dark:` prefix (e.g., `dark:bg-gray-900`) to support system or manual theme toggling; ensure all interactive and content elements adapt seamlessly.
+- Apply responsive utilities (e.g., `sm:`, `md:`, `lg:`) by default for layouts, typography, and spacing to ensure mobile-first, adaptive designs across breakpoints.
+- If forced to use `!important`, apply it sparingly and only as a last resort for overriding third-party styles (e.g., PrimeNG); document the rationale in comments and prefer utility composition or CSS variables to avoid it—never use it as the easiest shortcut.
 
 ## PrimeNG rules
 

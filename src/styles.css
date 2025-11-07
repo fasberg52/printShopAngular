@@ -8,6 +8,710 @@
 @import "primeicons/primeicons.css";
 @custom-variant dark (&:where(.my-app-dark, .my-app-dark *));
 
+/* ========= CSS Variables ========= */
+:root {
+  --color-card-bg: #ffffff;
+}
+
+.my-app-dark {
+  --color-card-bg: color-mix(in oklab, #1e293b 80%, transparent);
+}
+
+/* ========= Dark Mode Styles ========= */
+
+/* Dark mode base styles - now using Tailwind dark variant */
+@layer base {
+  .my-app-dark {
+    color-scheme: dark;
+  }
+
+  .my-app-dark body {
+    background-color: #0f172a;
+    color: #f1f5f9;
+  }
+}
+
+/* Dark mode for user layout - using Tailwind dark variant */
+.my-app-dark .user-layout-container {
+  background: #0f172a;
+}
+
+.my-app-dark .mobile-header {
+  background: #1e293b;
+  border-bottom: 1px solid #334155;
+}
+
+.my-app-dark .sidebar-container {
+  background: #1e293b;
+  border-left: 1px solid #334155;
+}
+
+.my-app-dark .sidebar-content {
+  background: #1e293b;
+}
+
+.my-app-dark .brand-section {
+  border-bottom: 1px solid #334155;
+}
+
+.my-app-dark .brand-section .flex.items-center.gap-3.p-4 h2 {
+  color: #f1f5f9;
+}
+
+.my-app-dark .brand-section .flex.items-center.gap-3.p-4 p {
+  color: #94a3b8;
+}
+
+.my-app-dark .navigation-menu {
+  background: #1e293b;
+}
+
+.my-app-dark .menu-list {
+  background: #1e293b;
+}
+
+.my-app-dark .menu-link {
+  color: #cbd5e1;
+}
+
+.my-app-dark .menu-link:hover {
+  background: color-mix(in oklab, #334155 50%, transparent) !important;
+  color: #f1f5f9 !important;
+  backdrop-filter: blur(8px) !important;
+}
+
+.my-app-dark .menu-link.active {
+  background: color-mix(in oklab, #2196f3 12%, transparent) !important;
+  color: #dbeafe !important;
+  backdrop-filter: blur(12px) !important;
+  border: 1px solid color-mix(in oklab, #2196f3 30%, transparent) !important;
+}
+
+.my-app-dark .menu-link.active .menu-icon {
+  color: #dbeafe !important;
+}
+
+.my-app-dark .menu-button {
+  color: #cbd5e1;
+}
+
+.my-app-dark .menu-button:hover {
+  background: color-mix(in oklab, #334155 50%, transparent) !important;
+  color: #f1f5f9 !important;
+  backdrop-filter: blur(8px) !important;
+}
+
+.my-app-dark .menu-button.active {
+  background: color-mix(in oklab, #2196f3 12%, transparent) !important;
+  color: #dbeafe !important;
+  backdrop-filter: blur(12px) !important;
+  border: 1px solid color-mix(in oklab, #2196f3 30%, transparent) !important;
+}
+
+.my-app-dark .menu-button.active .menu-icon {
+  color: #dbeafe !important;
+}
+
+.my-app-dark .menu-section-title span {
+  color: #94a3b8;
+}
+
+.my-app-dark .user-profile-section {
+  border-top: 1px solid #334155;
+}
+
+.my-app-dark .user-profile-card {
+  background: color-mix(in oklab, #334155 70%, transparent) !important;
+  backdrop-filter: blur(12px) !important;
+}
+
+.my-app-dark .user-profile-card .font-medium {
+  color: #f1f5f9;
+}
+
+.my-app-dark .user-profile-card .text-gray-600 {
+  color: #94a3b8;
+}
+
+.my-app-dark .user-profile-card .text-xs.text-gray-500 {
+  color: #64748b;
+}
+
+.my-app-dark .user-profile-card .border-t {
+  border-color: #475569;
+}
+
+.my-app-dark .user-profile-card .text-xs.text-gray-600 {
+  color: #94a3b8;
+}
+
+.my-app-dark .user-profile-card .font-semibold.text-gray-900 {
+  color: #f1f5f9;
+}
+
+.my-app-dark .user-profile-card .text-green-600 {
+  color: #10b981;
+}
+
+.my-app-dark .mobile-sidebar {
+  background: #1e293b;
+}
+
+.my-app-dark .mobile-sidebar-header {
+  background: #334155;
+}
+
+.my-app-dark .mobile-menu-link {
+  color: #cbd5e1;
+}
+
+.my-app-dark .mobile-menu-link:hover {
+  background: color-mix(in oklab, #334155 50%, transparent) !important;
+  color: #f1f5f9 !important;
+  backdrop-filter: blur(8px) !important;
+}
+
+.my-app-dark .mobile-menu-link.active {
+  background: color-mix(in oklab, #2196f3 12%, transparent) !important;
+  color: #dbeafe !important;
+  backdrop-filter: blur(12px) !important;
+  border: 1px solid color-mix(in oklab, #2196f3 30%, transparent) !important;
+}
+
+.my-app-dark .mobile-user-profile {
+  background: #334155;
+}
+
+.my-app-dark .mobile-user-profile .flex.items-center.gap-3.p-4 {
+  background: #475569;
+}
+
+.my-app-dark .mobile-user-profile .text-sm.font-medium {
+  color: #f1f5f9;
+}
+
+.my-app-dark .mobile-user-profile .text-xs {
+  color: #94a3b8;
+}
+
+.my-app-dark .mobile-user-profile .w-full button {
+  color: #ef4444 !important;
+}
+
+.my-app-dark .mobile-user-profile .w-full button:hover {
+  background: color-mix(in oklab, #ef4444 15%, transparent) !important;
+  backdrop-filter: blur(8px) !important;
+}
+
+/* Dark mode toggle button styles */
+.dark-mode-toggle {
+  position: relative;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  width: 2.5rem;
+  height: 2.5rem;
+  border-radius: 0.5rem;
+  color: #cbd5e1;
+  transition: all 0.2s ease;
+  cursor: pointer;
+  border: none;
+  background: transparent;
+}
+
+.dark-mode-toggle:hover {
+  background: color-mix(in oklab, #334155 50%, transparent) !important;
+  color: #f1f5f9 !important;
+  backdrop-filter: blur(8px) !important;
+}
+
+.my-app-dark .dark-mode-toggle {
+  color: #f1f5f9;
+}
+
+.my-app-dark .dark-mode-toggle:hover {
+  background: color-mix(in oklab, #475569 60%, transparent) !important;
+  backdrop-filter: blur(10px) !important;
+}
+
+/* ========= Global Dark Mode Styles for PrimeNG & Tailwind ========= */
+
+/* Cards and Panels - با افکت شیشه‌ای */
+.my-app-dark .p-card {
+  background: color-mix(in oklab, #1e293b 70%, transparent) !important;
+  border-color: color-mix(in oklab, #334155 40%, transparent) !important;
+  color: #f1f5f9 !important;
+  backdrop-filter: blur(12px) !important;
+  box-shadow: 0 4px 16px rgba(0, 0, 0, 0.3) !important;
+}
+
+.my-app-dark .p-card .p-card-header {
+  color: #f1f5f9 !important;
+  background: color-mix(in oklab, #334155 50%, transparent) !important;
+  backdrop-filter: blur(8px) !important;
+}
+
+.my-app-dark .p-card .p-card-content {
+  color: #cbd5e1 !important;
+}
+
+.my-app-dark .p-card .p-card-footer {
+  color: #cbd5e1 !important;
+}
+
+/* Buttons - با افکت شیشه‌ای */
+.my-app-dark .p-button {
+  background: color-mix(in oklab, #334155 60%, transparent) !important;
+  border-color: color-mix(in oklab, #475569 40%, transparent) !important;
+  color: #cbd5e1 !important;
+  backdrop-filter: blur(8px) !important;
+}
+
+.my-app-dark .p-button:hover {
+  background: color-mix(in oklab, #475569 70%, transparent) !important;
+  border-color: color-mix(in oklab, #64748b 50%, transparent) !important;
+  color: #f1f5f9 !important;
+  backdrop-filter: blur(10px) !important;
+}
+
+.my-app-dark .p-button.p-button-primary {
+  background: color-mix(in oklab, #2196f3 20%, transparent) !important;
+  border-color: color-mix(in oklab, #2196f3 40%, transparent) !important;
+  color: #dbeafe !important;
+  backdrop-filter: blur(12px) !important;
+}
+
+.my-app-dark .p-button.p-button-primary:hover {
+  background: color-mix(in oklab, #2196f3 30%, transparent) !important;
+  border-color: color-mix(in oklab, #2196f3 50%, transparent) !important;
+  backdrop-filter: blur(14px) !important;
+}
+
+.my-app-dark .p-button.p-button-secondary {
+  background: color-mix(in oklab, #6c757d 20%, transparent) !important;
+  border-color: color-mix(in oklab, #6c757d 40%, transparent) !important;
+  color: #cbd5e1 !important;
+  backdrop-filter: blur(10px) !important;
+}
+
+.my-app-dark .p-button.p-button-success {
+  background: color-mix(in oklab, #4caf50 20%, transparent) !important;
+  border-color: color-mix(in oklab, #4caf50 40%, transparent) !important;
+  color: #d1fae5 !important;
+  backdrop-filter: blur(10px) !important;
+}
+
+.my-app-dark .p-button.p-button-info {
+  background: color-mix(in oklab, #2196f3 20%, transparent) !important;
+  border-color: color-mix(in oklab, #2196f3 40%, transparent) !important;
+  color: #dbeafe !important;
+  backdrop-filter: blur(10px) !important;
+}
+
+.my-app-dark .p-button.p-button-help {
+  background: color-mix(in oklab, #ba68c8 20%, transparent) !important;
+  border-color: color-mix(in oklab, #ba68c8 40%, transparent) !important;
+  color: #fce7f3 !important;
+  backdrop-filter: blur(10px) !important;
+}
+
+/* Input Fields - با افکت شیشه‌ای */
+.my-app-dark .p-inputtext,
+.my-app-dark .p-inputnumber-input,
+.my-app-dark .p-textarea {
+  background: color-mix(in oklab, #1e293b 60%, transparent) !important;
+  border-color: color-mix(in oklab, #334155 50%, transparent) !important;
+  color: #f1f5f9 !important;
+  backdrop-filter: blur(10px) !important;
+}
+
+.my-app-dark .p-inputtext:focus,
+.my-app-dark .p-inputnumber-input:focus,
+.my-app-dark .p-textarea:focus {
+  border-color: color-mix(in oklab, #2196f3 60%, transparent) !important;
+  box-shadow: 0 0 0 3px color-mix(in oklab, #2196f3 15%, transparent) !important;
+  backdrop-filter: blur(12px) !important;
+}
+
+/* Dropdown/Select - با افکت شیشه‌ای */
+.my-app-dark .p-select {
+  background: color-mix(in oklab, #1e293b 80%, transparent) !important;
+  border-color: color-mix(in oklab, #334155 50%, transparent) !important;
+  backdrop-filter: blur(12px) !important;
+}
+
+.my-app-dark .p-select .p-select-label {
+  background: transparent !important;
+  color: #f1f5f9 !important;
+}
+
+.my-app-dark .p-select-overlay {
+  background: color-mix(in oklab, #1e293b 90%, transparent) !important;
+  border-color: color-mix(in oklab, #334155 50%, transparent) !important;
+  backdrop-filter: blur(16px) !important;
+  box-shadow: 0 8px 32px rgba(0, 0, 0, 0.4) !important;
+}
+
+.my-app-dark .p-select-overlay .p-select-item,
+.my-app-dark .p-select-overlay .p-select-option {
+  color: #f8fafc !important;
+  background: transparent !important;
+}
+
+.my-app-dark .p-select-overlay .p-select-item:hover,
+.my-app-dark .p-select-overlay .p-select-option:hover,
+.my-app-dark .p-select-overlay .p-select-item.p-focus,
+.my-app-dark .p-select-overlay .p-select-option.p-focus,
+.my-app-dark .p-select-overlay .p-select-item[data-p-focused="true"],
+.my-app-dark .p-select-overlay .p-select-option[data-p-focused="true"] {
+  background-color: #2196f338 !important;
+  color: #2196f3 !important;
+  backdrop-filter: blur(8px) !important;
+}
+
+.my-app-dark .p-select-overlay .p-select-item.p-highlight,
+.my-app-dark .p-select-overlay .p-select-option.p-highlight,
+.my-app-dark .p-select-overlay .p-select-item[data-p-highlight="true"],
+.my-app-dark .p-select-overlay .p-select-option[data-p-highlight="true"] {
+  background-color: #2196f338 !important;
+  color: #2196f3 !important;
+  font-weight: 600 !important;
+}
+
+.my-app-dark .p-select-overlay .p-select-item.p-highlight:hover,
+.my-app-dark .p-select-overlay .p-select-option.p-highlight:hover,
+.my-app-dark .p-select-overlay .p-select-item.p-highlight.p-focus,
+.my-app-dark .p-select-overlay .p-select-option.p-highlight.p-focus,
+.my-app-dark .p-select-overlay .p-select-item[data-p-highlight="true"]:hover,
+.my-app-dark .p-select-overlay .p-select-option[data-p-highlight="true"]:hover {
+  background-color: #2196f350 !important;
+  color: #60a5fa !important;
+}
+
+/* Dialogs - با افکت شیشه‌ای */
+.my-app-dark .p-dialog {
+  background: color-mix(in oklab, #1e293b 80%, transparent) !important;
+  border-color: color-mix(in oklab, #334155 50%, transparent) !important;
+  color: #f1f5f9 !important;
+  backdrop-filter: blur(16px) !important;
+  box-shadow: 0 12px 48px rgba(0, 0, 0, 0.5) !important;
+}
+
+.my-app-dark .p-dialog .p-dialog-header {
+  background: color-mix(in oklab, #334155 60%, transparent) !important;
+  border-bottom-color: color-mix(in oklab, #334155 40%, transparent) !important;
+  color: #f1f5f9 !important;
+  backdrop-filter: blur(10px) !important;
+}
+
+.my-app-dark .p-dialog .p-dialog-content {
+  background: transparent !important;
+  color: #cbd5e1 !important;
+}
+
+/* Toast Messages - با افکت شیشه‌ای */
+.my-app-dark .p-toast {
+  background: transparent !important;
+}
+
+.my-app-dark .p-toast .p-toast-message {
+  background: color-mix(in oklab, #334155 80%, transparent) !important;
+  border-color: color-mix(in oklab, #475569 50%, transparent) !important;
+  color: #f1f5f9 !important;
+  backdrop-filter: blur(16px) !important;
+  box-shadow: 0 8px 32px rgba(0, 0, 0, 0.4) !important;
+}
+
+/* Tables - با افکت شیشه‌ای */
+.my-app-dark .p-datatable {
+  background: color-mix(in oklab, #1e293b 60%, transparent) !important;
+  color: #f1f5f9 !important;
+  backdrop-filter: blur(10px) !important;
+}
+
+.my-app-dark .p-datatable .p-datatable-thead > tr > th {
+  background: color-mix(in oklab, #334155 70%, transparent) !important;
+  border-color: color-mix(in oklab, #475569 40%, transparent) !important;
+  color: #f1f5f9 !important;
+  backdrop-filter: blur(8px) !important;
+}
+
+.my-app-dark .p-datatable .p-datatable-tbody > tr > td {
+  background: color-mix(in oklab, #1e293b 40%, transparent) !important;
+  border-color: color-mix(in oklab, #334155 30%, transparent) !important;
+  color: #cbd5e1 !important;
+}
+
+.my-app-dark .p-datatable .p-datatable-tbody > tr:hover > td {
+  background: color-mix(in oklab, #334155 50%, transparent) !important;
+  color: #f1f5f9 !important;
+  backdrop-filter: blur(8px) !important;
+}
+
+/* Forms and Labels */
+.my-app-dark .p-field label {
+  color: #cbd5e1;
+}
+
+.my-app-dark .p-field .p-help-text {
+  color: #94a3b8;
+}
+
+/* Tabs - با افکت شیشه‌ای */
+.my-app-dark .p-tabview .p-tabview-nav {
+  background: color-mix(in oklab, #1e293b 60%, transparent) !important;
+  border-color: color-mix(in oklab, #334155 40%, transparent) !important;
+  backdrop-filter: blur(10px) !important;
+}
+
+.my-app-dark .p-tabview .p-tabview-nav li .p-tabview-nav-link {
+  color: #cbd5e1 !important;
+}
+
+.my-app-dark .p-tabview .p-tabview-nav li .p-tabview-nav-link:hover {
+  background: color-mix(in oklab, #334155 40%, transparent) !important;
+  color: #f1f5f9 !important;
+  backdrop-filter: blur(8px) !important;
+}
+
+.my-app-dark .p-tabview .p-tabview-nav li.p-highlight .p-tabview-nav-link {
+  background: color-mix(in oklab, #2196f3 20%, transparent) !important;
+  color: #dbeafe !important;
+  backdrop-filter: blur(12px) !important;
+  border: 1px solid color-mix(in oklab, #2196f3 30%, transparent) !important;
+}
+
+/* Sidebar */
+.my-app-dark .p-sidebar {
+  background: #1e293b;
+  border-color: #334155;
+  color: #f1f5f9;
+}
+
+.my-app-dark .p-sidebar .p-sidebar-header {
+  background: #334155;
+  border-bottom-color: #475569;
+  color: #f1f5f9;
+}
+
+/* Generic dark backgrounds for containers - با افکت شیشه‌ای */
+.my-app-dark .bg-white {
+  background-color: color-mix(in oklab, #1e293b 70%, transparent) !important;
+  backdrop-filter: blur(10px) !important;
+}
+
+.my-app-dark .bg-gray-50 {
+  background-color: color-mix(in oklab, #334155 60%, transparent) !important;
+  backdrop-filter: blur(8px) !important;
+}
+
+.my-app-dark .bg-gray-100 {
+  background-color: color-mix(in oklab, #334155 60%, transparent) !important;
+  backdrop-filter: blur(8px) !important;
+}
+
+.my-app-dark .bg-gray-200 {
+  background-color: color-mix(in oklab, #475569 60%, transparent) !important;
+  backdrop-filter: blur(8px) !important;
+}
+
+/* Hover states for backgrounds */
+.my-app-dark .hover\:bg-gray-50:hover,
+.my-app-dark .hover\:bg-gray-100:hover {
+  background-color: color-mix(in oklab, #334155 70%, transparent) !important;
+  backdrop-filter: blur(10px) !important;
+}
+
+.my-app-dark .hover\:bg-blue-50:hover {
+  background-color: color-mix(in oklab, #2196f3 15%, transparent) !important;
+  backdrop-filter: blur(10px) !important;
+}
+
+.my-app-dark .hover\:bg-red-50:hover {
+  background-color: color-mix(in oklab, #ef4444 15%, transparent) !important;
+  backdrop-filter: blur(10px) !important;
+}
+
+/* Main content area */
+.my-app-dark .main-content {
+  background: #0f172a !important;
+}
+
+.my-app-dark .main-content-container {
+  background: #0f172a !important;
+}
+
+/* Pricing Display Component */
+.my-app-dark .pricing-container {
+  background: #0f172a !important;
+  color: #f1f5f9 !important;
+}
+
+.my-app-dark .pricing-header h2 {
+  color: #f1f5f9 !important;
+}
+
+.my-app-dark .pricing-header p {
+  color: #94a3b8 !important;
+}
+
+.my-app-dark .filters-section {
+  background: color-mix(in oklab, #1e293b 60%, transparent) !important;
+  border-color: color-mix(in oklab, #475569 40%, transparent) !important;
+  box-shadow: 0 8px 24px rgba(0, 0, 0, 0.4) !important;
+  backdrop-filter: blur(16px) !important;
+}
+
+.my-app-dark .filter-label {
+  color: #cbd5e1 !important;
+}
+
+.my-app-dark .products-display {
+  background: transparent !important;
+}
+
+.my-app-dark .product-section {
+  background: transparent !important;
+}
+
+.my-app-dark .section-title {
+  color: #f1f5f9 !important;
+}
+
+.my-app-dark .product-card {
+  background: color-mix(in oklab, #1e293b 70%, transparent) !important;
+  border-color: color-mix(in oklab, #334155 40%, transparent) !important;
+  box-shadow: 0 8px 24px rgba(0, 0, 0, 0.4) !important;
+  backdrop-filter: blur(12px) !important;
+}
+
+.my-app-dark .product-card:hover {
+  background: color-mix(in oklab, #1e293b 80%, transparent) !important;
+  border-color: color-mix(in oklab, #2196f3 40%, transparent) !important;
+  box-shadow: 0 12px 32px rgba(0, 0, 0, 0.5) !important;
+  backdrop-filter: blur(16px) !important;
+  transform: translateY(-4px) !important;
+}
+
+.my-app-dark .product-card .card-header {
+  background: color-mix(in oklab, #334155 60%, transparent) !important;
+  color: #f1f5f9 !important;
+  border-bottom-color: color-mix(in oklab, #475569 40%, transparent) !important;
+  backdrop-filter: blur(8px) !important;
+}
+
+.my-app-dark .product-card .price-table,
+.my-app-dark .pricing-table {
+  background: color-mix(in oklab, #1e293b 80%, transparent) !important;
+  backdrop-filter: blur(12px) !important;
+  border: 1px solid color-mix(in oklab, #334155 40%, transparent) !important;
+  border-radius: 8px !important;
+  overflow: hidden !important;
+}
+
+.my-app-dark .product-card .price-table th,
+.my-app-dark .pricing-table th {
+  background: color-mix(in oklab, #334155 85%, transparent) !important;
+  color: #ffffff !important;
+  border-color: color-mix(in oklab, #475569 60%, transparent) !important;
+  font-weight: 700 !important;
+  backdrop-filter: blur(12px) !important;
+  font-size: 0.95rem !important;
+  text-shadow: 0 1px 2px rgba(0, 0, 0, 0.3) !important;
+}
+
+.my-app-dark .product-card .price-table td,
+.my-app-dark .pricing-table td {
+  background: color-mix(in oklab, #1e293b 70%, transparent) !important;
+  color: #f8fafc !important;
+  border-color: color-mix(in oklab, #334155 50%, transparent) !important;
+  backdrop-filter: blur(10px) !important;
+  font-size: 0.95rem !important;
+  font-weight: 500 !important;
+}
+
+.my-app-dark .product-card .price-table tbody tr:hover td,
+.my-app-dark .pricing-table tbody tr:hover td {
+  background: color-mix(in oklab, #334155 70%, transparent) !important;
+  color: #ffffff !important;
+  backdrop-filter: blur(12px) !important;
+  box-shadow: inset 0 0 0 1px color-mix(in oklab, #2196f3 30%, transparent) !important;
+}
+
+.my-app-dark .price-cell {
+  color: #fbbf24 !important;
+  font-weight: 700 !important;
+  font-size: 1.05rem !important;
+  text-shadow: 0 1px 3px rgba(0, 0, 0, 0.4) !important;
+}
+
+.my-app-dark .unavailable-message {
+  background: color-mix(in oklab, #334155 50%, transparent) !important;
+  color: #94a3b8 !important;
+  backdrop-filter: blur(8px) !important;
+}
+
+.my-app-dark .empty-state {
+  color: #94a3b8 !important;
+}
+
+.my-app-dark .empty-state i {
+  color: #475569 !important;
+}
+
+/* Text colors */
+.my-app-dark .text-gray-900 {
+  color: #f1f5f9 !important;
+}
+
+.my-app-dark .text-gray-800 {
+  color: #e2e8f0 !important;
+}
+
+.my-app-dark .text-gray-700 {
+  color: #cbd5e1 !important;
+}
+
+.my-app-dark .text-gray-600 {
+  color: #94a3b8 !important;
+}
+
+.my-app-dark .text-gray-500 {
+  color: #64748b !important;
+}
+
+.my-app-dark .text-gray-400 {
+  color: #475569 !important;
+}
+
+/* Border colors */
+.my-app-dark .border-gray-200 {
+  border-color: #334155 !important;
+}
+
+.my-app-dark .border-gray-300 {
+  border-color: #475569 !important;
+}
+
+/* Shadows - adjust for dark mode */
+.my-app-dark .shadow-sm {
+  box-shadow: 0 1px 2px 0 rgba(0, 0, 0, 0.5) !important;
+}
+
+.my-app-dark .shadow {
+  box-shadow: 0 1px 3px 0 rgba(0, 0, 0, 0.5), 0 1px 2px 0 rgba(0, 0, 0, 0.5) !important;
+}
+
+.my-app-dark .shadow-md {
+  box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.5),
+    0 2px 4px -1px rgba(0, 0, 0, 0.5) !important;
+}
+
+.my-app-dark .shadow-lg {
+  box-shadow: 0 10px 15px -3px rgba(0, 0, 0, 0.5),
+    0 4px 6px -2px rgba(0, 0, 0, 0.5) !important;
+}
+
 /* ========= PrimeIcons Base Styles ========= */
 
 /* Ensure PrimeIcons work properly */
@@ -1259,7 +1963,7 @@ input.p-inputtext {
 }
 
 .p-select.p-component {
-  background-color: #ffffff !important;
+  background-color: #ffffff;
   border: 1px solid #d1d5db !important;
   border-radius: 6px !important;
   transition: all 0.2s ease !important;

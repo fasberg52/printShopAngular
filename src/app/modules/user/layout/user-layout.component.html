@@ -1,312 +1,99 @@
-    <div class="user-layout-container">
-      <p-toast position="top-center"></p-toast>
-      <p-confirmDialog></p-confirmDialog>
+<div class="user-layout-container">
+  <p-toast position="top-center"></p-toast>
+  <p-confirmDialog></p-confirmDialog>
 
-      <!-- Mobile Header -->
-      <div class="mobile-header md:hidden">
-        <div
-          class="flex items-center justify-between p-4 bg-white shadow-sm border-b"
+  <!-- Mobile Header -->
+  <div class="mobile-header md:hidden">
+    <div
+      class="flex items-center justify-between p-4 bg-white shadow-sm border-b"
+    >
+      <button
+        type="button"
+        class="p-2 text-gray-600 hover:text-gray-900 hover:bg-gray-100 rounded-lg"
+        (click)="toggleSidebar()"
+        pTooltip="منو"
+        tooltipPosition="bottom"
+      >
+        <i class="pi pi-bars text-xl"></i>
+      </button>
+
+      <h1 class="text-lg font-semibold text-gray-900">پنل کاربری</h1>
+
+      <div class="flex items-center gap-2">
+        <button
+          type="button"
+          class="p-2 text-gray-600 hover:text-gray-900 hover:bg-gray-100 rounded-lg"
+          (click)="showUserMenu($event)"
+          pTooltip="حساب کاربری"
+          tooltipPosition="bottom"
         >
-          <button
-            type="button"
-            class="p-2 text-gray-600 hover:text-gray-900 hover:bg-gray-100 rounded-lg"
-            (click)="toggleSidebar()"
-            pTooltip="منو"
-            tooltipPosition="bottom"
+          <p-avatar
+            [label]="userProfileService.getUserInitials(userProfile)"
+            styleClass="bg-blue-500 text-white w-8 h-8"
           >
-            <i class="pi pi-bars text-xl"></i>
-          </button>
+          </p-avatar>
+        </button>
+      </div>
+    </div>
+  </div>
 
-          <h1 class="text-lg font-semibold text-gray-900">پنل کاربری</h1>
+  <!-- Desktop Layout -->
+  <div class="desktop-layout hidden md:flex">
+    <!-- Right Sidebar (RTL) -->
+    <div class="sidebar-container">
+      <div class="sidebar-content">
+        <!-- Logo/Brand Section -->
+        <div class="brand-section">
+          <div class="flex items-center justify-between p-4">
+            <div class="flex items-center gap-3">
+              <div
+                class="w-10 h-10 bg-blue-600 rounded-lg flex items-center justify-center"
+              >
+                <i class="pi pi-print text-white text-lg"></i>
+              </div>
+              <div>
+                <h2 class="text-lg font-bold text-gray-900">چاپخانه</h2>
+                <p class="text-sm text-gray-600">پنل کاربری</p>
+              </div>
+            </div>
 
-          <div class="flex items-center gap-2">
+            <!-- Dark Mode Toggle Button -->
             <button
               type="button"
-              class="p-2 text-gray-600 hover:text-gray-900 hover:bg-gray-100 rounded-lg"
-              (click)="showUserMenu($event)"
-              pTooltip="حساب کاربری"
-              tooltipPosition="bottom"
+              class="dark-mode-toggle"
+              (click)="toggleDarkMode()"
+              pTooltip="{{ isDarkMode ? 'حالت روشن' : 'حالت تاریک' }}"
+              tooltipPosition="left"
             >
-              <p-avatar
-                [label]="userProfileService.getUserInitials(userProfile)"
-                styleClass="bg-blue-500 text-white w-8 h-8"
-              >
-              </p-avatar>
+              <i
+                [class]="isDarkMode ? 'pi pi-sun' : 'pi pi-moon'"
+                class="text-lg"
+              ></i>
             </button>
           </div>
         </div>
-      </div>
 
-      <!-- Desktop Layout -->
-      <div class="desktop-layout hidden md:flex">
-        <!-- Right Sidebar (RTL) -->
-        <div class="sidebar-container">
-          <div class="sidebar-content">
-            <!-- Logo/Brand Section -->
-            <div class="brand-section">
-              <div class="flex items-center gap-3 p-4">
-                <div
-                  class="w-10 h-10 bg-blue-600 rounded-lg flex items-center justify-center"
-                >
-                  <i class="pi pi-print text-white text-lg"></i>
-                </div>
-                <div>
-                  <h2 class="text-lg font-bold text-gray-900">چاپخانه</h2>
-                  <p class="text-sm text-gray-600">پنل کاربری</p>
-                </div>
-              </div>
-            </div>
-
-            <!-- Navigation Menu -->
-            <nav class="navigation-menu">
-              <ul class="menu-list">
-                <!-- Main Navigation Items -->
-                <li
-                  class="menu-item"
-                  *ngFor="let item of navigationItems; trackBy: trackByNavItem"
-                >
-                  <a
-                    [routerLink]="item.route"
-                    routerLinkActive="active"
-                    [routerLinkActiveOptions]="{
-                      exact: item.route === '/user/dashboard'
-                    }"
-                    class="menu-link"
-                    [pTooltip]="item.label"
-                    tooltipPosition="left"
-                    [showDelay]="500"
-                  >
-                    <i [class]="item.icon + ' menu-icon'"></i>
-                    <span class="menu-text">{{ item.label }}</span>
-                    <p-badge
-                      *ngIf="item.badge && item.badge.value > 0"
-                      [value]="item.badge.value.toString()"
-                      [severity]="item.badge.severity"
-                      styleClass="mr-auto"
-                    >
-                    </p-badge>
-                  </a>
-                </li>
-
-                <!-- Menu Divider -->
-                <li class="menu-divider"></li>
-
-                <!-- Settings Section -->
-                <li class="menu-section-title pr-2">
-                  <span>تنظیمات</span>
-                </li>
-
-                <li class="menu-item">
-                  <button
-                    type="button"
-                    class="menu-link menu-button p-2"
-                    (click)="showNotificationSettings()"
-                    pTooltip="تنظیمات اعلان‌ها"
-                    tooltipPosition="left"
-                  >
-                    <i class="pi pi-bell menu-icon"></i>
-                    <span class="menu-text">اعلان‌ها</span>
-                  </button>
-                </li>
-
-                <li class="menu-item">
-                  <button
-                    type="button"
-                    class="menu-link menu-button p-2"
-                    (click)="showHelp()"
-                    pTooltip="راهنما و پشتیبانی"
-                    tooltipPosition="left"
-                  >
-                    <i class="pi pi-question-circle menu-icon"></i>
-                    <span class="menu-text">راهنما</span>
-                  </button>
-                </li>
-
-                <li class="menu-divider"></li>
-
-                <!-- Logout -->
-                <li class="menu-item">
-                  <button
-                    type="button"
-                    class="menu-link menu-button logout-button p-2"
-                    (click)="confirmLogout()"
-                    pTooltip="خروج از حساب کاربری"
-                    tooltipPosition="left"
-                  >
-                    <i class="pi pi-sign-out menu-icon"></i>
-                    <span class="menu-text">خروج از حساب</span>
-                  </button>
-                </li>
-              </ul>
-            </nav>
-
-            <!-- User Profile Section -->
-            <div class="user-profile-section">
-              <div class="user-profile-card">
-                <!-- Loading State -->
-                <div
-                  *ngIf="isProfileLoading"
-                  class="flex items-center gap-3 p-4"
-                >
-                  <div
-                    class="w-12 h-12 bg-gray-200 rounded-full animate-pulse"
-                  ></div>
-                  <div class="flex-1 min-w-0">
-                    <div
-                      class="h-4 bg-gray-200 rounded animate-pulse mb-2"
-                    ></div>
-                    <div
-                      class="h-3 bg-gray-200 rounded animate-pulse w-3/4"
-                    ></div>
-                  </div>
-                </div>
-
-                <!-- Profile Content -->
-                <div
-                  *ngIf="!isProfileLoading"
-                  class="flex items-center gap-3 p-4"
-                >
-                  <!-- Avatar -->
-                  <div class="relative">
-                    <p-avatar
-                      *ngIf="!userProfileService.hasAvatar(userProfile)"
-                      [label]="userProfileService.getUserInitials(userProfile)"
-                      size="large"
-                      styleClass="bg-blue-500 text-white"
-                    >
-                    </p-avatar>
-
-                    <img
-                      *ngIf="userProfileService.hasAvatar(userProfile)"
-                      [src]="userProfileService.getAvatarUrl(userProfile)"
-                      [alt]="userProfileService.getUserFullName(userProfile)"
-                      class="w-12 h-12 rounded-full object-cover border-2 border-gray-200"
-                    />
-
-                    <!-- Online Status Indicator -->
-                    <div
-                      class="absolute -bottom-1 -right-1 w-4 h-4 bg-green-500 border-2 border-white rounded-full"
-                    ></div>
-                  </div>
-
-                  <!-- User Info -->
-                  <div class="flex-1 min-w-0">
-                    <p class="text-sm font-medium text-gray-900 truncate">
-                      {{ userProfileService.getUserFullName(userProfile) }}
-                    </p>
-                    <p class="text-xs text-gray-600 truncate">
-                      {{ userProfileService.getUserPhone(userProfile) }}
-                    </p>
-                    <p
-                      *ngIf="userProfile?.email"
-                      class="text-xs text-gray-500 truncate"
-                    >
-                      {{ userProfile?.email }}
-                    </p>
-                  </div>
-
-                  <!-- Profile Menu Button -->
-                  <div class="flex flex-col gap-1">
-                    <button
-                      type="button"
-                      class="p-1 text-gray-400 hover:text-gray-600 hover:bg-gray-100 rounded"
-                      (click)="showUserMenu($event)"
-                      pTooltip="تنظیمات حساب"
-                      tooltipPosition="top"
-                    >
-                      <i class="pi pi-cog text-sm"></i>
-                    </button>
-
-                    <button
-                      type="button"
-                      class="p-1 text-gray-400 hover:text-blue-600 hover:bg-blue-50 rounded"
-                      (click)="editProfile()"
-                      pTooltip="ویرایش پروفایل"
-                      tooltipPosition="top"
-                    >
-                      <i class="pi pi-user-edit text-sm"></i>
-                    </button>
-                  </div>
-                </div>
-
-                <!-- Profile Stats -->
-                <div
-                  *ngIf="!isProfileLoading"
-                  class="border-t border-gray-100 px-4 py-3"
-                >
-                  <div class="flex justify-between text-xs text-gray-600">
-                    <div class="text-center">
-                      <div class="font-semibold text-gray-900">
-                        {{ pendingOrdersCount }}
-                      </div>
-                      <div>سفارش فعال</div>
-                    </div>
-                    <div class="text-center">
-                      <div class="font-semibold text-gray-900">12</div>
-                      <div>سفارش کل</div>
-                    </div>
-                    <div class="text-center">
-                      <div class="font-semibold text-green-600">عضو VIP</div>
-                      <div>وضعیت</div>
-                    </div>
-                  </div>
-                </div>
-              </div>
-            </div>
-          </div>
-        </div>
-
-        <!-- Main Content Area -->
-        <div class="main-content-container">
-          <div class="main-content">
-            <router-outlet></router-outlet>
-          </div>
-        </div>
-      </div>
-
-      <!-- Mobile Sidebar Overlay -->
-      <div
-        *ngIf="sidebarVisible"
-        class="mobile-sidebar-overlay"
-        (click)="closeSidebar()"
-      ></div>
-
-      <!-- Mobile Sidebar -->
-      <div class="mobile-sidebar" [class.mobile-sidebar-open]="sidebarVisible">
-        <div class="mobile-sidebar-header">
-          <div class="flex items-center gap-3">
-            <div
-              class="w-8 h-8 bg-blue-600 rounded-lg flex items-center justify-center"
+        <!-- Navigation Menu -->
+        <nav class="navigation-menu">
+          <ul class="menu-list">
+            <!-- Main Navigation Items -->
+            <li
+              class="menu-item"
+              *ngFor="let item of navigationItems; trackBy: trackByNavItem"
             >
-              <i class="pi pi-print text-white"></i>
-            </div>
-            <span class="font-semibold">پنل کاربری</span>
-          </div>
-
-          <button
-            type="button"
-            class="p-2 text-gray-600 hover:text-gray-900 hover:bg-gray-100 rounded-lg"
-            (click)="closeSidebar()"
-          >
-            <i class="pi pi-times"></i>
-          </button>
-        </div>
-
-        <!-- Mobile Navigation -->
-        <nav class="mobile-navigation">
-          <ul class="mobile-menu-list">
-            <li *ngFor="let item of navigationItems; trackBy: trackByNavItem">
               <a
                 [routerLink]="item.route"
                 routerLinkActive="active"
                 [routerLinkActiveOptions]="{
                   exact: item.route === '/user/dashboard'
                 }"
-                class="mobile-menu-link"
-                (click)="closeSidebar()"
+                class="menu-link"
+                [pTooltip]="item.label"
+                tooltipPosition="left"
+                [showDelay]="500"
               >
-                <i [class]="item.icon"></i>
-                <span>{{ item.label }}</span>
+                <i [class]="item.icon + ' menu-icon'"></i>
+                <span class="menu-text">{{ item.label }}</span>
                 <p-badge
                   *ngIf="item.badge && item.badge.value > 0"
                   [value]="item.badge.value.toString()"
@@ -316,17 +103,99 @@
                 </p-badge>
               </a>
             </li>
-          </ul>
 
-          <!-- Mobile User Profile -->
-          <div class="mobile-user-profile">
-            <div class="flex items-center gap-3 p-4 bg-gray-50 rounded-lg">
-              <p-avatar
-                [label]="userProfileService.getUserInitials(userProfile)"
-                styleClass="bg-blue-500 text-white"
+            <!-- Menu Divider -->
+            <li class="menu-divider"></li>
+
+            <!-- Settings Section -->
+            <li class="menu-section-title pr-2">
+              <span>تنظیمات</span>
+            </li>
+
+            <li class="menu-item">
+              <button
+                type="button"
+                class="menu-link menu-button p-2"
+                (click)="showNotificationSettings()"
+                pTooltip="تنظیمات اعلان‌ها"
+                tooltipPosition="left"
               >
-              </p-avatar>
+                <i class="pi pi-bell menu-icon"></i>
+                <span class="menu-text">اعلان‌ها</span>
+              </button>
+            </li>
 
+            <li class="menu-item">
+              <button
+                type="button"
+                class="menu-link menu-button p-2"
+                (click)="showHelp()"
+                pTooltip="راهنما و پشتیبانی"
+                tooltipPosition="left"
+              >
+                <i class="pi pi-question-circle menu-icon"></i>
+                <span class="menu-text">راهنما</span>
+              </button>
+            </li>
+
+            <li class="menu-divider"></li>
+
+            <!-- Logout -->
+            <li class="menu-item">
+              <button
+                type="button"
+                class="menu-link menu-button logout-button p-2"
+                (click)="confirmLogout()"
+                pTooltip="خروج از حساب کاربری"
+                tooltipPosition="left"
+              >
+                <i class="pi pi-sign-out menu-icon"></i>
+                <span class="menu-text">خروج از حساب</span>
+              </button>
+            </li>
+          </ul>
+        </nav>
+
+        <!-- User Profile Section -->
+        <div class="user-profile-section">
+          <div class="user-profile-card">
+            <!-- Loading State -->
+            <div *ngIf="isProfileLoading" class="flex items-center gap-3 p-4">
+              <div
+                class="w-12 h-12 bg-gray-200 rounded-full animate-pulse"
+              ></div>
+              <div class="flex-1 min-w-0">
+                <div class="h-4 bg-gray-200 rounded animate-pulse mb-2"></div>
+                <div class="h-3 bg-gray-200 rounded animate-pulse w-3/4"></div>
+              </div>
+            </div>
+
+            <!-- Profile Content -->
+            <div *ngIf="!isProfileLoading" class="flex items-center gap-3 p-4">
+              <!-- Avatar -->
+              <div class="relative">
+                <p-avatar
+                  *ngIf="!userProfileService.hasAvatar(userProfile)"
+                  [label]="userProfileService.getUserInitials(userProfile)"
+                  size="large"
+                  styleClass="bg-blue-500 text-white"
+                >
+                </p-avatar>
+
+                <img
+                  *ngIf="userProfileService.hasAvatar(userProfile)"
+                  [src]="userProfileService.getAvatarUrl(userProfile)"
+                  [alt]="userProfileService.getUserFullName(userProfile)"
+                  class="w-12 h-12 rounded-full object-cover border-2 border-gray-200"
+                />
+
+                <!-- Online Status Indicator -->
+                <div
+                  class="absolute -bottom-1 -right-1 w-4 h-4 bg-green-500 border-2 border-white rounded-full"
+                ></div>
+              </div>
+
+              <!-- User Info -->
               <div class="flex-1 min-w-0">
                 <p class="text-sm font-medium text-gray-900 truncate">
                   {{ userProfileService.getUserFullName(userProfile) }}
@@ -334,18 +203,155 @@
                 <p class="text-xs text-gray-600 truncate">
                   {{ userProfileService.getUserPhone(userProfile) }}
                 </p>
+                <p
+                  *ngIf="userProfile?.email"
+                  class="text-xs text-gray-500 truncate"
+                >
+                  {{ userProfile?.email }}
+                </p>
+              </div>
+
+              <!-- Profile Menu Button -->
+              <div class="flex flex-col gap-1">
+                <button
+                  type="button"
+                  class="p-1 text-gray-400 hover:text-gray-600 hover:bg-gray-100 rounded"
+                  (click)="showUserMenu($event)"
+                  pTooltip="تنظیمات حساب"
+                  tooltipPosition="top"
+                >
+                  <i class="pi pi-cog text-sm"></i>
+                </button>
+
+                <button
+                  type="button"
+                  class="p-1 text-gray-400 hover:text-blue-600 hover:bg-blue-50 rounded"
+                  (click)="editProfile()"
+                  pTooltip="ویرایش پروفایل"
+                  tooltipPosition="top"
+                >
+                  <i class="pi pi-user-edit text-sm"></i>
+                </button>
               </div>
             </div>
 
-            <button
-              type="button"
-              class="w-full mt-4 p-3 text-red-600 hover:bg-red-50 rounded-lg flex items-center gap-2 transition-colors"
-              (click)="confirmLogout()"
+            <!-- Profile Stats -->
+            <div
+              *ngIf="!isProfileLoading"
+              class="border-t border-gray-100 px-4 py-3"
             >
-              <i class="pi pi-sign-out"></i>
-              <span>خروج از حساب</span>
-            </button>
+              <div class="flex justify-between text-xs text-gray-600">
+                <div class="text-center">
+                  <div class="font-semibold text-gray-900">
+                    {{ pendingOrdersCount }}
+                  </div>
+                  <div>سفارش فعال</div>
+                </div>
+                <div class="text-center">
+                  <div class="font-semibold text-gray-900">12</div>
+                  <div>سفارش کل</div>
+                </div>
+                <div class="text-center">
+                  <div class="font-semibold text-green-600">عضو VIP</div>
+                  <div>وضعیت</div>
+                </div>
+              </div>
+            </div>
           </div>
-        </nav>
+        </div>
       </div>
     </div>
+
+    <!-- Main Content Area -->
+    <div class="main-content-container">
+      <div class="main-content">
+        <router-outlet></router-outlet>
+      </div>
+    </div>
+  </div>
+
+  <!-- Mobile Sidebar Overlay -->
+  <div
+    *ngIf="sidebarVisible"
+    class="mobile-sidebar-overlay"
+    (click)="closeSidebar()"
+  ></div>
+
+  <!-- Mobile Sidebar -->
+  <div class="mobile-sidebar" [class.mobile-sidebar-open]="sidebarVisible">
+    <div class="mobile-sidebar-header">
+      <div class="flex items-center gap-3">
+        <div
+          class="w-8 h-8 bg-blue-600 rounded-lg flex items-center justify-center"
+        >
+          <i class="pi pi-print text-white"></i>
+        </div>
+        <span class="font-semibold">پنل کاربری</span>
+      </div>
+
+      <button
+        type="button"
+        class="p-2 text-gray-600 hover:text-gray-900 hover:bg-gray-100 rounded-lg"
+        (click)="closeSidebar()"
+      >
+        <i class="pi pi-times"></i>
+      </button>
+    </div>
+
+    <!-- Mobile Navigation -->
+    <nav class="mobile-navigation">
+      <ul class="mobile-menu-list">
+        <li *ngFor="let item of navigationItems; trackBy: trackByNavItem">
+          <a
+            [routerLink]="item.route"
+            routerLinkActive="active"
+            [routerLinkActiveOptions]="{
+              exact: item.route === '/user/dashboard'
+            }"
+            class="mobile-menu-link"
+            (click)="closeSidebar()"
+          >
+            <i [class]="item.icon"></i>
+            <span>{{ item.label }}</span>
+            <p-badge
+              *ngIf="item.badge && item.badge.value > 0"
+              [value]="item.badge.value.toString()"
+              [severity]="item.badge.severity"
+              styleClass="mr-auto"
+            >
+            </p-badge>
+          </a>
+        </li>
+      </ul>
+
+      <!-- Mobile User Profile -->
+      <div class="mobile-user-profile">
+        <div class="flex items-center gap-3 p-4 bg-gray-50 rounded-lg">
+          <p-avatar
+            [label]="userProfileService.getUserInitials(userProfile)"
+            styleClass="bg-blue-500 text-white"
+          >
+          </p-avatar>
+
+          <div class="flex-1 min-w-0">
+            <p class="text-sm font-medium text-gray-900 truncate">
+              {{ userProfileService.getUserFullName(userProfile) }}
+            </p>
+            <p class="text-xs text-gray-600 truncate">
+              {{ userProfileService.getUserPhone(userProfile) }}
+            </p>
+          </div>
+        </div>
+
+        <button
+          type="button"
+          class="w-full mt-4 p-3 text-red-600 hover:bg-red-50 rounded-lg flex items-center gap-2 transition-colors"
+          (click)="confirmLogout()"
+        >
+          <i class="pi pi-sign-out"></i>
+          <span>خروج از حساب</span>
+        </button>
+      </div>
+    </nav>
+  </div>
+</div>

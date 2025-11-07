@@ -2,7 +2,7 @@
   max-width: 1200px;
   margin: 0 auto;
   padding: 2rem;
-  font-family: 'Vazirmatn', 'Vazir', sans-serif;
+  font-family: "Vazirmatn", "Vazir", sans-serif;
   direction: rtl;
 }
 
@@ -78,9 +78,11 @@
   width: 100%;
   border-radius: 12px;
   border: 2px solid #e5e7eb;
-  background: #ffffff;
+  background: var(--color-card-bg, #ffffff);
   transition: all 0.3s ease;
   box-shadow: 0 2px 4px rgba(0, 0, 0, 0.05);
+  position: relative;
+  z-index: 1;
 }
 
 .modern-select ::ng-deep .p-select:not(.p-disabled):hover {
@@ -90,7 +92,8 @@
 
 .modern-select ::ng-deep .p-select:not(.p-disabled).p-focus {
   border-color: var(--color-primary, #2196f3);
-  box-shadow: 0 0 0 3px rgba(33, 150, 243, 0.1), 0 4px 12px rgba(33, 150, 243, 0.15);
+  box-shadow: 0 0 0 3px rgba(33, 150, 243, 0.1),
+    0 4px 12px rgba(33, 150, 243, 0.15);
 }
 
 .modern-select ::ng-deep .p-select .p-select-label {
@@ -115,6 +118,120 @@
   box-shadow: 0 10px 25px rgba(0, 0, 0, 0.15);
   border: 1px solid #e5e7eb;
   margin-top: 0.5rem;
+  z-index: 1200 !important;
+}
+
+/* Dark mode overrides for modern select */
+.my-app-dark .modern-select ::ng-deep .p-select {
+  border: 2px solid color-mix(in oklab, #334155 50%, transparent) !important;
+  background: color-mix(in oklab, #1e293b 80%, transparent) !important;
+  box-shadow: 0 8px 24px rgba(0, 0, 0, 0.45) !important;
+  backdrop-filter: blur(12px) !important;
+}
+
+.my-app-dark .modern-select ::ng-deep .p-select:not(.p-disabled):hover {
+  border-color: color-mix(in oklab, #2196f3 50%, transparent) !important;
+  box-shadow: 0 12px 28px rgba(33, 150, 243, 0.35) !important;
+}
+
+.my-app-dark .modern-select ::ng-deep .p-select:not(.p-disabled).p-focus {
+  border-color: color-mix(in oklab, #2196f3 60%, transparent) !important;
+  box-shadow: 0 0 0 3px color-mix(in oklab, #2196f3 20%, transparent) !important;
+}
+
+.my-app-dark .modern-select ::ng-deep .p-select .p-select-label {
+  color: #f8fafc !important;
+}
+
+.my-app-dark .modern-select ::ng-deep .p-select .p-select-label.p-placeholder {
+  color: color-mix(in oklab, #94a3b8 80%, transparent) !important;
+}
+
+.my-app-dark .modern-select ::ng-deep .p-select .p-select-trigger {
+  color: #dbeafe !important;
+}
+
+.my-app-dark .modern-select ::ng-deep .p-select-overlay {
+  background: color-mix(in oklab, #1e293b 92%, transparent) !important;
+  border: 1px solid color-mix(in oklab, #334155 60%, transparent) !important;
+  backdrop-filter: blur(20px) !important;
+  box-shadow: 0 18px 45px rgba(0, 0, 0, 0.55) !important;
+}
+
+.my-app-dark .modern-select ::ng-deep .p-select-overlay .p-select-item,
+.my-app-dark .modern-select ::ng-deep .p-select-overlay .p-select-option {
+  color: #f8fafc !important;
+}
+
+.my-app-dark .modern-select ::ng-deep .p-select-overlay .p-select-item:hover,
+.my-app-dark .modern-select ::ng-deep .p-select-overlay .p-select-option:hover,
+.my-app-dark .modern-select ::ng-deep .p-select-overlay .p-select-item.p-focus,
+.my-app-dark
+  .modern-select
+  ::ng-deep
+  .p-select-overlay
+  .p-select-option.p-focus,
+.my-app-dark
+  .modern-select
+  ::ng-deep
+  .p-select-overlay
+  .p-select-item[data-p-focused="true"],
+.my-app-dark
+  .modern-select
+  ::ng-deep
+  .p-select-overlay
+  .p-select-option[data-p-focused="true"] {
+  background-color: #2196f338 !important;
+  color: #2196f3 !important;
+}
+
+.my-app-dark
+  .modern-select
+  ::ng-deep
+  .p-select-overlay
+  .p-select-item.p-highlight,
+.my-app-dark
+  .modern-select
+  ::ng-deep
+  .p-select-overlay
+  .p-select-option.p-highlight,
+.my-app-dark
+  .modern-select
+  ::ng-deep
+  .p-select-overlay
+  .p-select-item[data-p-highlight="true"],
+.my-app-dark
+  .modern-select
+  ::ng-deep
+  .p-select-overlay
+  .p-select-option[data-p-highlight="true"] {
+  background-color: #2196f338 !important;
+  color: #2196f3 !important;
+  font-weight: 600 !important;
+}
+
+.my-app-dark
+  .modern-select
+  ::ng-deep
+  .p-select-overlay
+  .p-select-item.p-highlight:hover,
+.my-app-dark
+  .modern-select
+  ::ng-deep
+  .p-select-overlay
+  .p-select-option.p-highlight:hover,
+.my-app-dark
+  .modern-select
+  ::ng-deep
+  .p-select-overlay
+  .p-select-item[data-p-highlight="true"]:hover,
+.my-app-dark
+  .modern-select
+  ::ng-deep
+  .p-select-overlay
+  .p-select-option[data-p-highlight="true"]:hover {
+  background-color: #2196f350 !important;
+  color: #60a5fa !important;
 }
 
 .modern-select ::ng-deep .p-select-overlay .p-select-item {
@@ -129,7 +246,16 @@
   color: var(--color-text, #333333);
 }
 
-.modern-select ::ng-deep .p-select-overlay .p-select-item.p-highlight {
+.modern-select ::ng-deep .p-select-overlay .p-select-item.p-highlight,
+.modern-select ::ng-deep .p-select-overlay .p-select-option.p-highlight,
+.modern-select
+  ::ng-deep
+  .p-select-overlay
+  .p-select-item[data-p-highlight="true"],
+.modern-select
+  ::ng-deep
+  .p-select-overlay
+  .p-select-option[data-p-highlight="true"] {
   background-color: var(--color-primary, #2196f3);
   color: #ffffff;
 }
@@ -228,7 +354,11 @@
   justify-content: space-between;
   align-items: center;
   padding: 1rem;
-  background: linear-gradient(135deg, var(--color-primary, #2196f3), var(--color-hover, #1976d2));
+  background: linear-gradient(
+    135deg,
+    var(--color-primary, #2196f3),
+    var(--color-hover, #1976d2)
+  );
   color: white;
 }
 
@@ -248,6 +378,7 @@
   border-radius: 8px;
   overflow: hidden;
   box-shadow: 0 1px 3px rgba(0, 0, 0, 0.1);
+  background: #ffffff;
 }
 
 .pricing-table thead {
@@ -257,6 +388,8 @@
 .pricing-table th {
   padding: 0.75rem 1rem;
   text-align: right;
+  background: #f8f9fa;
+  color: #333333;
   font-weight: 600;
   color: #374151;
   font-size: 0.875rem;
@@ -280,6 +413,12 @@
   padding: 0.75rem 1rem;
   color: #1f2937;
   font-size: 0.875rem;
+  background: #ffffff;
+  border-bottom: 1px solid #e5e7eb;
+}
+
+.pricing-table tbody tr:hover td {
+  background: #f9fafb;
 }
 
 .price-cell {

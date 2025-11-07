@@ -144,12 +144,14 @@
   flex: 1;
   margin-right: 280px;
   min-height: 100vh;
+  background: #f8fafc;
 }
 
 .main-content {
   padding: 2rem;
   max-width: 1200px;
   margin: 0 auto;
+  background: #f8fafc;
 }
 
 /* Mobile Sidebar */
