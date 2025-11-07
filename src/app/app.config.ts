@@ -1,4 +1,4 @@
-import { provideHttpClient, withInterceptors } from '@angular/common/http';
+import { provideHttpClient, withInterceptors, withFetch } from '@angular/common/http';
 import {
   ApplicationConfig,
   provideZonelessChangeDetection,
@@ -19,6 +19,7 @@ export const appConfig: ApplicationConfig = {
     provideAnimations(),
     provideRouter(routes),
     provideHttpClient(
+      withFetch(),
       withInterceptors([
         timeoutInterceptor,
         authInterceptor,

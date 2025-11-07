@@ -15,6 +15,11 @@ export const routes: Routes = [
     loadChildren: () =>
       import('./modules/auth/admin/admin.routes').then((m) => m.ADMIN_ROUTES),
   },
+  {
+    path: 'user',
+    loadChildren: () =>
+      import('./modules/user/user.routes').then((m) => m.USER_ROUTES),
+  },
 
   // روت‌های پیش‌فرض
   { path: '', redirectTo: 'admin', pathMatch: 'full' },

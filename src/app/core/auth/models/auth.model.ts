@@ -21,3 +21,35 @@ export interface DecodedToken {
   iat: number;
   exp: number;
 }
+
+// Registration interfaces
+export interface RegisterPayload {
+  firstName: string;
+  lastName: string;
+  phone: string;
+  email?: string;
+  password: string;
+}
+
+export interface RegisterResponse {
+  message: string;
+  requiresOtp: boolean;
+  userId?: string;
+}
+
+export interface OtpVerificationPayload {
+  phone: string;
+  code: string;
+  action: 'registration' | 'login' | 'password-reset';
+}
+
+export interface OtpVerificationResponse {
+  success: boolean;
+  message: string;
+  accessToken?: string;
+}
+
+export interface OtpRequestPayload {
+  phone: string;
+  action: 'registration' | 'login' | 'password-reset';
+}

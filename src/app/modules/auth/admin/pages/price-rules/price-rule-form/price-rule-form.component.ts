@@ -1,28 +1,21 @@
 import { CommonModule } from '@angular/common';
-import {
-  Component,
-  computed,
-  inject,
-  input,
-  OnInit,
-  output,
-  signal,
-} from '@angular/core';
+import { Component, computed, inject, OnInit, signal } from '@angular/core';
 import {
   FormArray,
   FormBuilder,
   FormGroup,
   ReactiveFormsModule,
 } from '@angular/forms';
+import { ActivatedRoute, Router } from '@angular/router';
 import { MessageService } from 'primeng/api';
 import { z } from 'zod';
 
 // PrimeNG imports
 import { ButtonModule } from 'primeng/button';
-import { DialogModule } from 'primeng/dialog';
 import { InputNumberModule } from 'primeng/inputnumber';
 import { InputTextModule } from 'primeng/inputtext';
 import { SelectModule } from 'primeng/select';
+import { ToastModule } from 'primeng/toast';
 import { ToggleSwitchModule } from 'primeng/toggleswitch';
 
 import {
@@ -136,38 +129,36 @@ const priceRuleSchema = z.object({
 });
 
 @Component({
-  selector: 'app-price-rule-modal',
+  selector: 'app-price-rule-form',
   standalone: true,
   imports: [
     CommonModule,
     ReactiveFormsModule,
     ButtonModule,
-    DialogModule,
     InputTextModule,
     InputNumberModule,
     ToggleSwitchModule,
     SelectModule,
+    ToastModule,
   ],
   providers: [MessageService],
-  templateUrl: './price-rule-modal.component.html',
-  styleUrls: ['./price-rule-modal.component.css'],
+  templateUrl: './price-rule-form.component.html',
+  styleUrls: ['./price-rule-form.component.css'],
 })
-export class PriceRuleModalComponent implements OnInit {
-  priceRule = input<PriceRule | null>(null);
-  isEditMode = input<boolean>(false);
-
-  close = output<void>();
-
-  // Dialog visibility - starts true, becomes false when closing
-  visible = signal<boolean>(true);
-
+export class PriceRuleFormComponent implements OnInit {
   private fb = inject(FormBuilder);
   private priceRuleService = inject(PriceRuleService);
   private messageService = inject(MessageService);
+  private route = inject(ActivatedRoute);
+  private router = inject(Router);
 
   form!: FormGroup;
   validationErrors = signal<Record<string, string>>({});
   submitting = signal<boolean>(false);
+  loading = signal<boolean>(true);
+  isEditMode = signal<boolean>(false);
+  priceRuleId = signal<string | null>(null);
+
   productTypes = [
     { label: 'چاپ', value: 'print' },
     { label: 'صحافی', value: 'binding' },
@@ -190,9 +181,22 @@ export class PriceRuleModalComponent implements OnInit {
 
   ngOnInit(): void {
     this.initForm();
-    if (this.isEditMode() && this.priceRule()) {
-      this.populateForm(this.priceRule()!);
+
+    // Check if we're in edit mode
+    const id = this.route.snapshot.paramMap.get('id');
+    if (id) {
+      this.isEditMode.set(true);
+      this.priceRuleId.set(id);
+      this.loadPriceRule(id);
+    } else {
+      this.loading.set(false);
     }
+
+    // Clear match conditions when product type changes
+    this.form.get('productType')?.valueChanges.subscribe(() => {
+      const matchArray = this.form.get('match') as FormArray;
+      matchArray.clear();
+    });
   }
 
   initForm(): void {
@@ -204,11 +208,21 @@ export class PriceRuleModalComponent implements OnInit {
       match: this.fb.array([]),
       breakpoints: this.fb.array([]),
     });
+  }
 
-    // Clear match conditions when product type changes
-    this.form.get('productType')?.valueChanges.subscribe(() => {
-      const matchArray = this.form.get('match') as FormArray;
-      matchArray.clear();
+  loadPriceRule(id: string): void {
+    this.loading.set(true);
+    this.priceRuleService.getPriceRuleById(id).subscribe({
+      next: (priceRule: PriceRule) => {
+        this.populateForm(priceRule);
+        this.loading.set(false);
+      },
+      error: (error: unknown) => {
+        this.loading.set(false);
+        this.showToast('error', 'خطا', 'خطا در بارگذاری قانون قیمت');
+        console.error('Error loading price rule:', error);
+        this.router.navigate(['/admin/price-rules']);
+      },
     });
   }
 
@@ -358,10 +372,10 @@ export class PriceRuleModalComponent implements OnInit {
     const validatedData = result.data;
     this.submitting.set(true);
 
-    if (this.isEditMode() && this.priceRule()?._id) {
+    if (this.isEditMode() && this.priceRuleId()) {
       // Update
       this.priceRuleService
-        .updatePriceRule(this.priceRule()!._id!, validatedData)
+        .updatePriceRule(this.priceRuleId()!, validatedData)
         .subscribe({
           next: () => {
             this.submitting.set(false);
@@ -370,7 +384,7 @@ export class PriceRuleModalComponent implements OnInit {
               'موفق',
               'قانون قیمت با موفقیت به‌روزرسانی شد'
             );
-            this.onClose();
+            this.router.navigate(['/admin/price-rules']);
           },
           error: (error) => {
             this.submitting.set(false);
@@ -388,7 +402,7 @@ export class PriceRuleModalComponent implements OnInit {
         next: () => {
           this.submitting.set(false);
           this.showToast('success', 'موفق', 'قانون قیمت با موفقیت ایجاد شد');
-          this.onClose();
+          this.router.navigate(['/admin/price-rules']);
         },
         error: (error) => {
           this.submitting.set(false);
@@ -403,17 +417,8 @@ export class PriceRuleModalComponent implements OnInit {
     }
   }
 
-  onVisibleChange(value: boolean): void {
-    this.visible.set(value);
-    if (!value) {
-      // Dialog is being closed (X button clicked or ESC pressed)
-      this.close.emit();
-    }
-  }
-
-  onClose(): void {
-    this.visible.set(false);
-    this.close.emit();
+  onCancel(): void {
+    this.router.navigate(['/admin/price-rules']);
   }
 
   private showToast(severity: string, summary: string, detail: string): void {

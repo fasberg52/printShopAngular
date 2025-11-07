@@ -2,6 +2,7 @@ import { Routes } from '@angular/router';
 import { LayoutComponent } from './layout/layout.component';
 import { DashboardComponent } from './pages/dashboard/dashboard.component';
 import { PriceRulesComponent } from './pages/price-rules/price-rules.component';
+import { PriceRuleFormComponent } from './pages/price-rules/price-rule-form/price-rule-form.component';
 
 export const ADMIN_ROUTES: Routes = [
   {
@@ -10,6 +11,8 @@ export const ADMIN_ROUTES: Routes = [
     children: [
       { path: 'dashboard', component: DashboardComponent },
       { path: 'price-rules', component: PriceRulesComponent },
+      { path: 'price-rules/new', component: PriceRuleFormComponent },
+      { path: 'price-rules/edit/:id', component: PriceRuleFormComponent },
       { path: '', redirectTo: 'dashboard', pathMatch: 'full' },
     ],
   },

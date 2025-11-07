@@ -9,6 +9,11 @@ import {
   CheckPhoneResponse,
   DecodedToken,
   LoginPayload,
+  RegisterPayload,
+  RegisterResponse,
+  OtpVerificationPayload,
+  OtpVerificationResponse,
+  OtpRequestPayload,
 } from '../../../core/auth/models/auth.model';
 import { StorageService } from '../../services/storage.service';
 
@@ -56,6 +61,62 @@ export class AuthService {
       .pipe(tap((response) => this.saveToken(response.accessToken)));
   }
 
+  // === متدهای ثبت نام کاربران ===
+
+  /**
+   * ثبت نام کاربر جدید
+   */
+  register(payload: RegisterPayload): Observable<RegisterResponse> {
+    return this.http.post<RegisterResponse>(`${this.apiUrl}/auth/register`, payload);
+  }
+
+  /**
+   * درخواست کد OTP برای ثبت نام
+   */
+  requestRegistrationOtp(phone: string): Observable<any> {
+    const payload: OtpRequestPayload = { phone, action: 'registration' };
+    return this.http.post(`${this.apiUrl}/auth/request-otp`, payload);
+  }
+
+  /**
+   * تایید کد OTP برای ثبت نام
+   */
+  verifyRegistrationOtp(phone: string, code: string): Observable<OtpVerificationResponse> {
+    const payload: OtpVerificationPayload = { phone, code, action: 'registration' };
+    return this.http.post<OtpVerificationResponse>(`${this.apiUrl}/auth/verify-otp`, payload)
+      .pipe(tap((response) => {
+        if (response.accessToken) {
+          this.saveToken(response.accessToken);
+        }
+      }));
+  }
+
+  // === متدهای بازیابی رمز عبور ===
+
+  /**
+   * درخواست کد OTP برای بازیابی رمز عبور
+   */
+  requestPasswordResetOtp(phone: string): Observable<any> {
+    const payload: OtpRequestPayload = { phone, action: 'password-reset' };
+    return this.http.post(`${this.apiUrl}/auth/request-otp`, payload);
+  }
+
+  /**
+   * تایید کد OTP برای بازیابی رمز عبور
+   */
+  verifyPasswordResetOtp(phone: string, code: string): Observable<OtpVerificationResponse> {
+    const payload: OtpVerificationPayload = { phone, code, action: 'password-reset' };
+    return this.http.post<OtpVerificationResponse>(`${this.apiUrl}/auth/verify-otp`, payload);
+  }
+
+  /**
+   * تنظیم رمز عبور جدید پس از تایید OTP
+   */
+  resetPassword(phone: string, newPassword: string, otpCode: string): Observable<any> {
+    const payload = { phone, newPassword, otpCode };
+    return this.http.post(`${this.apiUrl}/auth/reset-password`, payload);
+  }
+
   // --- متدهای کمکی (موجود) ---
   saveToken(token: string): void {
     this.storage.setItem(this.tokenKey, token);
@@ -94,6 +155,23 @@ export class AuthService {
     try {
       const decoded: DecodedToken = jwtDecode(token);
       return decoded.roles && decoded.roles.includes('admin');
+    } catch (error) {
+      console.error('Invalid token', error);
+      return false;
+    }
+  }
+
+  isUser(): boolean {
+    const token = this.getToken();
+    if (!token) return false;
+
+    if (!this.isLoggedIn()) {
+      return false;
+    }
+
+    try {
+      const decoded: DecodedToken = jwtDecode(token);
+      return decoded.roles && decoded.roles.includes('user');
     } catch (error) {
       console.error('Invalid token', error);
       return false;

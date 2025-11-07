@@ -9,6 +9,26 @@
     </div>
     <div class="toolbar-right">
       <p-button
+        label="ایجاد نمونه"
+        icon="pi pi-database"
+        (click)="openSeedModal()"
+        styleClass="p-button-help p-button-outlined"
+      ></p-button>
+      <p-button
+        label="ماشین حساب"
+        icon="pi pi-calculator"
+        (click)="openCalculatorModal()"
+        styleClass="p-button-success p-button-outlined"
+        severity="success"
+      ></p-button>
+      <p-button
+        label="راهنما"
+        icon="pi pi-question-circle"
+        (click)="openExamplesModal()"
+        styleClass="p-button-info p-button-outlined"
+        severity="info"
+      ></p-button>
+      <p-button
         label="افزودن قانون جدید"
         icon="pi pi-plus"
         (click)="openCreateModal()"
@@ -86,15 +106,6 @@
     </ng-template>
   </p-table>
 
-  <!-- Create/Edit Modal -->
-  @if (showCreateModal() || showEditModal()) {
-  <app-price-rule-modal
-    [priceRule]="selectedPriceRule()"
-    [isEditMode]="showEditModal()"
-    (close)="onModalClose()"
-  />
-  }
-
   <!-- Detail Modal -->
   @if (showDetailModal()) {
   <app-price-rule-detail-modal
@@ -102,6 +113,30 @@
     (close)="onModalClose()"
     (edit)="openEditModal(selectedPriceRule()!)"
     (delete)="deletePriceRule(selectedPriceRule()!)"
+  />
+  }
+
+  <!-- Examples Modal -->
+  @if (showExamplesModal) {
+  <app-price-rule-examples
+    [visible]="showExamplesModal"
+    (visibleChange)="showExamplesModal = $event"
+  />
+  }
+
+  <!-- Calculator Modal -->
+  @if (showCalculatorModal) {
+  <app-price-calculator
+    [visible]="showCalculatorModal"
+    (visibleChange)="showCalculatorModal = $event"
+  />
+  }
+
+  <!-- Seed Modal -->
+  @if (showSeedModal) {
+  <app-seed-price-rules
+    [visible]="showSeedModal"
+    (visibleChange)="showSeedModal = $event"
   />
   }
 </div>

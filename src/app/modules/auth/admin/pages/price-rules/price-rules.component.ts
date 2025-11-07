@@ -1,6 +1,7 @@
 import { CommonModule } from '@angular/common';
 import { Component, inject, OnInit, signal } from '@angular/core';
 import { FormsModule } from '@angular/forms';
+import { Router } from '@angular/router';
 import { ConfirmationService, MessageService } from 'primeng/api';
 
 // PrimeNG imports
@@ -16,7 +17,9 @@ import { ToolbarModule } from 'primeng/toolbar';
 import { PriceRule } from '../../../../../core/models/price-rule.model';
 import { PriceRuleService } from '../../../../../core/services/price-rule.service';
 import { PriceRuleDetailModalComponent } from './modals/price-rule-detail-modal.component';
-import { PriceRuleModalComponent } from './modals/price-rule-modal.component';
+import { PriceRuleExamplesComponent } from './price-rule-examples.component';
+import { PriceCalculatorComponent } from './price-calculator.component';
+import { SeedPriceRulesComponent } from './seed-price-rules.component';
 
 @Component({
   selector: 'app-price-rules',
@@ -32,8 +35,10 @@ import { PriceRuleModalComponent } from './modals/price-rule-modal.component';
     ToastModule,
     MenuModule,
     DialogModule,
-    PriceRuleModalComponent,
     PriceRuleDetailModalComponent,
+    PriceRuleExamplesComponent,
+    PriceCalculatorComponent,
+    SeedPriceRulesComponent,
   ],
   providers: [MessageService, ConfirmationService],
   templateUrl: './price-rules.component.html',
@@ -43,6 +48,7 @@ export class PriceRulesComponent implements OnInit {
   private priceRuleService = inject(PriceRuleService);
   private messageService = inject(MessageService);
   private confirmationService = inject(ConfirmationService);
+  private router = inject(Router);
 
   // State
   priceRules = signal<PriceRule[]>([]);
@@ -50,9 +56,10 @@ export class PriceRulesComponent implements OnInit {
   selectedPriceRule = signal<PriceRule | null>(null);
 
   // Modals
-  showCreateModal = signal(false);
-  showEditModal = signal(false);
   showDetailModal = signal(false);
+  showExamplesModal = false;
+  showCalculatorModal = false;
+  showSeedModal = false;
 
   // Pagination
   first = 0;
@@ -89,19 +96,17 @@ export class PriceRulesComponent implements OnInit {
   }
 
   /**
-   * Open create modal
+   * Navigate to create form
    */
   openCreateModal(): void {
-    this.selectedPriceRule.set(null);
-    this.showCreateModal.set(true);
+    this.router.navigate(['/admin/price-rules/new']);
   }
 
   /**
-   * Open edit modal
+   * Navigate to edit form
    */
   openEditModal(priceRule: PriceRule): void {
-    this.selectedPriceRule.set({ ...priceRule });
-    this.showEditModal.set(true);
+    this.router.navigate(['/admin/price-rules/edit', priceRule._id]);
   }
 
   /**
@@ -110,6 +115,27 @@ export class PriceRulesComponent implements OnInit {
   openDetailModal(priceRule: PriceRule): void {
     this.selectedPriceRule.set({ ...priceRule });
     this.showDetailModal.set(true);
+  }
+
+  /**
+   * Open examples modal
+   */
+  openExamplesModal(): void {
+    this.showExamplesModal = true;
+  }
+
+  /**
+   * Open calculator modal
+   */
+  openCalculatorModal(): void {
+    this.showCalculatorModal = true;
+  }
+
+  /**
+   * Open seed modal
+   */
+  openSeedModal(): void {
+    this.showSeedModal = true;
   }
 
   /**
@@ -166,9 +192,10 @@ export class PriceRulesComponent implements OnInit {
    * Handle modal close
    */
   onModalClose(): void {
-    this.showCreateModal.set(false);
-    this.showEditModal.set(false);
     this.showDetailModal.set(false);
+    this.showExamplesModal = false;
+    this.showCalculatorModal = false;
+    this.showSeedModal = false;
     this.selectedPriceRule.set(null);
     this.loadPriceRules();
   }

@@ -1,5 +1,703 @@
 /* You can add global styles to this file, and also import other style files */
+
+/* Vazir Matn Font Import - Must be first */
+/* @import url('https://fonts.googleapis.com/css2?family=Vazirmatn:wght@100;200;300;400;500;600;700;800;900&display=swap'); */
+
+@import "tailwindcss";
+@import "tailwindcss-primeui";
 @import "primeicons/primeicons.css";
+@custom-variant dark (&:where(.my-app-dark, .my-app-dark *));
+
+/* ========= PrimeIcons Base Styles ========= */
+
+/* Ensure PrimeIcons work properly */
+.pi {
+  font-family: "primeicons" !important;
+  speak: none;
+  font-style: normal;
+  font-weight: normal;
+  font-variant: normal;
+  text-transform: none;
+  line-height: 1;
+  display: inline-block;
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+}
+
+.pi::before {
+  --webkit-backface-visibility: hidden;
+  backface-visibility: hidden;
+}
+
+/* Ensure specific PrimeIcon classes work */
+[class*="pi-"] {
+  font-family: "primeicons" !important;
+}
+
+[class*="pi-"]::before {
+  font-family: "primeicons" !important;
+}
+
+/* Force PrimeIcons content for specific icons */
+.pi-home::before {
+  content: "\e925" !important;
+}
+.pi-shopping-cart::before {
+  content: "\e932" !important;
+}
+.pi-list::before {
+  content: "\e956" !important;
+}
+.pi-user::before {
+  content: "\ea70" !important;
+}
+.pi-print::before {
+  content: "\e9ba" !important;
+}
+.pi-credit-card::before {
+  content: "\e979" !important;
+}
+.pi-map-marker::before {
+  content: "\e96e" !important;
+}
+.pi-bars::before {
+  content: "\e917" !important;
+}
+.pi-bell::before {
+  content: "\e91f" !important;
+}
+.pi-question-circle::before {
+  content: "\e9c4" !important;
+}
+.pi-sign-out::before {
+  content: "\ea14" !important;
+}
+.pi-cog::before {
+  content: "\e94a" !important;
+}
+.pi-user-edit::before {
+  content: "\ea71" !important;
+}
+.pi-times::before {
+  content: "\ea36" !important;
+}
+
+/* ========= RTL Foundation & Typography System ========= */
+
+/* RTL Base Styles */
+* {
+  direction: rtl;
+}
+
+html {
+  direction: rtl;
+  text-align: right;
+}
+
+body {
+  font-family: "Vazirmatn", "Segoe UI", Tahoma, Geneva, Verdana, sans-serif;
+  direction: rtl;
+  text-align: right;
+}
+
+/* RTL Layout Utilities */
+.rtl-container {
+  direction: rtl;
+  text-align: right;
+}
+
+.rtl-flex {
+  display: flex;
+  flex-direction: row-reverse;
+}
+
+.rtl-flex-col {
+  display: flex;
+  flex-direction: column;
+}
+
+.rtl-grid {
+  display: grid;
+  direction: rtl;
+}
+
+/* RTL Spacing Utilities */
+.mr-auto-rtl {
+  margin-left: auto;
+  margin-right: 0;
+}
+
+.ml-auto-rtl {
+  margin-right: auto;
+  margin-left: 0;
+}
+
+/* RTL Text Alignment */
+.text-right-rtl {
+  text-align: right;
+}
+
+.text-left-rtl {
+  text-align: left;
+}
+
+/* Persian Typography */
+.persian-text {
+  font-family: "Vazirmatn", sans-serif;
+  direction: rtl;
+  text-align: right;
+}
+
+.persian-numbers {
+  font-variant-numeric: normal;
+  direction: rtl;
+}
+
+/* RTL Form Styles */
+.rtl-form .p-float-label > label {
+  right: 0.75rem;
+  left: auto;
+  transform-origin: top right;
+}
+
+.rtl-form .p-inputtext,
+.rtl-form .p-inputnumber-input,
+.rtl-form .p-select-label {
+  text-align: right;
+  direction: rtl;
+}
+
+/* RTL Button Icon Positioning */
+.rtl-button .p-button-icon-left {
+  margin-right: 0.5rem;
+  margin-left: 0;
+  order: 2;
+}
+
+.rtl-button .p-button-icon-right {
+  margin-left: 0.5rem;
+  margin-right: 0;
+  order: -1;
+}
+
+.rtl-button .p-button-label {
+  order: 1;
+}
+
+/* RTL Sidebar Positioning */
+.rtl-sidebar {
+  right: 0;
+  left: auto;
+}
+
+.rtl-sidebar.p-sidebar-right {
+  right: 0;
+  left: auto;
+}
+
+/* RTL Table Styles */
+.rtl-table .p-datatable-thead > tr > th {
+  text-align: right;
+}
+
+.rtl-table .p-datatable-tbody > tr > td {
+  text-align: right;
+}
+
+/* RTL Menu Styles */
+.rtl-menu .p-menuitem-link {
+  justify-content: flex-end;
+  text-align: right;
+}
+
+.rtl-menu .p-menuitem-icon {
+  margin-left: 0.5rem;
+  margin-right: 0;
+  order: 2;
+}
+
+.rtl-menu .p-menuitem-text {
+  order: 1;
+}
+
+/* RTL Toast Positioning */
+.p-toast.p-toast-top-right {
+  top: 20px;
+  left: 20px;
+  right: auto;
+}
+
+.p-toast.p-toast-top-left {
+  top: 20px;
+  right: 20px;
+  left: auto;
+}
+
+/* RTL Dialog Styles */
+.rtl-dialog .p-dialog-header {
+  text-align: right;
+}
+
+.rtl-dialog .p-dialog-content {
+  text-align: right;
+}
+
+.rtl-dialog .p-dialog-footer {
+  justify-content: flex-start;
+}
+
+.rtl-dialog .p-dialog-footer .p-button {
+  margin-left: 0.5rem;
+  margin-right: 0;
+}
+
+.rtl-dialog .p-dialog-footer .p-button:first-child {
+  margin-left: 0;
+}
+
+/* RTL Tabs */
+.rtl-tabs .p-tabview-nav {
+  direction: rtl;
+}
+
+.rtl-tabs .p-tabview-nav li {
+  margin-left: 0.25rem;
+  margin-right: 0;
+}
+
+.rtl-tabs .p-tabview-nav li:first-child {
+  margin-left: 0;
+}
+
+/* RTL Breadcrumb */
+.rtl-breadcrumb .p-breadcrumb-list {
+  direction: rtl;
+}
+
+.rtl-breadcrumb .p-breadcrumb-separator {
+  transform: scaleX(-1);
+}
+
+/* ========= PrimeNG RTL Theme Configuration ========= */
+
+/* RTL Float Label */
+.p-float-label > label {
+  right: 0.75rem !important;
+  left: auto !important;
+  transform-origin: top right !important;
+}
+
+.p-float-label > .p-placeholder,
+.p-float-label > input::placeholder,
+.p-float-label > .p-inputtext::placeholder {
+  text-align: right;
+}
+
+/* RTL Input Components */
+.p-inputtext,
+.p-inputnumber-input,
+.p-textarea {
+  text-align: right !important;
+  direction: rtl !important;
+}
+
+/* RTL Select Component */
+.p-select .p-select-label {
+  text-align: right !important;
+  padding-right: 0.875rem !important;
+  padding-left: 2.5rem !important;
+}
+
+.p-select .p-select-trigger {
+  left: 0.75rem !important;
+  right: auto !important;
+}
+
+/* RTL Dropdown Panel */
+.p-select-overlay .p-select-item,
+.p-select-overlay .p-select-option {
+  text-align: right !important;
+  direction: rtl !important;
+}
+
+/* RTL Button Styles */
+.p-button .p-button-icon-left {
+  margin-right: 0.5rem !important;
+  margin-left: 0 !important;
+  order: 2;
+}
+
+.p-button .p-button-icon-right {
+  margin-left: 0.5rem !important;
+  margin-right: 0 !important;
+  order: -1;
+}
+
+.p-button .p-button-label {
+  order: 1;
+}
+
+/* RTL Table Styles */
+.p-datatable .p-datatable-thead > tr > th,
+.p-datatable .p-datatable-tbody > tr > td,
+.p-datatable .p-datatable-tfoot > tr > td {
+  text-align: right !important;
+}
+
+.p-datatable .p-column-header-content {
+  justify-content: flex-end !important;
+}
+
+.p-datatable .p-sortable-column-icon {
+  margin-left: 0.5rem !important;
+  margin-right: 0 !important;
+}
+
+/* RTL Menu Styles */
+.p-menu .p-menuitem-link {
+  justify-content: flex-end !important;
+  text-align: right !important;
+}
+
+.p-menu .p-menuitem-icon {
+  margin-left: 0.5rem !important;
+  margin-right: 0 !important;
+  order: 2;
+}
+
+.p-menu .p-menuitem-text {
+  order: 1;
+}
+
+/* RTL Sidebar */
+.p-sidebar-right {
+  right: 0 !important;
+  left: auto !important;
+}
+
+/* RTL Toast Positioning for Persian UI */
+.p-toast.p-toast-top-right {
+  top: 20px !important;
+  left: 20px !important;
+  right: auto !important;
+}
+
+.p-toast.p-toast-top-left {
+  top: 20px !important;
+  right: 20px !important;
+  left: auto !important;
+}
+
+.p-toast.p-toast-bottom-right {
+  bottom: 20px !important;
+  left: 20px !important;
+  right: auto !important;
+}
+
+.p-toast.p-toast-bottom-left {
+  bottom: 20px !important;
+  right: 20px !important;
+  left: auto !important;
+}
+
+/* RTL Dialog */
+.p-dialog .p-dialog-header {
+  text-align: right !important;
+}
+
+.p-dialog .p-dialog-content {
+  text-align: right !important;
+}
+
+.p-dialog .p-dialog-footer {
+  justify-content: flex-start !important;
+}
+
+.p-dialog .p-dialog-footer .p-button {
+  margin-left: 0.5rem !important;
+  margin-right: 0 !important;
+}
+
+.p-dialog .p-dialog-footer .p-button:first-child {
+  margin-left: 0 !important;
+}
+
+.p-dialog .p-dialog-header-icon {
+  margin-left: 0.5rem !important;
+  margin-right: 0 !important;
+}
+
+/* RTL Tabs */
+.p-tabview .p-tabview-nav {
+  direction: rtl !important;
+}
+
+.p-tabview .p-tabview-nav li {
+  margin-left: 0.25rem !important;
+  margin-right: 0 !important;
+}
+
+.p-tabview .p-tabview-nav li:first-child {
+  margin-left: 0 !important;
+}
+
+.p-tabview .p-tabview-nav li .p-tabview-nav-link {
+  text-align: right !important;
+}
+
+/* RTL Toolbar */
+.p-toolbar {
+  justify-content: space-between !important;
+}
+
+.p-toolbar .p-toolbar-group-start {
+  order: 2;
+}
+
+.p-toolbar .p-toolbar-group-end {
+  order: 1;
+}
+
+/* RTL Card */
+.p-card .p-card-header {
+  text-align: right !important;
+}
+
+.p-card .p-card-content {
+  text-align: right !important;
+}
+
+.p-card .p-card-footer {
+  text-align: right !important;
+}
+
+/* RTL Pagination */
+.p-paginator {
+  direction: rtl !important;
+}
+
+.p-paginator .p-paginator-pages {
+  direction: ltr !important;
+}
+
+/* RTL Checkbox and Radio */
+.p-checkbox .p-checkbox-box {
+  margin-left: 0.5rem !important;
+  margin-right: 0 !important;
+}
+
+.p-radiobutton .p-radiobutton-box {
+  margin-left: 0.5rem !important;
+  margin-right: 0 !important;
+}
+
+/* RTL Form Layout */
+.p-field {
+  text-align: right !important;
+}
+
+.p-field > label {
+  text-align: right !important;
+  display: block !important;
+  margin-bottom: 0.5rem !important;
+}
+
+/* RTL Specific Utility Classes */
+.rtl-text {
+  direction: rtl !important;
+  text-align: right !important;
+}
+
+.rtl-flex-reverse {
+  flex-direction: row-reverse !important;
+}
+
+.rtl-justify-start {
+  justify-content: flex-start !important;
+}
+
+.rtl-justify-end {
+  justify-content: flex-end !important;
+}
+
+/* Persian Font Weight Classes */
+.persian-light {
+  font-weight: 300;
+}
+
+.persian-regular {
+  font-weight: 400;
+}
+
+.persian-medium {
+  font-weight: 500;
+}
+
+.persian-semibold {
+  font-weight: 600;
+}
+
+.persian-bold {
+  font-weight: 700;
+}
+
+/* ========= Additional RTL Utilities ========= */
+
+/* RTL Icon Positioning */
+.rtl-icon-left {
+  margin-right: 0.5rem;
+  margin-left: 0;
+}
+
+.rtl-icon-right {
+  margin-left: 0.5rem;
+  margin-right: 0;
+}
+
+/* RTL Border Utilities */
+.rtl-border-left {
+  border-right: 1px solid #e5e7eb;
+  border-left: none;
+}
+
+.rtl-border-right {
+  border-left: 1px solid #e5e7eb;
+  border-right: none;
+}
+
+/* RTL Shadow Utilities */
+.rtl-shadow-left {
+  box-shadow: -2px 0 4px rgba(0, 0, 0, 0.1);
+}
+
+.rtl-shadow-right {
+  box-shadow: 2px 0 4px rgba(0, 0, 0, 0.1);
+}
+
+/* RTL Position Utilities */
+.rtl-left-0 {
+  right: 0;
+  left: auto;
+}
+
+.rtl-right-0 {
+  left: 0;
+  right: auto;
+}
+
+/* RTL Transform Utilities */
+.rtl-transform-x {
+  transform: scaleX(-1);
+}
+
+/* RTL Specific Component Overrides */
+.rtl-layout .p-inputgroup .p-inputgroup-addon:first-child {
+  border-radius: 0 6px 6px 0;
+}
+
+.rtl-layout .p-inputgroup .p-inputgroup-addon:last-child {
+  border-radius: 6px 0 0 6px;
+}
+
+.rtl-layout .p-inputgroup .p-inputtext:first-child {
+  border-radius: 0 6px 6px 0;
+}
+
+.rtl-layout .p-inputgroup .p-inputtext:last-child {
+  border-radius: 6px 0 0 6px;
+}
+
+/* RTL Dropdown Arrow */
+.rtl-layout .p-select .p-select-trigger .p-select-trigger-icon {
+  transform: rotate(180deg);
+}
+
+/* RTL Calendar */
+.rtl-layout .p-datepicker .p-datepicker-header {
+  direction: rtl;
+}
+
+.rtl-layout .p-datepicker .p-datepicker-next {
+  order: -1;
+}
+
+.rtl-layout .p-datepicker .p-datepicker-prev {
+  order: 1;
+}
+
+/* RTL Steps */
+.rtl-layout .p-steps .p-steps-item {
+  direction: rtl;
+}
+
+.rtl-layout .p-steps .p-steps-item .p-steps-number {
+  margin-left: 0.5rem;
+  margin-right: 0;
+}
+
+/* RTL Accordion */
+.rtl-layout .p-accordion .p-accordion-header .p-accordion-header-link {
+  text-align: right;
+}
+
+.rtl-layout .p-accordion .p-accordion-toggle-icon {
+  margin-left: 0.5rem;
+  margin-right: 0;
+  order: -1;
+}
+
+/* RTL Panel */
+.rtl-layout .p-panel .p-panel-header {
+  text-align: right;
+}
+
+.rtl-layout .p-panel .p-panel-header-icon {
+  margin-left: 0.5rem;
+  margin-right: 0;
+}
+
+/* RTL Fieldset */
+.rtl-layout .p-fieldset .p-fieldset-legend {
+  text-align: right;
+}
+
+.rtl-layout .p-fieldset .p-fieldset-toggler {
+  margin-left: 0.5rem;
+  margin-right: 0;
+}
+
+/* RTL Splitter */
+.rtl-layout .p-splitter .p-splitter-gutter {
+  cursor: ew-resize;
+}
+
+/* RTL Responsive Utilities */
+@media (max-width: 768px) {
+  .rtl-layout .p-sidebar-right {
+    width: 100% !important;
+  }
+
+  .rtl-layout .p-dialog {
+    width: 95% !important;
+    margin: 0 auto !important;
+  }
+
+  .rtl-layout .p-datatable .p-datatable-wrapper {
+    overflow-x: auto;
+    direction: rtl;
+  }
+}
+
+/* RTL Print Styles */
+@media print {
+  .rtl-layout {
+    direction: rtl !important;
+  }
+
+  .rtl-layout * {
+    text-align: right !important;
+  }
+}
 
 /* Reset button styles for non-PrimeNG buttons */
 button:not(.p-button):not([class*="p-"]) {

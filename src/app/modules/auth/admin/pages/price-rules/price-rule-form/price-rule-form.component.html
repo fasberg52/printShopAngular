@@ -1,0 +1,251 @@
+<div class="price-rule-form-container">
+  <p-toast></p-toast>
+
+  <!-- Header -->
+  <div class="form-header">
+    <div class="header-content">
+      <h1 class="form-title">
+        {{ isEditMode() ? "ویرایش قانون قیمت" : "ایجاد قانون قیمت جدید" }}
+      </h1>
+      <p-button
+        label="بازگشت"
+        icon="pi pi-arrow-right"
+        severity="secondary"
+        [outlined]="true"
+        (onClick)="onCancel()"
+      ></p-button>
+    </div>
+  </div>
+
+  <!-- Loading State -->
+  @if (loading()) {
+  <div class="loading-container">
+    <p>در حال بارگذاری...</p>
+  </div>
+  } @else {
+  <!-- Form -->
+  <form [formGroup]="form" (ngSubmit)="onSubmit()" class="price-rule-form">
+    <div class="form-content">
+      <!-- Name -->
+      <div class="form-field">
+        <label for="name">نام قانون *</label>
+        <input
+          id="name"
+          type="text"
+          pInputText
+          formControlName="name"
+          placeholder="مثال: چاپ A4 - سیاه سفید"
+          class="full-width-input"
+        />
+        @if (validationErrors()['name']) {
+        <small class="error-text">{{ validationErrors()["name"] }}</small>
+        }
+      </div>
+
+      <!-- Product Type -->
+      <div class="form-field">
+        <label for="productType">نوع محصول *</label>
+        <p-select
+          id="productType"
+          formControlName="productType"
+          [options]="productTypes"
+          optionLabel="label"
+          optionValue="value"
+          placeholder="انتخاب کنید"
+          class="full-width-input"
+        ></p-select>
+        @if (validationErrors()['productType']) {
+        <small class="error-text">{{
+          validationErrors()["productType"]
+        }}</small>
+        }
+        <small class="hint-text">
+          @if (form.get('productType')?.value === 'print') { برای چاپ: اندازه
+          کاغذ (A3, A4, A5)، رنگ چاپ (سیاه و سفید، رنگی معمولی، تمام رنگ)، و نوع
+          رو (تک رو، دو رو) را انتخاب کنید. } @else if
+          (form.get('productType')?.value === 'binding') { برای صحافی: نوع صحافی
+          (فنری معمولی، فنری پاپکو، منگنه) و اندازه کاغذ (A3, A4, A5) را انتخاب
+          کنید. } @else { ابتدا نوع محصول را انتخاب کنید. }
+        </small>
+      </div>
+
+      <!-- Price -->
+      <div class="form-field">
+        <label for="price">قیمت (تومان) *</label>
+        <p-inputNumber
+          id="price"
+          formControlName="price"
+          mode="decimal"
+          [min]="0"
+          [maxFractionDigits]="0"
+          placeholder="مثال: 4200"
+          class="full-width-input"
+        ></p-inputNumber>
+        @if (validationErrors()['price']) {
+        <small class="error-text">{{ validationErrors()["price"] }}</small>
+        }
+      </div>
+
+      <!-- Is Active -->
+      <div class="form-field">
+        <label for="isActive">قانون فعال باشد</label>
+        <p-toggleswitch
+          formControlName="isActive"
+          inputId="isActive"
+        ></p-toggleswitch>
+      </div>
+
+      <!-- Match Conditions -->
+      <div class="form-field">
+        <div class="field-header">
+          <label>شرایط تطابق</label>
+          <p-button
+            label="افزودن شرط"
+            icon="pi pi-plus"
+            (click)="addMatchCondition()"
+            [text]="true"
+            size="small"
+            styleClass="p-button-success"
+          ></p-button>
+        </div>
+
+        <div class="match-list">
+          @for (match of matchArray.controls; track $index) {
+          <div class="match-item">
+            <div class="match-inputs">
+              <div class="match-input-wrapper">
+                <p-select
+                  [formControl]="$any(match).get('attributeKey')"
+                  [options]="attributeOptions()"
+                  optionLabel="label"
+                  optionValue="value"
+                  placeholder="انتخاب کلید"
+                  class="small-input"
+                  [disabled]="!form.get('productType')?.value"
+                ></p-select>
+                @if (validationErrors()['match.' + $index + '.attributeKey']) {
+                <small class="error-text">{{
+                  validationErrors()["match." + $index + ".attributeKey"]
+                }}</small>
+                }
+              </div>
+              <div class="match-input-wrapper">
+                <p-select
+                  [formControl]="$any(match).get('value')"
+                  [options]="
+                    getValueOptions(
+                      $any(match).get('attributeKey')?.value || ''
+                    )
+                  "
+                  optionLabel="label"
+                  optionValue="label"
+                  placeholder="انتخاب مقدار"
+                  class="small-input"
+                  [disabled]="!$any(match).get('attributeKey')?.value"
+                ></p-select>
+                @if (validationErrors()['match.' + $index + '.value']) {
+                <small class="error-text">{{
+                  validationErrors()["match." + $index + ".value"]
+                }}</small>
+                }
+              </div>
+            </div>
+            <p-button
+              icon="pi pi-trash"
+              (click)="removeMatchCondition($index)"
+              [text]="true"
+              severity="danger"
+              size="small"
+            ></p-button>
+          </div>
+          } @if (matchArray.length === 0) {
+          <p class="empty-state">هیچ شرطی اضافه نشده است</p>
+          }
+        </div>
+      </div>
+
+      <!-- Breakpoints -->
+      <div class="form-field">
+        <div class="field-header">
+          <label>نقطه‌شکن‌ها (قیمت‌گذاری یکپارچه)</label>
+          <p-button
+            label="افزودن نقطه شکن"
+            icon="pi pi-plus"
+            (click)="addBreakpoint()"
+            [text]="true"
+            size="small"
+            styleClass="p-button-info"
+          ></p-button>
+        </div>
+
+        <div class="breakpoint-list">
+          @for (bp of breakpointsArray.controls; track $index) {
+          <div class="breakpoint-item">
+            <div class="breakpoint-inputs">
+              <div class="breakpoint-input-wrapper">
+                <label>از تعداد:</label>
+                <p-inputNumber
+                  [formControl]="$any(bp).get('at')"
+                  mode="decimal"
+                  [min]="1"
+                  placeholder="مثال: 501"
+                  class="small-input"
+                ></p-inputNumber>
+                @if (validationErrors()['breakpoints.' + $index + '.at']) {
+                <small class="error-text">{{
+                  validationErrors()["breakpoints." + $index + ".at"]
+                }}</small>
+                }
+              </div>
+
+              <div class="breakpoint-input-wrapper">
+                <label>قیمت:</label>
+                <p-inputNumber
+                  [formControl]="$any(bp).get('price')"
+                  mode="decimal"
+                  [min]="0"
+                  placeholder="مثال: 4000"
+                  class="small-input"
+                ></p-inputNumber>
+                @if (validationErrors()['breakpoints.' + $index + '.price']) {
+                <small class="error-text">{{
+                  validationErrors()["breakpoints." + $index + ".price"]
+                }}</small>
+                }
+              </div>
+            </div>
+            <p-button
+              icon="pi pi-trash"
+              (click)="removeBreakpoint($index)"
+              [text]="true"
+              severity="danger"
+              size="small"
+            ></p-button>
+          </div>
+          } @if (breakpointsArray.length === 0) {
+          <p class="empty-state">هیچ نقطه شکنی اضافه نشده است</p>
+          }
+        </div>
+      </div>
+    </div>
+
+    <!-- Actions Footer -->
+    <div class="form-actions">
+      <p-button
+        label="انصراف"
+        icon="pi pi-times"
+        severity="secondary"
+        [outlined]="true"
+        (onClick)="onCancel()"
+      ></p-button>
+      <p-button
+        [label]="isEditMode() ? 'ویرایش قانون' : 'ایجاد'"
+        [icon]="isEditMode() ? 'pi pi-pencil' : 'pi pi-check'"
+        severity="primary"
+        (onClick)="onSubmit()"
+        [loading]="submitting()"
+      ></p-button>
+    </div>
+  </form>
+  }
+</div>

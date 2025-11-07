@@ -1,0 +1,214 @@
+<div class="pricing-container">
+  <!-- Loading State -->
+  @if (isLoading()) {
+  <div class="loading-state">
+    <p-skeleton width="100%" height="200px"></p-skeleton>
+    <p-skeleton width="100%" height="200px"></p-skeleton>
+    <p-skeleton width="100%" height="200px"></p-skeleton>
+  </div>
+  }
+
+  <!-- Error State -->
+  @if (errorMessage() && !isLoading()) {
+  <p-message severity="error" [text]="errorMessage()"></p-message>
+  }
+
+  <!-- Main Content -->
+  @if (!isLoading() && !errorMessage()) {
+  <div class="pricing-content">
+
+    <!-- Header -->
+    <div class="pricing-header">
+      <h2>لیست قیمت‌های خدمات</h2>
+      <p>قیمت‌ها بر اساس تعداد و نوع محصول محاسبه می‌شوند</p>
+    </div>
+
+    <!-- Filters -->
+    <div class="filters-section">
+      <div class="filters-grid">
+
+        <!-- Product Type Filter -->
+        <div class="filter-group">
+          <label class="filter-label">نوع خدمات</label>
+          <p-select
+            [options]="productTypeFilters"
+            optionLabel="label"
+            optionValue="value"
+            [(ngModel)]="selectedProductType"
+            placeholder="انتخاب کنید"
+            class="modern-select"
+            (onChange)="onProductTypeChange()"
+          ></p-select>
+        </div>
+
+        <!-- Size Filter -->
+        <div class="filter-group">
+          <label class="filter-label">سایز کاغذ</label>
+          <p-select
+            [options]="sizeFilters"
+            optionLabel="label"
+            optionValue="value"
+            [(ngModel)]="selectedSize"
+            placeholder="انتخاب کنید"
+            class="modern-select"
+          ></p-select>
+        </div>
+
+        <!-- Color Filter (only show for print or all) -->
+        @if (selectedProductType() !== 'binding') {
+        <div class="filter-group">
+          <label class="filter-label">نوع رنگ</label>
+          <p-select
+            [options]="colorFilters"
+            optionLabel="label"
+            optionValue="value"
+            [(ngModel)]="selectedColor"
+            placeholder="انتخاب کنید"
+            class="modern-select"
+          ></p-select>
+        </div>
+        }
+
+        <!-- Clear Filters -->
+        @if (selectedSize() !== 'all' || selectedColor() !== 'all' || selectedProductType() !== 'all') {
+        <div class="filter-group">
+          <label class="filter-label">&nbsp;</label>
+          <p-button
+            label="پاک کردن فیلترها"
+            icon="pi pi-times"
+            severity="secondary"
+            size="small"
+            (onClick)="clearFilters()"
+            class="clear-filters-btn"
+          ></p-button>
+        </div>
+        }
+
+      </div>
+    </div>
+
+    <!-- Products Display -->
+    @if (hasFilteredVariants()) {
+    <div class="products-display">
+
+      <!-- Print Products Section -->
+      @if (selectedProductType() === 'all' || selectedProductType() === 'print') {
+        @if (hasPrintVariants()) {
+          <div class="product-section">
+            <h3 class="section-title">
+              <i class="pi pi-print"></i>
+              خدمات چاپ
+            </h3>
+
+            <div class="products-grid">
+              @for (variant of productVariants(); track variant.id) {
+                @if (variant.productType === 'print' && shouldShowVariant(variant)) {
+                  <p-card class="product-card" [class.available]="variant.rule" [class.unavailable]="!variant.rule" [@filterAnimation]>
+                    <ng-template pTemplate="header">
+                      <div class="card-header">
+                        <h4>{{ variant.name }}</h4>
+                        <p-tag [value]="getProductTypeLabel(variant.productType)" severity="success"></p-tag>
+                      </div>
+                    </ng-template>
+
+                    @if (variant.rule && variant.prices) {
+                      <div class="pricing-table">
+                        <table>
+                          <thead>
+                            <tr>
+                              <th>تعداد</th>
+                              <th>قیمت (تومان)</th>
+                            </tr>
+                          </thead>
+                          <tbody>
+                            @for (price of variant.prices; track price.quantity) {
+                              <tr>
+                                <td>{{ price.range }}</td>
+                                <td class="price-cell">{{ price.price | persianCurrency }}</td>
+                              </tr>
+                            }
+                          </tbody>
+                        </table>
+                      </div>
+                    } @else {
+                      <div class="unavailable-message">
+                        <i class="pi pi-info-circle"></i>
+                        <p>قیمت‌گذاری برای این محصول تعریف نشده است</p>
+                      </div>
+                    }
+                  </p-card>
+                }
+              }
+            </div>
+          </div>
+        }
+      }
+
+      <!-- Binding Products Section -->
+      @if (selectedProductType() === 'all' || selectedProductType() === 'binding') {
+        @if (hasBindingVariants()) {
+          <div class="product-section">
+            <h3 class="section-title">
+              <i class="pi pi-book"></i>
+              خدمات صحافی
+            </h3>
+
+            <div class="products-grid">
+              @for (variant of productVariants(); track variant.id) {
+                @if (variant.productType === 'binding' && shouldShowVariant(variant)) {
+                  <p-card class="product-card" [class.available]="variant.rule" [class.unavailable]="!variant.rule" [@filterAnimation]>
+                    <ng-template pTemplate="header">
+                      <div class="card-header">
+                        <h4>{{ variant.name }}</h4>
+                        <p-tag [value]="getProductTypeLabel(variant.productType)" severity="info"></p-tag>
+                      </div>
+                    </ng-template>
+
+                    @if (variant.rule && variant.prices) {
+                      <div class="pricing-table">
+                        <table>
+                          <thead>
+                            <tr>
+                              <th>تعداد</th>
+                              <th>قیمت (تومان)</th>
+                            </tr>
+                          </thead>
+                          <tbody>
+                            @for (price of variant.prices; track price.quantity) {
+                              <tr>
+                                <td>{{ price.range }}</td>
+                                <td class="price-cell">{{ price.price | persianCurrency }}</td>
+                              </tr>
+                            }
+                          </tbody>
+                        </table>
+                      </div>
+                    } @else {
+                      <div class="unavailable-message">
+                        <i class="pi pi-info-circle"></i>
+                        <p>قیمت‌گذاری برای این محصول تعریف نشده است</p>
+                      </div>
+                    }
+                  </p-card>
+                }
+              }
+            </div>
+          </div>
+        }
+      }
+
+    </div>
+    }
+
+    <!-- Empty State -->
+    @if (productVariants().length === 0) {
+    <div class="empty-state">
+      <i class="pi pi-info-circle"></i>
+      <h3>اطلاعات قیمت‌گذاری یافت نشد</h3>
+      <p>در حال حاضر هیچ قانونی برای قیمت‌گذاری تعریف نشده است</p>
+    </div>
+    }
+
+  </div>
+  }
+</div>
