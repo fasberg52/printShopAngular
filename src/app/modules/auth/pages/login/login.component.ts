@@ -11,11 +11,7 @@ import { Router, RouterLink } from '@angular/router'; // Import RouterLink
 import { MessageService } from 'primeng/api';
 import { Subscription, timer } from 'rxjs';
 import { AuthService } from '../../../../core/auth/services/auth.service';
-import {
-  extractDigits,
-  toLatinNumerals,
-  toPersianNumerals,
-} from '../../../../core/shared/utils';
+import { extractDigits, toLatinNumerals } from '../../../../core/shared/utils';
 
 // --- ایمپورت‌های کامپوننت‌های زیبای PrimeNG ---
 import { ButtonModule } from 'primeng/button';
@@ -80,7 +76,6 @@ export class LoginComponent implements OnDestroy {
   countdown = signal(0);
   showPassword = signal(false);
   private timerSubscription: Subscription | undefined;
-  private codeSubscription: Subscription | undefined;
 
   // --- فرم ورود با رمز عبور ---
   passwordForm = this.fb.group({
@@ -296,37 +291,12 @@ export class LoginComponent implements OnDestroy {
     this.loginForm.get('password')?.clearValidators();
     this.loginForm.get('password')?.reset();
 
-    // ولیدیتور کد را به‌روز کن تا فقط 5 رقم فارسی را بپذیرد
+    // ولیدیتور کد را به‌روز کن تا فقط 5 رقم عددی فارسی یا لاتین را بپذیرد
     this.loginForm.get('code')?.setValidators([
       Validators.required,
-      Validators.pattern(/^[۰-۹]{5}$/), // <-- تغییر به الگوی فارسی
+      Validators.pattern(/^[0-9۰-۹]{5}$/),
     ]);
     this.loginForm.get('code')?.updateValueAndValidity();
-
-    const codeControl = this.loginForm.get('code');
-    this.codeSubscription?.unsubscribe();
-
-    // به تغییرات فیلد کد گوش بده
-    this.codeSubscription = codeControl?.valueChanges.subscribe((val) => {
-      const value = (val ?? '').toString();
-
-      // ۱. هر عددی (انگلیسی) را به فارسی تبدیل کن
-      let persianValue = toPersianNumerals(value);
-      // ۲. هر چیزی جز اعداد فارسی را حذف کن
-      persianValue = extractDigits(persianValue);
-      // ۳. به ۵ رقم محدود کن
-      persianValue = persianValue.slice(0, 5);
-
-      // ۴. اگر تغییری رخ داده، فرم را (بدون emit کردن) آپدیت کن
-      if (val !== persianValue) {
-        codeControl?.setValue(persianValue, { emitEvent: false });
-      }
-
-      // ۵. برای ارسال خودکار، چک کن که طول به ۵ رسیده
-      if (persianValue.length === 5 && !this.otpLoading()) {
-        this.verifyOtp();
-      }
-    });
 
     this.otpStage.set('request');
     this.requestOtp();
@@ -349,8 +319,8 @@ export class LoginComponent implements OnDestroy {
         // Focus on OTP input after OTP is sent
         setTimeout(() => {
           const otpInput = document.querySelector(
-            '[name="code_0"]'
-          ) as HTMLInputElement;
+            'p-inputotp input'
+          ) as HTMLInputElement | null;
           otpInput?.focus();
         }, 100);
       },
@@ -370,8 +340,9 @@ export class LoginComponent implements OnDestroy {
     this.otpLoading.set(true);
     const phone = this.loginForm.get('phone')!.value!;
     // Convert Persian OTP code to Latin for server
-    const persianCode = codeControl!.value!;
-    const latinCode = toLatinNumerals(persianCode);
+    const persianCode = codeControl!.value ?? '';
+    const normalizedCode = extractDigits(persianCode).slice(0, 5);
+    const latinCode = toLatinNumerals(normalizedCode);
 
     this.authService.verifyLoginOtp(phone, latinCode).subscribe({
       next: () => this.router.navigate(['/admin']),
@@ -401,7 +372,6 @@ export class LoginComponent implements OnDestroy {
     this.loginForm.get('code')?.reset();
     this.timerSubscription?.unsubscribe();
     this.countdown.set(0);
-    this.codeSubscription?.unsubscribe();
   }
 
   // (موجود) تایمر
@@ -462,11 +432,27 @@ export class LoginComponent implements OnDestroy {
   // (موجود) پاکسازی تایمر
   ngOnDestroy(): void {
     this.timerSubscription?.unsubscribe();
-    this.codeSubscription?.unsubscribe();
   }
 
   // Toggle password visibility
   togglePasswordVisibility(): void {
     this.showPassword.update((value) => !value);
+  }
+
+  onOtpComplete(event: unknown): void {
+    if (this.otpLoading()) {
+      return;
+    }
+    const rawValue =
+      typeof event === 'string'
+        ? event
+        : typeof (event as { value?: string })?.value === 'string'
+          ? (event as { value?: string }).value!
+          : '';
+    const cleanedCode = extractDigits(rawValue).slice(0, 5);
+    this.loginForm.get('code')?.setValue(cleanedCode);
+    if (cleanedCode.length === 5) {
+      this.verifyOtp();
+    }
   }
 }

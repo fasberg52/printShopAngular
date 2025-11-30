@@ -1,0 +1,270 @@
+<div class="delivery-methods-container">
+  <p-toolbar>
+    <div class="p-toolbar-group-start">
+      <h2>مدیریت روش‌های ارسال</h2>
+    </div>
+    <div class="p-toolbar-group-end">
+      <p-button
+        label="افزودن روش ارسال"
+        icon="pi pi-plus"
+        (click)="openCreateModal()"
+      ></p-button>
+    </div>
+  </p-toolbar>
+
+  <p-table
+    [value]="deliveryMethods()"
+    [loading]="loading()"
+    [paginator]="true"
+    [rows]="rows"
+    [first]="first"
+    [totalRecords]="totalRecords"
+    [lazy]="false"
+    styleClass="p-datatable-striped"
+    [tableStyle]="{ 'min-width': '50rem' }"
+  >
+    <ng-template pTemplate="header">
+      <tr>
+        <th>روش ارسال</th>
+        <th>نام</th>
+        <th>هزینه پایه</th>
+        <th>توضیحات</th>
+        <th>نیاز به آدرس</th>
+        <th>وضعیت</th>
+        <th>عملیات</th>
+      </tr>
+    </ng-template>
+    <ng-template pTemplate="body" let-deliveryMethod>
+      <tr>
+        <td>
+          <p-tag
+            [value]="getMethodLabel(deliveryMethod.method)"
+            severity="info"
+          ></p-tag>
+        </td>
+        <td>{{ deliveryMethod.name }}</td>
+        <td>{{ formatPrice(deliveryMethod.basePrice) }} تومان</td>
+        <td>{{ deliveryMethod.description || "-" }}</td>
+        <td>
+          <p-tag
+            [value]="deliveryMethod.requiresAddress ? 'بله' : 'خیر'"
+            [severity]="
+              deliveryMethod.requiresAddress ? 'success' : 'secondary'
+            "
+          ></p-tag>
+        </td>
+        <td>
+          <p-tag
+            [value]="deliveryMethod.isActive ? 'فعال' : 'غیرفعال'"
+            [severity]="deliveryMethod.isActive ? 'success' : 'danger'"
+          ></p-tag>
+        </td>
+        <td>
+          <div class="actions">
+            <p-button
+              icon="pi pi-ellipsis-v"
+              [text]="true"
+              [rounded]="true"
+              styleClass="action-button"
+              (click)="menu.toggle($event)"
+            ></p-button>
+            <p-menu
+              #menu
+              [model]="getMenuItems(deliveryMethod)"
+              [popup]="true"
+              [appendTo]="'body'"
+            ></p-menu>
+          </div>
+        </td>
+      </tr>
+    </ng-template>
+    <ng-template pTemplate="emptymessage">
+      <tr>
+        <td colspan="7">هیچ روش ارسالی یافت نشد</td>
+      </tr>
+    </ng-template>
+  </p-table>
+
+  <!-- Create Modal -->
+  <p-dialog
+    [(visible)]="createModalVisible"
+    header="افزودن روش ارسال جدید"
+    [modal]="true"
+    [style]="{ width: '50rem' }"
+    (onHide)="showCreateModal.set(false)"
+  >
+    <div class="form-container">
+      <div class="form-group">
+        <label for="method">روش ارسال *</label>
+        <select
+          id="method"
+          class="form-control"
+          [(ngModel)]="formData().method"
+          [ngModelOptions]="{ standalone: true }"
+        >
+          <option [value]="'post'">پست</option>
+          <option [value]="'pickup'">دریافت حضوری</option>
+          <option [value]="'express'">اکسپرس</option>
+        </select>
+      </div>
+
+      <div class="form-group">
+        <label for="name">نام *</label>
+        <input
+          id="name"
+          type="text"
+          pInputText
+          [(ngModel)]="formData().name"
+          [ngModelOptions]="{ standalone: true }"
+          placeholder="مثال: ارسال پستی"
+        />
+      </div>
+
+      <div class="form-group">
+        <label for="basePrice">هزینه پایه (تومان) *</label>
+        <p-inputNumber
+          id="basePrice"
+          [(ngModel)]="formData().basePrice"
+          [ngModelOptions]="{ standalone: true }"
+          [min]="0"
+          [useGrouping]="true"
+          [minFractionDigits]="0"
+          [maxFractionDigits]="0"
+        ></p-inputNumber>
+      </div>
+
+      <div class="form-group">
+        <label for="description">توضیحات</label>
+        <textarea
+          id="description"
+          pTextarea
+          [(ngModel)]="formData().description"
+          [ngModelOptions]="{ standalone: true }"
+          rows="3"
+          placeholder="توضیحات اختیاری"
+          [autoResize]="true"
+        ></textarea>
+      </div>
+
+      <div class="form-group">
+        <label for="requiresAddress">نیاز به آدرس</label>
+        <p-toggleButton
+          [(ngModel)]="formData().requiresAddress"
+          [ngModelOptions]="{ standalone: true }"
+          onLabel="بله"
+          offLabel="خیر"
+        ></p-toggleButton>
+      </div>
+
+      <div class="form-group">
+        <label for="isActive">وضعیت فعال</label>
+        <p-toggleButton
+          [(ngModel)]="formData().isActive"
+          [ngModelOptions]="{ standalone: true }"
+          onLabel="فعال"
+          offLabel="غیرفعال"
+        ></p-toggleButton>
+      </div>
+    </div>
+
+    <ng-template pTemplate="footer">
+      <p-button
+        label="انصراف"
+        icon="pi pi-times"
+        [text]="true"
+        (click)="showCreateModal.set(false)"
+      ></p-button>
+      <p-button
+        label="ذخیره"
+        icon="pi pi-check"
+        (click)="createDeliveryMethod()"
+        [loading]="loading()"
+      ></p-button>
+    </ng-template>
+  </p-dialog>
+
+  <!-- Edit Modal -->
+  <p-dialog
+    [(visible)]="editModalVisible"
+    header="ویرایش روش ارسال"
+    [modal]="true"
+    [style]="{ width: '50rem' }"
+    (onHide)="showEditModal.set(false)"
+  >
+    <div class="form-container">
+      <div class="form-group">
+        <label for="edit-name">نام *</label>
+        <input
+          id="edit-name"
+          type="text"
+          pInputText
+          [(ngModel)]="formData().name"
+          [ngModelOptions]="{ standalone: true }"
+        />
+      </div>
+
+      <div class="form-group">
+        <label for="edit-basePrice">هزینه پایه (تومان) *</label>
+        <p-inputNumber
+          id="edit-basePrice"
+          [(ngModel)]="formData().basePrice"
+          [ngModelOptions]="{ standalone: true }"
+          [min]="0"
+          [useGrouping]="true"
+          [minFractionDigits]="0"
+          [maxFractionDigits]="0"
+        ></p-inputNumber>
+      </div>
+
+      <div class="form-group">
+        <label for="edit-description">توضیحات</label>
+        <textarea
+          id="edit-description"
+          pTextarea
+          [(ngModel)]="formData().description"
+          [ngModelOptions]="{ standalone: true }"
+          rows="3"
+          [autoResize]="true"
+        ></textarea>
+      </div>
+
+      <div class="form-group">
+        <label for="edit-requiresAddress">نیاز به آدرس</label>
+        <p-toggleButton
+          [(ngModel)]="formData().requiresAddress"
+          [ngModelOptions]="{ standalone: true }"
+          onLabel="بله"
+          offLabel="خیر"
+        ></p-toggleButton>
+      </div>
+
+      <div class="form-group">
+        <label for="edit-isActive">وضعیت فعال</label>
+        <p-toggleButton
+          [(ngModel)]="formData().isActive"
+          [ngModelOptions]="{ standalone: true }"
+          onLabel="فعال"
+          offLabel="غیرفعال"
+        ></p-toggleButton>
+      </div>
+    </div>
+
+    <ng-template pTemplate="footer">
+      <p-button
+        label="انصراف"
+        icon="pi pi-times"
+        [text]="true"
+        (click)="showEditModal.set(false)"
+      ></p-button>
+      <p-button
+        label="ذخیره"
+        icon="pi pi-check"
+        (click)="updateDeliveryMethod()"
+        [loading]="loading()"
+      ></p-button>
+    </ng-template>
+  </p-dialog>
+
+  <p-toast></p-toast>
+  <p-confirmDialog></p-confirmDialog>
+</div>

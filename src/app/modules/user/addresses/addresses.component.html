@@ -1,0 +1,527 @@
+<div class="addresses-container">
+  <!-- Header Section -->
+  <div class="header-section">
+    <div class="header-content">
+      <div class="header-title">
+        <i class="pi pi-map-marker header-icon"></i>
+        <div>
+          <h1 class="page-title">آدرس‌های من</h1>
+          <p class="page-subtitle">مدیریت آدرس‌های ارسال سفارش‌ها</p>
+        </div>
+      </div>
+      <p-button
+        label="افزودن آدرس جدید"
+        icon="pi pi-plus"
+        (click)="openCreateModal()"
+        styleClass="add-button"
+        [loading]="loading()"
+      ></p-button>
+    </div>
+  </div>
+
+  <!-- Loading State -->
+  @if (loading() && addresses().length === 0) {
+  <div class="loading-container">
+    <div class="loading-spinner">
+      <i class="pi pi-spin pi-spinner text-4xl text-blue-500"></i>
+      <p class="loading-text">در حال بارگذاری آدرس‌ها...</p>
+    </div>
+  </div>
+  }
+
+  <!-- Empty State -->
+  @if (!loading() && addresses().length === 0) {
+  <div class="empty-state">
+    <div class="empty-state-icon">
+      <i class="pi pi-map-marker"></i>
+    </div>
+    <h3 class="empty-state-title">هنوز آدرسی ثبت نکرده‌اید</h3>
+    <p class="empty-state-description">
+      برای ثبت سفارش، ابتدا یک آدرس اضافه کنید
+    </p>
+    <p-button
+      label="افزودن اولین آدرس"
+      icon="pi pi-plus"
+      (click)="openCreateModal()"
+      styleClass="p-button-primary"
+    ></p-button>
+  </div>
+  }
+
+  <!-- Addresses Grid -->
+  @if (addresses().length > 0) {
+  <div class="addresses-grid">
+    @for (address of addresses(); track address._id || address.id) {
+    <div class="address-card" [class.default-address]="address.isDefault">
+      <!-- Card Header -->
+      <div class="card-header">
+        <div class="card-title-section">
+          <i class="pi pi-home card-icon"></i>
+          <h3 class="card-title">{{ address.title }}</h3>
+        </div>
+        <div class="card-actions">
+          <p-button
+            icon="pi pi-pencil"
+            [text]="true"
+            [rounded]="true"
+            severity="secondary"
+            size="small"
+            (click)="openEditModal(address)"
+            pTooltip="ویرایش"
+            tooltipPosition="top"
+          ></p-button>
+          <p-button
+            icon="pi pi-trash"
+            [text]="true"
+            [rounded]="true"
+            severity="danger"
+            size="small"
+            (click)="deleteAddress(address)"
+            pTooltip="حذف"
+            tooltipPosition="top"
+          ></p-button>
+        </div>
+      </div>
+
+      <!-- Card Body -->
+      <div class="card-body">
+        <div class="address-info">
+          <div class="info-row">
+            <i class="pi pi-user info-icon"></i>
+            <span class="info-label">گیرنده:</span>
+            <span class="info-value">{{ address.recipientName }}</span>
+          </div>
+          <div class="info-row">
+            <i class="pi pi-phone info-icon"></i>
+            <span class="info-label">شماره تماس:</span>
+            <span class="info-value phone-value">{{
+              formatPhone(address.recipientPhone)
+            }}</span>
+          </div>
+          <div class="info-row">
+            <i class="pi pi-map info-icon"></i>
+            <span class="info-label">آدرس:</span>
+            <span class="info-value">{{ address.fullAddress }}</span>
+          </div>
+          <div class="info-row">
+            <i class="pi pi-building info-icon"></i>
+            <span class="info-label">شهر:</span>
+            <span class="info-value"
+              >{{ address.city }}، {{ address.province }}</span
+            >
+          </div>
+          <div class="info-row">
+            <i class="pi pi-inbox info-icon"></i>
+            <span class="info-label">کد پستی:</span>
+            <span class="info-value postal-code-value">{{
+              address.postalCode
+            }}</span>
+          </div>
+        </div>
+      </div>
+
+      <!-- Card Footer -->
+      <div class="card-footer">
+        @if (address.isDefault) {
+        <div class="default-badge">
+          <i class="pi pi-check-circle"></i>
+          <span>آدرس پیش‌فرض</span>
+        </div>
+        } @else {
+        <p-button
+          label="تنظیم به عنوان پیش‌فرض"
+          icon="pi pi-star"
+          [text]="true"
+          size="small"
+          (click)="setDefaultAddress(address)"
+          styleClass="set-default-button"
+        ></p-button>
+        }
+      </div>
+    </div>
+    }
+  </div>
+  }
+
+  <!-- Create Address Modal -->
+  <p-dialog
+    [(visible)]="createModalVisible"
+    header="افزودن آدرس جدید"
+    [modal]="true"
+    [style]="{ width: '90vw', maxWidth: '600px' }"
+    [draggable]="false"
+    [resizable]="false"
+    (onHide)="showCreateModal.set(false)"
+    styleClass="address-dialog"
+  >
+    <form [formGroup]="createForm" (ngSubmit)="createAddress()">
+      <div class="form-container">
+        <!-- Title -->
+        <div class="form-group">
+          <label for="create-title" class="form-label">
+            عنوان آدرس <span class="required">*</span>
+          </label>
+          <input
+            id="create-title"
+            type="text"
+            pInputText
+            formControlName="title"
+            placeholder="مثال: خانه، محل کار"
+            [class.p-invalid]="hasFieldError(createForm, 'title')"
+            class="form-input"
+          />
+          @if (hasFieldError(createForm, 'title')) {
+          <small class="p-error">{{
+            getFieldError(createForm, "title")
+          }}</small>
+          }
+        </div>
+
+        <!-- Recipient Name -->
+        <div class="form-group">
+          <label for="create-recipientName" class="form-label">
+            نام گیرنده <span class="required">*</span>
+          </label>
+          <input
+            id="create-recipientName"
+            type="text"
+            pInputText
+            formControlName="recipientName"
+            placeholder="نام و نام خانوادگی گیرنده"
+            [class.p-invalid]="hasFieldError(createForm, 'recipientName')"
+            class="form-input"
+          />
+          @if (hasFieldError(createForm, 'recipientName')) {
+          <small class="p-error">{{
+            getFieldError(createForm, "recipientName")
+          }}</small>
+          }
+        </div>
+
+        <!-- Recipient Phone -->
+        <div class="form-group">
+          <label for="create-recipientPhone" class="form-label">
+            شماره تماس گیرنده <span class="required">*</span>
+          </label>
+          <input
+            id="create-recipientPhone"
+            type="tel"
+            pInputText
+            formControlName="recipientPhone"
+            placeholder="09123456789"
+            [class.p-invalid]="hasFieldError(createForm, 'recipientPhone')"
+            class="form-input"
+          />
+          @if (hasFieldError(createForm, 'recipientPhone')) {
+          <small class="p-error">{{
+            getFieldError(createForm, "recipientPhone")
+          }}</small>
+          }
+        </div>
+
+        <!-- Province and City Row -->
+        <div class="form-row">
+          <div class="form-group">
+            <label for="create-province" class="form-label">
+              استان <span class="required">*</span>
+            </label>
+            <input
+              id="create-province"
+              type="text"
+              pInputText
+              formControlName="province"
+              placeholder="مثال: تهران"
+              [class.p-invalid]="hasFieldError(createForm, 'province')"
+              class="form-input"
+            />
+            @if (hasFieldError(createForm, 'province')) {
+            <small class="p-error">{{
+              getFieldError(createForm, "province")
+            }}</small>
+            }
+          </div>
+
+          <div class="form-group">
+            <label for="create-city" class="form-label">
+              شهر <span class="required">*</span>
+            </label>
+            <input
+              id="create-city"
+              type="text"
+              pInputText
+              formControlName="city"
+              placeholder="مثال: تهران"
+              [class.p-invalid]="hasFieldError(createForm, 'city')"
+              class="form-input"
+            />
+            @if (hasFieldError(createForm, 'city')) {
+            <small class="p-error">{{
+              getFieldError(createForm, "city")
+            }}</small>
+            }
+          </div>
+        </div>
+
+        <!-- Full Address -->
+        <div class="form-group">
+          <label for="create-fullAddress" class="form-label">
+            آدرس کامل <span class="required">*</span>
+          </label>
+          <textarea
+            id="create-fullAddress"
+            pTextarea
+            formControlName="fullAddress"
+            placeholder="خیابان، پلاک، طبقه، واحد و..."
+            rows="3"
+            [autoResize]="true"
+            [class.p-invalid]="hasFieldError(createForm, 'fullAddress')"
+            class="form-textarea"
+          ></textarea>
+          @if (hasFieldError(createForm, 'fullAddress')) {
+          <small class="p-error">{{
+            getFieldError(createForm, "fullAddress")
+          }}</small>
+          }
+        </div>
+
+        <!-- Postal Code -->
+        <div class="form-group">
+          <label for="create-postalCode" class="form-label">
+            کد پستی <span class="required">*</span>
+          </label>
+          <input
+            id="create-postalCode"
+            type="text"
+            pInputText
+            formControlName="postalCode"
+            placeholder="1234567890"
+            maxlength="10"
+            [class.p-invalid]="hasFieldError(createForm, 'postalCode')"
+            class="form-input"
+          />
+          @if (hasFieldError(createForm, 'postalCode')) {
+          <small class="p-error">{{
+            getFieldError(createForm, "postalCode")
+          }}</small>
+          }
+        </div>
+
+        <!-- Is Default -->
+        <div class="form-group checkbox-group">
+          <p-toggleButton
+            formControlName="isDefault"
+            onLabel="آدرس پیش‌فرض"
+            offLabel="آدرس پیش‌فرض نیست"
+            styleClass="toggle-button"
+          ></p-toggleButton>
+        </div>
+      </div>
+    </form>
+
+    <ng-template pTemplate="footer">
+      <div class="dialog-footer">
+        <p-button
+          label="انصراف"
+          icon="pi pi-times"
+          [text]="true"
+          (click)="showCreateModal.set(false)"
+          styleClass="cancel-button"
+        ></p-button>
+        <p-button
+          label="ذخیره آدرس"
+          icon="pi pi-check"
+          (click)="createAddress()"
+          [loading]="loading()"
+          styleClass="save-button"
+        ></p-button>
+      </div>
+    </ng-template>
+  </p-dialog>
+
+  <!-- Edit Address Modal -->
+  <p-dialog
+    [(visible)]="editModalVisible"
+    header="ویرایش آدرس"
+    [modal]="true"
+    [style]="{ width: '90vw', maxWidth: '600px' }"
+    [draggable]="false"
+    [resizable]="false"
+    (onHide)="showEditModal.set(false)"
+    styleClass="address-dialog"
+  >
+    <form [formGroup]="editForm" (ngSubmit)="updateAddress()">
+      <div class="form-container">
+        <!-- Title -->
+        <div class="form-group">
+          <label for="edit-title" class="form-label">
+            عنوان آدرس <span class="required">*</span>
+          </label>
+          <input
+            id="edit-title"
+            type="text"
+            pInputText
+            formControlName="title"
+            [class.p-invalid]="hasFieldError(editForm, 'title')"
+            class="form-input"
+          />
+          @if (hasFieldError(editForm, 'title')) {
+          <small class="p-error">{{ getFieldError(editForm, "title") }}</small>
+          }
+        </div>
+
+        <!-- Recipient Name -->
+        <div class="form-group">
+          <label for="edit-recipientName" class="form-label">
+            نام گیرنده <span class="required">*</span>
+          </label>
+          <input
+            id="edit-recipientName"
+            type="text"
+            pInputText
+            formControlName="recipientName"
+            [class.p-invalid]="hasFieldError(editForm, 'recipientName')"
+            class="form-input"
+          />
+          @if (hasFieldError(editForm, 'recipientName')) {
+          <small class="p-error">{{
+            getFieldError(editForm, "recipientName")
+          }}</small>
+          }
+        </div>
+
+        <!-- Recipient Phone -->
+        <div class="form-group">
+          <label for="edit-recipientPhone" class="form-label">
+            شماره تماس گیرنده <span class="required">*</span>
+          </label>
+          <input
+            id="edit-recipientPhone"
+            type="tel"
+            pInputText
+            formControlName="recipientPhone"
+            [class.p-invalid]="hasFieldError(editForm, 'recipientPhone')"
+            class="form-input"
+          />
+          @if (hasFieldError(editForm, 'recipientPhone')) {
+          <small class="p-error">{{
+            getFieldError(editForm, "recipientPhone")
+          }}</small>
+          }
+        </div>
+
+        <!-- Province and City Row -->
+        <div class="form-row">
+          <div class="form-group">
+            <label for="edit-province" class="form-label">
+              استان <span class="required">*</span>
+            </label>
+            <input
+              id="edit-province"
+              type="text"
+              pInputText
+              formControlName="province"
+              [class.p-invalid]="hasFieldError(editForm, 'province')"
+              class="form-input"
+            />
+            @if (hasFieldError(editForm, 'province')) {
+            <small class="p-error">{{
+              getFieldError(editForm, "province")
+            }}</small>
+            }
+          </div>
+
+          <div class="form-group">
+            <label for="edit-city" class="form-label">
+              شهر <span class="required">*</span>
+            </label>
+            <input
+              id="edit-city"
+              type="text"
+              pInputText
+              formControlName="city"
+              [class.p-invalid]="hasFieldError(editForm, 'city')"
+              class="form-input"
+            />
+            @if (hasFieldError(editForm, 'city')) {
+            <small class="p-error">{{ getFieldError(editForm, "city") }}</small>
+            }
+          </div>
+        </div>
+
+        <!-- Full Address -->
+        <div class="form-group">
+          <label for="edit-fullAddress" class="form-label">
+            آدرس کامل <span class="required">*</span>
+          </label>
+          <textarea
+            id="edit-fullAddress"
+            pTextarea
+            formControlName="fullAddress"
+            rows="3"
+            [autoResize]="true"
+            [class.p-invalid]="hasFieldError(editForm, 'fullAddress')"
+            class="form-textarea"
+          ></textarea>
+          @if (hasFieldError(editForm, 'fullAddress')) {
+          <small class="p-error">{{
+            getFieldError(editForm, "fullAddress")
+          }}</small>
+          }
+        </div>
+
+        <!-- Postal Code -->
+        <div class="form-group">
+          <label for="edit-postalCode" class="form-label">
+            کد پستی <span class="required">*</span>
+          </label>
+          <input
+            id="edit-postalCode"
+            type="text"
+            pInputText
+            formControlName="postalCode"
+            maxlength="10"
+            [class.p-invalid]="hasFieldError(editForm, 'postalCode')"
+            class="form-input"
+          />
+          @if (hasFieldError(editForm, 'postalCode')) {
+          <small class="p-error">{{
+            getFieldError(editForm, "postalCode")
+          }}</small>
+          }
+        </div>
+
+        <!-- Is Default -->
+        <div class="form-group checkbox-group">
+          <p-toggleButton
+            formControlName="isDefault"
+            onLabel="آدرس پیش‌فرض"
+            offLabel="آدرس پیش‌فرض نیست"
+            styleClass="toggle-button"
+          ></p-toggleButton>
+        </div>
+      </div>
+    </form>
+
+    <ng-template pTemplate="footer">
+      <div class="dialog-footer">
+        <p-button
+          label="انصراف"
+          icon="pi pi-times"
+          [text]="true"
+          (click)="showEditModal.set(false)"
+          styleClass="cancel-button"
+        ></p-button>
+        <p-button
+          label="ذخیره تغییرات"
+          icon="pi pi-check"
+          (click)="updateAddress()"
+          [loading]="loading()"
+          styleClass="save-button"
+        ></p-button>
+      </div>
+    </ng-template>
+  </p-dialog>
+
+  <p-toast position="top-center"></p-toast>
+  <p-confirmDialog></p-confirmDialog>
+</div>

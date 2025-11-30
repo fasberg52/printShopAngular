@@ -1,5 +1,5 @@
 import { CommonModule } from '@angular/common';
-import { Component, computed, input, output } from '@angular/core';
+import { ChangeDetectionStrategy, Component, computed, input, output } from '@angular/core';
 import { ButtonModule } from 'primeng/button';
 
 /**
@@ -19,6 +19,8 @@ import { ButtonModule } from 'primeng/button';
       [loading]="loading()"
       [severity]="severity()"
       [size]="size()"
+      [label]="label() || undefined"
+      [attr.aria-label]="label() || null"
       [class]="'w-full ' + (class() || '')"
       (onClick)="onClick()"
     >
@@ -30,7 +32,8 @@ import { ButtonModule } from 'primeng/button';
       display: block;
       width: 100%;
     }
-  `]
+  `],
+  changeDetection: ChangeDetectionStrategy.OnPush
 })
 export class LoadingButtonComponent {
   // Input signals - following Angular best practices
@@ -42,6 +45,7 @@ export class LoadingButtonComponent {
   >('primary');
   size = input<'small' | 'large' | undefined>(undefined);
   class = input<string>('');
+  label = input<string>('');
 
   // Output event
   buttonClick = output<void>();

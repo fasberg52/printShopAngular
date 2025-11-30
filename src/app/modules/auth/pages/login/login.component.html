@@ -72,7 +72,9 @@
         <div class="form-stage-container">
           <div class="info-text">
             ورود برای شماره:
-            <span class="info-text-bold">{{ loginForm.get("phone")?.value }}</span>
+            <span class="info-text-bold">{{
+              loginForm.get("phone")?.value
+            }}</span>
             <a (click)="goBackToCheckPhone()" class="span info-link"
               >(تغییر شماره)</a
             >
@@ -154,7 +156,9 @@
         <div class="form-stage-container">
           <div class="info-text">
             کد تایید برای شماره:
-            <span class="info-text-bold">{{ loginForm.get("phone")?.value }}</span>
+            <span class="info-text-bold">{{
+              loginForm.get("phone")?.value
+            }}</span>
             <a (click)="goBackToCheckPhone()" class="span info-link"
               >(تغییر شماره)</a
             >
@@ -162,15 +166,19 @@
 
           <ng-container *ngIf="otpStage() === 'verify'">
             <div class="otp-container otp-box">
-              <label class="otp-label"
-                >کد ۵ رقمی ارسال شده را وارد کنید</label
-              >
+              <label class="otp-label">کد ۵ رقمی ارسال شده را وارد کنید</label>
 
               <div dir="ltr" class="otp-input-wrapper">
                 <p-inputotp
                   formControlName="code"
                   [length]="5"
                   aria-label="کد تایید ۵ رقمی"
+                  [attr.dir]="'ltr'"
+                  [style.direction]="'ltr'"
+                  [style.flexDirection]="'row'"
+                  [style.justifyContent]="'flex-start'"
+                  inputMode="numeric"
+                  (onComplete)="onOtpComplete($event)"
                 />
               </div>
 
@@ -187,10 +195,7 @@
               </div>
 
               <div class="otp-resend-container">
-                <span
-                  *ngIf="countdown() > 0"
-                  class="countdown-badge"
-                >
+                <span *ngIf="countdown() > 0" class="countdown-badge">
                   ارسال مجدد در {{ countdown() }} ثانیه
                 </span>
                 <button
@@ -203,7 +208,10 @@
                     *ngIf="otpLoading()"
                     class="pi pi-spin pi-spinner resend-icon"
                   ></i>
-                  <i *ngIf="!otpLoading()" class="pi pi-refresh resend-icon"></i>
+                  <i
+                    *ngIf="!otpLoading()"
+                    class="pi pi-refresh resend-icon"
+                  ></i>
                   <span>{{
                     otpLoading() ? "درحال ارسال..." : "ارسال دوباره کد"
                   }}</span>
@@ -220,9 +228,7 @@
           </ng-container>
 
           <ng-container *ngIf="otpStage() === 'request'">
-            <div class="otp-loading-text">
-              درحال ارسال کد تایید...
-            </div>
+            <div class="otp-loading-text">درحال ارسال کد تایید...</div>
           </ng-container>
         </div>
       </ng-container>
