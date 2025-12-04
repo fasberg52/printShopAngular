@@ -1,0 +1,20 @@
+.upload-zone {
+  border: 2px dashed #cbd5e1;
+  border-radius: 0.75rem;
+  transition: all 0.3s ease;
+  background-color: #f8fafc;
+}
+
+.upload-zone.drag-over {
+  border-color: #3b82f6;
+  background-color: #eff6ff;
+}
+
+.file-card {
+  transition: all 0.2s ease;
+}
+
+.file-card:hover {
+  transform: translateY(-2px);
+  box-shadow: 0 4px 6px -1px rgb(0 0 0 / 0.1);
+}

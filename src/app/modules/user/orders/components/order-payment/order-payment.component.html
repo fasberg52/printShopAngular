@@ -1,0 +1,153 @@
+<div class="space-y-6">
+  <!-- Header -->
+  <div class="flex items-center justify-between">
+    <h2 class="text-xl font-bold text-gray-800 dark:text-white">پرداخت</h2>
+    <button
+      pButton
+      icon="pi pi-arrow-left"
+      label="انصراف و بازگشت"
+      class="p-button-text dark:text-white"
+      (click)="onBack()"
+    ></button>
+  </div>
+
+  <div class="grid grid-cols-1 lg:grid-cols-2 gap-8">
+    <!-- Payment Method -->
+    <div class="space-y-6">
+      <div
+        class="bg-white dark:bg-gray-800 p-6 rounded-xl shadow-sm border border-gray-100 dark:border-gray-700"
+      >
+        <h3 class="font-bold text-gray-800 dark:text-white mb-4">
+          شیوه پرداخت
+        </h3>
+
+        <div class="space-y-4">
+          <div
+            class="flex items-center justify-between p-4 border rounded-lg cursor-pointer transition-colors dark:border-gray-600"
+            [class.border-blue-500]="paymentMethod() === 'zarinpal'"
+            [class.bg-blue-50]="paymentMethod() === 'zarinpal'"
+            [class.dark:bg-blue-900]="paymentMethod() === 'zarinpal'"
+            (click)="selectPayment('zarinpal')"
+          >
+            <div class="flex items-center gap-3">
+              <p-radioButton
+                name="payment"
+                value="zarinpal"
+                [(ngModel)]="paymentMethodVal"
+                inputId="zarinpal"
+              ></p-radioButton>
+              <label
+                for="zarinpal"
+                class="cursor-pointer font-medium dark:text-white"
+                >درگاه پرداخت زرین پال</label
+              >
+            </div>
+            <img
+              src="assets/images/zarinpal-logo.png"
+              alt="ZarinPal"
+              class="h-6 opacity-50"
+            />
+          </div>
+
+          <div
+            class="flex items-center justify-between p-4 border rounded-lg cursor-pointer transition-colors dark:border-gray-600"
+            [class.border-blue-500]="paymentMethod() === 'wallet'"
+            [class.bg-blue-50]="paymentMethod() === 'wallet'"
+            [class.dark:bg-blue-900]="paymentMethod() === 'wallet'"
+            (click)="selectPayment('wallet')"
+          >
+            <div class="flex items-center gap-3">
+              <p-radioButton
+                name="payment"
+                value="wallet"
+                [(ngModel)]="paymentMethodVal"
+                inputId="wallet"
+              ></p-radioButton>
+              <label
+                for="wallet"
+                class="cursor-pointer font-medium dark:text-white"
+                >کیف پول</label
+              >
+            </div>
+            <span class="text-sm text-gray-500 dark:text-gray-400"
+              >موجودی: ۰ تومان</span
+            >
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- Invoice Summary -->
+    <div class="space-y-6">
+      <div
+        class="bg-white dark:bg-gray-800 p-6 rounded-xl shadow-sm border border-gray-100 dark:border-gray-700"
+      >
+        <div class="flex justify-between items-center mb-6">
+          <span class="text-gray-600 dark:text-gray-300">پوشه ۱:</span>
+          <span class="font-medium dark:text-white"
+            >{{ orderService.totalPrice() | number }} تومان</span
+          >
+        </div>
+
+        <div class="flex gap-2 mb-6">
+          <input
+            type="text"
+            pInputText
+            placeholder="کد تخفیف"
+            class="w-full dark:bg-gray-700 dark:text-white dark:border-gray-600"
+          />
+          <button
+            pButton
+            label="اعمال"
+            class="bg-purple-600 border-none"
+          ></button>
+        </div>
+
+        <div
+          class="border-t border-gray-100 dark:border-gray-700 pt-4 space-y-3 text-sm"
+        >
+          <div class="flex justify-between text-gray-600 dark:text-gray-300">
+            <span>هزینه بسته بندی:</span>
+            <span>۱۵,۰۰۰ تومان</span>
+          </div>
+          <div class="flex justify-between text-gray-600 dark:text-gray-300">
+            <span>هزینه ارسال:</span>
+            <span>پس کرایه</span>
+          </div>
+          <div
+            class="flex justify-between font-bold text-gray-800 dark:text-white text-lg mt-4"
+          >
+            <span>مجموع:</span>
+            <span>{{ orderService.totalPrice() + 15000 | number }} تومان</span>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- Footer -->
+  <div
+    class="flex justify-between items-center mt-8 pt-4 border-t border-gray-200 dark:border-gray-700"
+  >
+    <div class="flex items-center gap-2">
+      <span class="text-gray-600 dark:text-gray-300">مبلغ قابل پرداخت:</span>
+      <span class="text-xl font-bold text-blue-600 dark:text-blue-400"
+        >{{ orderService.totalPrice() + 15000 | number }} تومان</span
+      >
+    </div>
+    <div class="flex gap-3">
+      <button
+        pButton
+        label="مرحله قبل"
+        class="p-button-text text-gray-600 dark:text-gray-400"
+        (click)="onBack()"
+      ></button>
+      <button
+        pButton
+        label="پرداخت"
+        class="p-button-rounded bg-blue-500 border-none px-8"
+        (click)="onPay()"
+      ></button>
+    </div>
+  </div>
+</div>

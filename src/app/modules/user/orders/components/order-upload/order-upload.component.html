@@ -1,0 +1,173 @@
+<div class="space-y-6">
+  <!-- Header -->
+  <div class="flex items-center justify-between">
+    <h2 class="text-xl font-bold text-gray-800 dark:text-white">پوشه ۱</h2>
+    <div class="flex gap-2">
+      <button
+        pButton
+        label="محاسبه قیمت"
+        icon="pi pi-calculator"
+        class="p-button-outlined"
+        (click)="openCalculator()"
+      ></button>
+      <button
+        pButton
+        icon="pi pi-arrow-left"
+        label="بازگشت"
+        class="p-button-text dark:text-white"
+      ></button>
+    </div>
+  </div>
+
+  <!-- File Upload Section -->
+  <div class="grid grid-cols-1 lg:grid-cols-2 gap-6">
+    <!-- File List -->
+    <div class="space-y-4">
+      <h3 class="font-bold text-gray-800 dark:text-white mb-2">
+        فایل‌های این پوشه رو چکارش کنم برات؟
+      </h3>
+
+      <div
+        *ngFor="let file of orderService.files()"
+        class="bg-white dark:bg-gray-800 p-4 rounded-xl shadow-sm border border-gray-100 dark:border-gray-700 file-card"
+      >
+        <div class="flex justify-between items-start mb-3">
+          <span
+            class="font-medium truncate max-w-[200px] dark:text-white"
+            [pTooltip]="file.file.name"
+            >{{ file.file.name }}</span
+          >
+          <button
+            pButton
+            icon="pi pi-trash"
+            class="p-button-text p-button-danger p-button-sm"
+            (click)="removeFile(file.id)"
+          ></button>
+        </div>
+
+        <div class="grid grid-cols-1 gap-3">
+          <p-select
+            [options]="colorModes"
+            [(ngModel)]="file.config.colorMode"
+            optionLabel="label"
+            optionValue="value"
+            styleClass="w-full dark:bg-gray-700 dark:border-gray-600"
+            (onChange)="updateFile(file.id, { colorMode: $event.value })"
+          ></p-select>
+          <p-select
+            [options]="paperSizes"
+            [(ngModel)]="file.config.paperSize"
+            optionLabel="label"
+            optionValue="value"
+            styleClass="w-full dark:bg-gray-700 dark:border-gray-600"
+            (onChange)="updateFile(file.id, { paperSize: $event.value })"
+          ></p-select>
+          <p-select
+            [options]="printSides"
+            [(ngModel)]="file.config.printSide"
+            optionLabel="label"
+            optionValue="value"
+            styleClass="w-full dark:bg-gray-700 dark:border-gray-600"
+            (onChange)="updateFile(file.id, { printSide: $event.value })"
+          ></p-select>
+        </div>
+
+        <div
+          class="mt-3 text-sm text-gray-500 dark:text-gray-400 flex justify-between items-center"
+        >
+          <span>قیمت هر برگ: ۱,۲۵۰ تومان</span>
+          <div
+            class="bg-gray-100 dark:bg-gray-700 px-3 py-1 rounded-lg dark:text-gray-300"
+          >
+            {{ file.config.copies || 1 }} برگ
+          </div>
+        </div>
+      </div>
+
+      <div
+        *ngIf="orderService.files().length === 0"
+        class="text-center text-gray-400 py-8"
+      >
+        هنوز فایلی آپلود نشده است
+      </div>
+    </div>
+
+    <!-- Upload Area -->
+    <div>
+      <h3 class="font-bold text-gray-800 dark:text-white mb-2">
+        ارسال فایل ها
+      </h3>
+      <div class="flex items-center gap-4 mb-4">
+        <div class="flex items-center gap-2">
+          <p-radioButton
+            name="uploadSource"
+            value="site"
+            label="از طریق سایت"
+            [(ngModel)]="uploadSource"
+          ></p-radioButton>
+          <span class="dark:text-gray-300">از طریق سایت</span>
+        </div>
+        <div class="flex items-center gap-2">
+          <p-radioButton
+            name="uploadSource"
+            value="telegram"
+            label="از طریق تلگرام یا ایتا"
+            [(ngModel)]="uploadSource"
+          ></p-radioButton>
+          <span class="dark:text-gray-300">از طریق تلگرام یا ایتا</span>
+        </div>
+      </div>
+
+      <div
+        class="upload-zone h-64 flex flex-col items-center justify-center cursor-pointer dark:bg-gray-800 dark:border-gray-600"
+        [class.drag-over]="isDragOver"
+        (dragover)="onDragOver($event)"
+        (dragleave)="onDragLeave($event)"
+        (drop)="onDrop($event)"
+        (click)="fileInput.click()"
+      >
+        <input
+          #fileInput
+          type="file"
+          multiple
+          class="hidden"
+          (change)="onFileSelected($event)"
+        />
+        <div
+          class="w-16 h-16 bg-blue-100 dark:bg-blue-900/30 text-blue-600 dark:text-blue-400 rounded-full flex items-center justify-center mb-4"
+        >
+          <i class="pi pi-plus text-2xl"></i>
+        </div>
+        <p class="text-blue-600 dark:text-blue-400 font-medium mb-2">
+          فایل‌ها را اینجا بکشید و رها کنید یا بارگزاری کنید
+        </p>
+        <p class="text-gray-400 text-sm">حداکثر هر فایل: ۵۰۰ مگابایت</p>
+        <p class="text-gray-400 text-sm mt-1">فرمت مجاز: Word و PDF</p>
+      </div>
+    </div>
+  </div>
+
+  <!-- Footer -->
+  <div
+    class="flex justify-between items-center mt-8 pt-4 border-t border-gray-200 dark:border-gray-700"
+  >
+    <div class="text-xl font-bold text-blue-600 dark:text-blue-400">
+      مبلغ: {{ orderService.totalPrice() | number }} تومان
+    </div>
+    <div class="flex gap-3">
+      <button
+        pButton
+        label="مرحله قبل"
+        class="p-button-text text-gray-600 dark:text-gray-400"
+      ></button>
+      <button
+        pButton
+        label="ثبت پوشه ۱"
+        class="p-button-rounded bg-blue-500 border-none px-8"
+        (click)="onNext()"
+      ></button>
+    </div>
+  </div>
+
+  <app-user-price-calculator></app-user-price-calculator>
+</div>

@@ -1,0 +1,131 @@
+<div class="space-y-6">
+  <!-- Header -->
+  <div class="flex items-center justify-between">
+    <h2 class="text-xl font-bold text-gray-800 dark:text-white">آدرس پستی</h2>
+    <button
+      pButton
+      icon="pi pi-arrow-left"
+      label="انصراف و بازگشت"
+      class="p-button-text dark:text-white"
+      (click)="onBack()"
+    ></button>
+  </div>
+
+  <!-- Address List -->
+  <div class="space-y-4">
+    <div
+      *ngFor="let address of addresses()"
+      class="bg-white dark:bg-gray-800 p-6 rounded-xl shadow-sm border transition-all cursor-pointer relative"
+      [class.border-blue-500]="selectedAddress()?._id === address._id"
+      [class.bg-blue-50]="selectedAddress()?._id === address._id"
+      [class.dark:bg-blue-900]="selectedAddress()?._id === address._id"
+      [class.border-gray-100]="selectedAddress()?._id !== address._id"
+      [class.dark:border-gray-700]="selectedAddress()?._id !== address._id"
+      (click)="selectAddress(address)"
+    >
+      <div class="flex justify-between items-start mb-4">
+        <h3 class="font-bold text-gray-800 dark:text-white">
+          {{ address.title }}
+        </h3>
+        <div class="flex gap-2">
+          <button
+            pButton
+            icon="pi pi-pencil"
+            class="p-button-text p-button-secondary p-button-sm dark:text-gray-400"
+          ></button>
+          <button
+            pButton
+            icon="pi pi-trash"
+            class="p-button-text p-button-danger p-button-sm"
+          ></button>
+        </div>
+      </div>
+
+      <div class="text-sm text-gray-600 dark:text-gray-300 space-y-2">
+        <div class="flex justify-between">
+          <span>گیرنده: {{ address.recipientName }}</span>
+          <span>شماره تلفن: {{ address.recipientPhone }}</span>
+        </div>
+        <div class="flex justify-between">
+          <span
+            >نشانی: {{ address.province }}، {{ address.city }}،
+            {{ address.fullAddress }}</span
+          >
+          <span>کد پستی: {{ address.postalCode }}</span>
+        </div>
+      </div>
+
+      <div
+        *ngIf="selectedAddress()?._id === address._id"
+        class="absolute top-4 left-4 text-blue-500 dark:text-blue-400"
+      >
+        <i class="pi pi-check-circle text-2xl"></i>
+      </div>
+    </div>
+
+    <!-- Create New Address Button -->
+    <div
+      class="border-2 border-dashed border-gray-300 dark:border-gray-600 rounded-xl p-8 flex items-center justify-center cursor-pointer hover:bg-gray-50 dark:hover:bg-gray-700 transition-colors"
+      (click)="showCreateModal = true"
+    >
+      <div
+        class="text-gray-500 dark:text-gray-400 font-medium flex items-center gap-2"
+      >
+        <i class="pi pi-plus"></i>
+        ایجاد آدرس جدید
+      </div>
+    </div>
+  </div>
+
+  <!-- Footer -->
+  <div
+    class="flex justify-between items-center mt-8 pt-4 border-t border-gray-200 dark:border-gray-700"
+  >
+    <button
+      pButton
+      label="مرحله قبل"
+      class="p-button-text text-gray-600 dark:text-gray-400"
+      (click)="onBack()"
+    ></button>
+    <button
+      pButton
+      label="بعدی"
+      class="p-button-rounded bg-blue-500 border-none px-8"
+      (click)="onNext()"
+      [disabled]="!selectedAddress()"
+    ></button>
+  </div>
+</div>
+
+<!-- Create Address Dialog (Simplified) -->
+<p-dialog
+  header="افزودن آدرس جدید"
+  [(visible)]="showCreateModal"
+  [modal]="true"
+  [style]="{ width: '50vw' }"
+  [draggable]="false"
+  [resizable]="false"
+>
+  <div class="p-fluid grid grid-cols-1 md:grid-cols-2 gap-4 mt-4">
+    <!-- Form fields would go here, simplified for this task -->
+    <div class="col-span-2">
+      <p>فرم ایجاد آدرس اینجا قرار می‌گیرد (مشابه صفحه آدرس‌ها)</p>
+    </div>
+  </div>
+  <ng-template pTemplate="footer">
+    <button
+      pButton
+      label="انصراف"
+      icon="pi pi-times"
+      (click)="showCreateModal = false"
+      class="p-button-text"
+    ></button>
+    <button
+      pButton
+      label="ثبت آدرس"
+      icon="pi pi-check"
+      (click)="showCreateModal = false"
+      autofocus
+    ></button>
+  </ng-template>
+</p-dialog>
