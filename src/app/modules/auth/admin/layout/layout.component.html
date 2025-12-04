@@ -1,49 +1,72 @@
-<div class="admin-layout">
-  <aside class="admin-sidebar">
-    <h2 class="sidebar-title">پنل ادمین</h2>
-    <nav class="sidebar-nav">
+<div class="flex h-screen w-full overflow-hidden bg-gray-50 dark:bg-slate-900">
+  <aside
+    class="w-64 min-w-64 bg-gray-800 text-white p-4 shadow-md flex flex-col overflow-y-auto overflow-x-hidden"
+  >
+    <h2 class="text-2xl font-bold mb-6 p-0 text-white leading-normal">
+      پنل ادمین
+    </h2>
+    <nav class="flex flex-col gap-1 flex-1">
       <a
         routerLink="/admin/dashboard"
-        routerLinkActive="nav-link-active"
-        class="nav-link"
+        routerLinkActive="bg-gray-700 text-white font-medium"
+        class="flex items-center px-4 py-2 rounded-md transition-colors duration-200 no-underline text-white cursor-pointer w-full box-border hover:bg-gray-700 gap-2"
       >
-        <i class="pi pi-home nav-icon"></i>
+        <i
+          class="pi pi-home text-base inline-flex items-center justify-center w-5"
+        ></i>
         داشبورد
       </a>
       <a
         routerLink="/admin/users"
-        routerLinkActive="nav-link-active"
-        class="nav-link"
+        routerLinkActive="bg-gray-700 text-white font-medium"
+        class="flex items-center px-4 py-2 rounded-md transition-colors duration-200 no-underline text-white cursor-pointer w-full box-border hover:bg-gray-700 gap-2"
       >
-        <i class="pi pi-users nav-icon"></i>
+        <i
+          class="pi pi-users text-base inline-flex items-center justify-center w-5"
+        ></i>
         کاربران
       </a>
       <a
         routerLink="/admin/price-rules"
-        routerLinkActive="nav-link-active"
-        class="nav-link"
+        routerLinkActive="bg-gray-700 text-white font-medium"
+        class="flex items-center px-4 py-2 rounded-md transition-colors duration-200 no-underline text-white cursor-pointer w-full box-border hover:bg-gray-700 gap-2"
       >
-        <i class="pi pi-dollar nav-icon"></i>
+        <i
+          class="pi pi-dollar text-base inline-flex items-center justify-center w-5"
+        ></i>
         قوانین قیمت
       </a>
       <a
         routerLink="/admin/delivery-methods"
-        routerLinkActive="nav-link-active"
-        class="nav-link"
+        routerLinkActive="bg-gray-700 text-white font-medium"
+        class="flex items-center px-4 py-2 rounded-md transition-colors duration-200 no-underline text-white cursor-pointer w-full box-border hover:bg-gray-700 gap-2"
       >
-        <i class="pi pi-truck nav-icon"></i>
+        <i
+          class="pi pi-truck text-base inline-flex items-center justify-center w-5"
+        ></i>
         روش‌های ارسال
       </a>
     </nav>
-    <button type="button" class="nav-link" aria-label="خروج" (click)="logout()">
-      <i class="pi pi-sign-out nav-icon"></i>
+    <button
+      type="button"
+      class="flex items-center px-4 py-2 rounded-md transition-colors duration-200 no-underline text-white cursor-pointer w-full box-border hover:bg-gray-700 gap-2 bg-transparent border-none"
+      aria-label="خروج"
+      (click)="logout()"
+    >
+      <i
+        class="pi pi-sign-out text-base inline-flex items-center justify-center w-5"
+      ></i>
       خروج
     </button>
   </aside>
 
-  <main class="admin-main">
-    <header class="admin-header">
-      <h1 class="header-title">به پنل ادمین خوش آمدید</h1>
+  <main class="flex-1 flex flex-col overflow-hidden">
+    <header
+      class="bg-white dark:bg-slate-800 shadow-sm p-4 flex justify-between items-center border-b border-gray-200 dark:border-slate-700"
+    >
+      <h1 class="text-xl font-semibold text-gray-800 dark:text-white">
+        به پنل ادمین خوش آمدید
+      </h1>
       <p-button
         label="خروج"
         icon="pi pi-sign-out"
@@ -52,7 +75,7 @@
       ></p-button>
     </header>
 
-    <div class="admin-content">
+    <div class="flex-1 overflow-y-auto p-6 bg-gray-50 dark:bg-slate-900">
       <router-outlet></router-outlet>
     </div>
   </main>
