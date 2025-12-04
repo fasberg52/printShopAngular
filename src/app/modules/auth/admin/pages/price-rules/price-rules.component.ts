@@ -17,8 +17,8 @@ import { ToolbarModule } from 'primeng/toolbar';
 import { PriceRule } from '../../../../../core/models/price-rule.model';
 import { PriceRuleService } from '../../../../../core/services/price-rule.service';
 import { PriceRuleDetailModalComponent } from './modals/price-rule-detail-modal.component';
-import { PriceRuleExamplesComponent } from './price-rule-examples.component';
 import { PriceCalculatorComponent } from './price-calculator.component';
+import { PriceRuleExamplesComponent } from './price-rule-examples.component';
 import { SeedPriceRulesComponent } from './seed-price-rules.component';
 
 @Component({
@@ -42,7 +42,6 @@ import { SeedPriceRulesComponent } from './seed-price-rules.component';
   ],
   providers: [MessageService, ConfirmationService],
   templateUrl: './price-rules.component.html',
-  styleUrls: ['./price-rules.component.css'],
 })
 export class PriceRulesComponent implements OnInit {
   private priceRuleService = inject(PriceRuleService);
@@ -272,7 +271,8 @@ export class PriceRulesComponent implements OnInit {
       {
         label: 'حذف',
         icon: 'pi pi-trash',
-        styleClass: 'text-red-500 m-2 hover:text-red-700 active:text-red-700',
+        styleClass:
+          '!text-red-500 m-2 hover:!text-red-700 active:!text-red-700',
         command: () => {
           console.log('Deleting:', priceRule);
           this.deletePriceRule(priceRule);

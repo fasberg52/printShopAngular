@@ -1,38 +1,40 @@
-<div class="price-rules-container">
+<div class="p-4 md:p-6 bg-white rounded-lg shadow-md">
   <p-confirmDialog></p-confirmDialog>
   <p-toast></p-toast>
 
   <!-- Toolbar -->
-  <div class="toolbar">
+  <div
+    class="flex flex-col md:flex-row justify-between items-start md:items-center mb-6 pb-4 border-b-2 border-gray-200 gap-4 md:gap-0"
+  >
     <div class="toolbar-left">
-      <h2 class="title">قوانین قیمت</h2>
+      <h2 class="text-2xl font-bold text-gray-800 m-0">قوانین قیمت</h2>
     </div>
-    <div class="toolbar-right">
+    <div class="flex gap-2 w-full md:w-auto">
       <p-button
         label="ایجاد نمونه"
         icon="pi pi-database"
         (click)="openSeedModal()"
-        styleClass="p-button-help p-button-outlined"
+        styleClass="p-button-help p-button-outlined w-full md:w-auto"
       ></p-button>
       <p-button
         label="ماشین حساب"
         icon="pi pi-calculator"
         (click)="openCalculatorModal()"
-        styleClass="p-button-success p-button-outlined"
+        styleClass="p-button-success p-button-outlined w-full md:w-auto"
         severity="success"
       ></p-button>
       <p-button
         label="راهنما"
         icon="pi pi-question-circle"
         (click)="openExamplesModal()"
-        styleClass="p-button-info p-button-outlined"
+        styleClass="p-button-info p-button-outlined w-full md:w-auto"
         severity="info"
       ></p-button>
       <p-button
         label="افزودن قانون جدید"
         icon="pi pi-plus"
         (click)="openCreateModal()"
-        styleClass="p-button-primary"
+        styleClass="p-button-primary w-full md:w-auto"
       ></p-button>
     </div>
   </div>
@@ -51,45 +53,93 @@
   >
     <ng-template pTemplate="header">
       <tr>
-        <th pSortableColumn="name">
+        <th
+          pSortableColumn="name"
+          class="bg-gray-50 text-gray-800 font-semibold p-2 md:p-4 border-b-2 border-gray-200 text-right text-sm md:text-base"
+        >
           نام <p-sortIcon field="name"></p-sortIcon>
         </th>
-        <th pSortableColumn="productType">
+        <th
+          pSortableColumn="productType"
+          class="bg-gray-50 text-gray-800 font-semibold p-2 md:p-4 border-b-2 border-gray-200 text-right text-sm md:text-base"
+        >
           نوع محصول <p-sortIcon field="productType"></p-sortIcon>
         </th>
-        <th pSortableColumn="price">
+        <th
+          pSortableColumn="price"
+          class="bg-gray-50 text-gray-800 font-semibold p-2 md:p-4 border-b-2 border-gray-200 text-right text-sm md:text-base"
+        >
           قیمت <p-sortIcon field="price"></p-sortIcon>
         </th>
-        <th>تاریخ ایجاد</th>
-        <th>وضعیت</th>
-        <th style="width: 100px">عملیات</th>
+        <th
+          class="bg-gray-50 text-gray-800 font-semibold p-2 md:p-4 border-b-2 border-gray-200 text-right text-sm md:text-base"
+        >
+          تاریخ ایجاد
+        </th>
+        <th
+          class="bg-gray-50 text-gray-800 font-semibold p-2 md:p-4 border-b-2 border-gray-200 text-right text-sm md:text-base"
+        >
+          وضعیت
+        </th>
+        <th
+          class="bg-gray-50 text-gray-800 font-semibold p-2 md:p-4 border-b-2 border-gray-200 text-right text-sm md:text-base"
+          style="width: 100px"
+        >
+          عملیات
+        </th>
       </tr>
     </ng-template>
 
     <ng-template pTemplate="body" let-priceRule>
-      <tr>
-        <td>{{ priceRule.name }}</td>
-        <td>
+      <tr class="hover:bg-gray-50">
+        <td
+          class="p-2 md:p-4 border-b border-gray-200 text-right text-gray-700 text-sm md:text-base"
+        >
+          {{ priceRule.name }}
+        </td>
+        <td
+          class="p-2 md:p-4 border-b border-gray-200 text-right text-gray-700 text-sm md:text-base"
+        >
           <p-tag
             [value]="getProductTypeLabel(priceRule.productType)"
-            [severity]="priceRule.productType === 'print' ? 'success' : 'info'"
+            [styleClass]="
+              priceRule.productType === 'print'
+                ? '!bg-green-100 !text-green-700'
+                : '!bg-blue-100 !text-blue-700'
+            "
           ></p-tag>
         </td>
-        <td class="price-cell">{{ formatPrice(priceRule.price) }} تومان</td>
-        <td>{{ formatDate(priceRule.createdAt) }}</td>
-        <td>
+        <td
+          class="p-2 md:p-4 border-b border-gray-200 text-right font-semibold text-emerald-600 text-sm md:text-lg"
+        >
+          {{ formatPrice(priceRule.price) }} تومان
+        </td>
+        <td
+          class="p-2 md:p-4 border-b border-gray-200 text-right text-gray-700 text-sm md:text-base"
+        >
+          {{ formatDate(priceRule.createdAt) }}
+        </td>
+        <td
+          class="p-2 md:p-4 border-b border-gray-200 text-right text-gray-700 text-sm md:text-base"
+        >
           <p-tag
             [value]="priceRule.isActive ? 'فعال' : 'غیرفعال'"
-            [severity]="priceRule.isActive ? 'success' : 'danger'"
+            [styleClass]="
+              priceRule.isActive
+                ? '!bg-green-100 !text-green-700'
+                : '!bg-red-100 !text-red-700'
+            "
           ></p-tag>
         </td>
-        <td>
-          <div class="actions">
+        <td
+          class="p-2 md:p-4 border-b border-gray-200 text-right text-gray-700 text-sm md:text-base"
+        >
+          <div class="flex justify-center items-center">
             <p-button
               icon="pi pi-ellipsis-v"
               [text]="true"
               [rounded]="true"
-              styleClass="action-button"
+              styleClass="w-8 h-8 p-0 hover:bg-gray-100"
               (click)="menu.toggle($event)"
             ></p-button>
 
@@ -98,7 +148,7 @@
               [model]="getMenuItems(priceRule)"
               [popup]="true"
               [appendTo]="'body'"
-              styleClass="price-rule-menu"
+              styleClass="w-[200px] !bg-white rounded-lg shadow-xl border border-black/10 mt-2 p-2 z-[2000]"
             ></p-menu>
           </div>
         </td>
