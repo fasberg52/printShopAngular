@@ -143,7 +143,6 @@ const priceRuleSchema = z.object({
   ],
   providers: [MessageService],
   templateUrl: './price-rule-form.component.html',
-  styleUrls: ['./price-rule-form.component.css'],
 })
 export class PriceRuleFormComponent implements OnInit {
   private fb = inject(FormBuilder);

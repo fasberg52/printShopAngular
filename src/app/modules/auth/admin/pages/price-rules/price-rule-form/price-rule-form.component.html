@@ -1,10 +1,14 @@
-<div class="price-rule-form-container">
+<div
+  class="min-h-screen bg-gray-50 dark:bg-slate-900 p-4 md:p-8 flex flex-col transition-colors duration-300"
+>
   <p-toast></p-toast>
 
   <!-- Header -->
-  <div class="form-header">
-    <div class="header-content">
-      <h1 class="form-title">
+  <div
+    class="flex flex-col md:flex-row justify-between items-start md:items-center mb-8 pb-4 border-b-2 border-gray-200 dark:border-slate-700 gap-4 md:gap-0"
+  >
+    <div class="flex justify-between items-center w-full">
+      <h1 class="text-2xl font-bold text-gray-800 dark:text-white m-0">
         {{ isEditMode() ? "ویرایش قانون قیمت" : "ایجاد قانون قیمت جدید" }}
       </h1>
       <p-button
@@ -13,38 +17,59 @@
         severity="secondary"
         [outlined]="true"
         (onClick)="onCancel()"
+        styleClass="!bg-white dark:!bg-slate-800 !text-gray-700 dark:!text-gray-200 !border-gray-300 dark:!border-slate-600 hover:!bg-gray-100 dark:hover:!bg-slate-700"
       ></p-button>
     </div>
   </div>
 
   <!-- Loading State -->
   @if (loading()) {
-  <div class="loading-container">
-    <p>در حال بارگذاری...</p>
+  <div
+    class="flex justify-center items-center min-h-[50vh] text-lg text-gray-700 dark:text-gray-200"
+  >
+    <div class="flex flex-col items-center gap-4">
+      <i class="pi pi-spin pi-spinner text-4xl text-primary-500"></i>
+      <p>در حال بارگذاری...</p>
+    </div>
   </div>
   } @else {
   <!-- Form -->
-  <form [formGroup]="form" (ngSubmit)="onSubmit()" class="price-rule-form">
-    <div class="form-content">
+  <form
+    [formGroup]="form"
+    (ngSubmit)="onSubmit()"
+    class="bg-white dark:bg-slate-800 rounded-xl shadow-lg p-6 md:p-8 flex flex-col gap-8 flex-1 border border-gray-100 dark:border-slate-700 transition-colors duration-300"
+  >
+    <div class="flex flex-col gap-6 flex-1">
       <!-- Name -->
-      <div class="form-field">
-        <label for="name">نام قانون *</label>
+      <div class="flex flex-col gap-2">
+        <label
+          for="name"
+          class="font-semibold text-gray-700 dark:text-gray-200 text-sm mb-1 block"
+          >نام قانون *</label
+        >
         <input
           id="name"
           type="text"
           pInputText
           formControlName="name"
           placeholder="مثال: چاپ A4 - سیاه سفید"
-          class="full-width-input"
+          class="w-full !bg-white dark:!bg-slate-900 !text-gray-800 dark:!text-gray-100 !border-gray-300 dark:!border-slate-600 focus:!border-primary-500 dark:focus:!border-primary-400"
         />
         @if (validationErrors()['name']) {
-        <small class="error-text">{{ validationErrors()["name"] }}</small>
+        <small
+          class="text-red-600 text-xs mt-1 font-medium flex items-center gap-1 before:content-['⚠'] before:text-sm"
+          >{{ validationErrors()["name"] }}</small
+        >
         }
       </div>
 
       <!-- Product Type -->
-      <div class="form-field">
-        <label for="productType">نوع محصول *</label>
+      <div class="flex flex-col gap-2">
+        <label
+          for="productType"
+          class="font-semibold text-gray-700 dark:text-gray-200 text-sm mb-1 block"
+          >نوع محصول *</label
+        >
         <p-select
           id="productType"
           formControlName="productType"
@@ -52,14 +77,17 @@
           optionLabel="label"
           optionValue="value"
           placeholder="انتخاب کنید"
-          class="full-width-input"
+          styleClass="w-full !bg-white dark:!bg-slate-900 !text-gray-800 dark:!text-gray-100 !border-gray-300 dark:!border-slate-600"
         ></p-select>
         @if (validationErrors()['productType']) {
-        <small class="error-text">{{
-          validationErrors()["productType"]
-        }}</small>
+        <small
+          class="text-red-600 text-xs mt-1 font-medium flex items-center gap-1 before:content-['⚠'] before:text-sm"
+          >{{ validationErrors()["productType"] }}</small
+        >
         }
-        <small class="hint-text">
+        <small
+          class="text-gray-500 dark:text-gray-400 text-xs mt-1 italic leading-relaxed"
+        >
           @if (form.get('productType')?.value === 'print') { برای چاپ: اندازه
           کاغذ (A3, A4, A5)، رنگ چاپ (سیاه و سفید، رنگی معمولی، تمام رنگ)، و نوع
           رو (تک رو، دو رو) را انتخاب کنید. } @else if
@@ -70,8 +98,12 @@
       </div>
 
       <!-- Price -->
-      <div class="form-field">
-        <label for="price">قیمت (تومان) *</label>
+      <div class="flex flex-col gap-2">
+        <label
+          for="price"
+          class="font-semibold text-gray-700 dark:text-gray-200 text-sm mb-1 block"
+          >قیمت (تومان) *</label
+        >
         <p-inputNumber
           id="price"
           formControlName="price"
@@ -79,16 +111,26 @@
           [min]="0"
           [maxFractionDigits]="0"
           placeholder="مثال: 4200"
-          class="full-width-input"
+          styleClass="w-full"
+          inputStyleClass="w-full !bg-white dark:!bg-slate-900 !text-gray-800 dark:!text-gray-100 !border-gray-300 dark:!border-slate-600 focus:!border-primary-500 dark:focus:!border-primary-400"
         ></p-inputNumber>
         @if (validationErrors()['price']) {
-        <small class="error-text">{{ validationErrors()["price"] }}</small>
+        <small
+          class="text-red-600 text-xs mt-1 font-medium flex items-center gap-1 before:content-['⚠'] before:text-sm"
+          >{{ validationErrors()["price"] }}</small
+        >
         }
       </div>
 
       <!-- Is Active -->
-      <div class="form-field">
-        <label for="isActive">قانون فعال باشد</label>
+      <div
+        class="flex items-center justify-between gap-4 p-4 bg-gray-50 dark:bg-slate-900/50 rounded-lg border border-gray-200 dark:border-slate-700"
+      >
+        <label
+          for="isActive"
+          class="font-semibold text-gray-700 dark:text-gray-200 text-sm m-0 cursor-pointer"
+          >قانون فعال باشد</label
+        >
         <p-toggleswitch
           formControlName="isActive"
           inputId="isActive"
@@ -96,40 +138,49 @@
       </div>
 
       <!-- Match Conditions -->
-      <div class="form-field">
-        <div class="field-header">
-          <label>شرایط تطابق</label>
+      <div class="flex flex-col gap-2">
+        <div class="flex justify-between items-center mb-2">
+          <label class="font-semibold text-gray-700 dark:text-gray-200 text-sm"
+            >شرایط تطابق</label
+          >
           <p-button
             label="افزودن شرط"
             icon="pi pi-plus"
             (click)="addMatchCondition()"
             [text]="true"
             size="small"
-            styleClass="p-button-success"
+            styleClass="!text-green-600 hover:!bg-green-50 dark:!text-green-400 dark:hover:!bg-green-900/20"
           ></p-button>
         </div>
 
-        <div class="match-list">
+        <div
+          class="flex flex-col gap-3 p-4 bg-gray-50 dark:bg-slate-900/50 rounded-lg border border-gray-200 dark:border-slate-700"
+        >
           @for (match of matchArray.controls; track $index) {
-          <div class="match-item">
-            <div class="match-inputs">
-              <div class="match-input-wrapper">
+          <div
+            class="flex flex-col md:flex-row items-start md:items-center gap-3 p-3 bg-white dark:bg-slate-800 rounded-md border border-gray-200 dark:border-slate-700 shadow-sm"
+          >
+            <div class="flex flex-col md:flex-row gap-2 flex-1 w-full">
+              <div class="flex flex-col gap-1 flex-1 w-full">
                 <p-select
                   [formControl]="$any(match).get('attributeKey')"
                   [options]="attributeOptions()"
                   optionLabel="label"
                   optionValue="value"
                   placeholder="انتخاب کلید"
-                  class="small-input"
+                  styleClass="w-full !bg-white dark:!bg-slate-900 !text-gray-800 dark:!text-gray-100 !border-gray-300 dark:!border-slate-600"
                   [disabled]="!form.get('productType')?.value"
                 ></p-select>
                 @if (validationErrors()['match.' + $index + '.attributeKey']) {
-                <small class="error-text">{{
-                  validationErrors()["match." + $index + ".attributeKey"]
-                }}</small>
+                <small
+                  class="text-red-600 text-xs mt-1 font-medium flex items-center gap-1 before:content-['⚠'] before:text-sm"
+                  >{{
+                    validationErrors()["match." + $index + ".attributeKey"]
+                  }}</small
+                >
                 }
               </div>
-              <div class="match-input-wrapper">
+              <div class="flex flex-col gap-1 flex-1 w-full">
                 <p-select
                   [formControl]="$any(match).get('value')"
                   [options]="
@@ -140,13 +191,14 @@
                   optionLabel="label"
                   optionValue="label"
                   placeholder="انتخاب مقدار"
-                  class="small-input"
+                  styleClass="w-full !bg-white dark:!bg-slate-900 !text-gray-800 dark:!text-gray-100 !border-gray-300 dark:!border-slate-600"
                   [disabled]="!$any(match).get('attributeKey')?.value"
                 ></p-select>
                 @if (validationErrors()['match.' + $index + '.value']) {
-                <small class="error-text">{{
-                  validationErrors()["match." + $index + ".value"]
-                }}</small>
+                <small
+                  class="text-red-600 text-xs mt-1 font-medium flex items-center gap-1 before:content-['⚠'] before:text-sm"
+                  >{{ validationErrors()["match." + $index + ".value"] }}</small
+                >
                 }
               </div>
             </div>
@@ -156,61 +208,86 @@
               [text]="true"
               severity="danger"
               size="small"
+              styleClass="!text-red-500 hover:!bg-red-50 dark:hover:!bg-red-900/20"
             ></p-button>
           </div>
           } @if (matchArray.length === 0) {
-          <p class="empty-state">هیچ شرطی اضافه نشده است</p>
+          <p class="text-center text-gray-500 dark:text-gray-400 text-sm p-4">
+            هیچ شرطی اضافه نشده است
+          </p>
           }
         </div>
       </div>
 
       <!-- Breakpoints -->
-      <div class="form-field">
-        <div class="field-header">
-          <label>نقطه‌شکن‌ها (قیمت‌گذاری یکپارچه)</label>
+      <div class="flex flex-col gap-2">
+        <div class="flex justify-between items-center mb-2">
+          <label class="font-semibold text-gray-700 dark:text-gray-200 text-sm"
+            >نقطه‌شکن‌ها (قیمت‌گذاری یکپارچه)</label
+          >
           <p-button
             label="افزودن نقطه شکن"
             icon="pi pi-plus"
             (click)="addBreakpoint()"
             [text]="true"
             size="small"
-            styleClass="p-button-info"
+            styleClass="!text-blue-600 hover:!bg-blue-50 dark:!text-blue-400 dark:hover:!bg-blue-900/20"
           ></p-button>
         </div>
 
-        <div class="breakpoint-list">
+        <div
+          class="flex flex-col gap-3 p-4 bg-gray-50 dark:bg-slate-900/50 rounded-lg border border-gray-200 dark:border-slate-700"
+        >
           @for (bp of breakpointsArray.controls; track $index) {
-          <div class="breakpoint-item">
-            <div class="breakpoint-inputs">
-              <div class="breakpoint-input-wrapper">
-                <label>از تعداد:</label>
+          <div
+            class="flex flex-col md:flex-row items-start md:items-center gap-3 p-3 bg-white dark:bg-slate-800 rounded-md border border-gray-200 dark:border-slate-700 shadow-sm"
+          >
+            <div
+              class="flex flex-col md:flex-row gap-4 flex-1 w-full items-start md:items-center"
+            >
+              <div class="flex flex-col gap-1 flex-1 w-full">
+                <label
+                  class="text-xs text-gray-600 dark:text-gray-400 font-medium mb-1"
+                  >از تعداد:</label
+                >
                 <p-inputNumber
                   [formControl]="$any(bp).get('at')"
                   mode="decimal"
                   [min]="1"
                   placeholder="مثال: 501"
-                  class="small-input"
+                  styleClass="w-full"
+                  inputStyleClass="w-full !bg-white dark:!bg-slate-900 !text-gray-800 dark:!text-gray-100 !border-gray-300 dark:!border-slate-600 focus:!border-primary-500 dark:focus:!border-primary-400"
                 ></p-inputNumber>
                 @if (validationErrors()['breakpoints.' + $index + '.at']) {
-                <small class="error-text">{{
-                  validationErrors()["breakpoints." + $index + ".at"]
-                }}</small>
+                <small
+                  class="text-red-600 text-xs mt-1 font-medium flex items-center gap-1 before:content-['⚠'] before:text-sm"
+                  >{{
+                    validationErrors()["breakpoints." + $index + ".at"]
+                  }}</small
+                >
                 }
               </div>
 
-              <div class="breakpoint-input-wrapper">
-                <label>قیمت:</label>
+              <div class="flex flex-col gap-1 flex-1 w-full">
+                <label
+                  class="text-xs text-gray-600 dark:text-gray-400 font-medium mb-1"
+                  >قیمت:</label
+                >
                 <p-inputNumber
                   [formControl]="$any(bp).get('price')"
                   mode="decimal"
                   [min]="0"
                   placeholder="مثال: 4000"
-                  class="small-input"
+                  styleClass="w-full"
+                  inputStyleClass="w-full !bg-white dark:!bg-slate-900 !text-gray-800 dark:!text-gray-100 !border-gray-300 dark:!border-slate-600 focus:!border-primary-500 dark:focus:!border-primary-400"
                 ></p-inputNumber>
                 @if (validationErrors()['breakpoints.' + $index + '.price']) {
-                <small class="error-text">{{
-                  validationErrors()["breakpoints." + $index + ".price"]
-                }}</small>
+                <small
+                  class="text-red-600 text-xs mt-1 font-medium flex items-center gap-1 before:content-['⚠'] before:text-sm"
+                  >{{
+                    validationErrors()["breakpoints." + $index + ".price"]
+                  }}</small
+                >
                 }
               </div>
             </div>
@@ -220,23 +297,29 @@
               [text]="true"
               severity="danger"
               size="small"
+              styleClass="!text-red-500 hover:!bg-red-50 dark:hover:!bg-red-900/20 md:mt-6"
             ></p-button>
           </div>
           } @if (breakpointsArray.length === 0) {
-          <p class="empty-state">هیچ نقطه شکنی اضافه نشده است</p>
+          <p class="text-center text-gray-500 dark:text-gray-400 text-sm p-4">
+            هیچ نقطه شکنی اضافه نشده است
+          </p>
           }
         </div>
       </div>
     </div>
 
     <!-- Actions Footer -->
-    <div class="form-actions">
+    <div
+      class="border-t-2 border-gray-100 dark:border-slate-700 pt-6 mt-auto flex flex-col-reverse md:flex-row justify-end gap-3"
+    >
       <p-button
         label="انصراف"
         icon="pi pi-times"
         severity="secondary"
         [outlined]="true"
         (onClick)="onCancel()"
+        styleClass="w-full md:w-auto !bg-white dark:!bg-slate-800 !text-gray-700 dark:!text-gray-200 !border-gray-300 dark:!border-slate-600 hover:!bg-gray-100 dark:hover:!bg-slate-700"
       ></p-button>
       <p-button
         [label]="isEditMode() ? 'ویرایش قانون' : 'ایجاد'"
@@ -244,6 +327,7 @@
         severity="primary"
         (onClick)="onSubmit()"
         [loading]="submitting()"
+        styleClass="w-full md:w-auto !bg-primary-600 hover:!bg-primary-700 !border-primary-600 !text-white"
       ></p-button>
     </div>
   </form>
