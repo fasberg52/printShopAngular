@@ -71,15 +71,13 @@
   <div class="grid grid-cols-1 md:grid-cols-2 xl:grid-cols-3 gap-6">
     @for (address of addresses(); track address._id || address.id) {
     <div
-      class="group relative bg-white dark:bg-slate-800 rounded-2xl border-2 transition-all duration-300 hover:-translate-y-1 hover:shadow-xl overflow-hidden"
-      [class.border-blue-500]="address.isDefault"
-      [class.dark:border-blue-500]="address.isDefault"
-      [class.bg-blue-50]="address.isDefault"
-      [class.dark:bg-slate-800]="address.isDefault"
-      [class.border-transparent]="!address.isDefault"
-      [class.shadow-sm]="!address.isDefault"
-      [class.hover:border-blue-200]="!address.isDefault"
-      [class.dark:hover:border-slate-600]="!address.isDefault"
+      class="group relative rounded-2xl border-2 transition-all duration-300 hover:-translate-y-1 hover:shadow-xl overflow-hidden"
+      [ngClass]="{
+        'bg-blue-50 dark:bg-slate-800/80 border-blue-500 dark:border-blue-500':
+          address.isDefault,
+        'bg-white dark:bg-slate-800 border-transparent shadow-sm hover:border-blue-200 dark:hover:border-slate-600':
+          !address.isDefault
+      }"
     >
       <!-- Card Header -->
       <div

@@ -178,26 +178,58 @@
   }
 
   /* Select/Dropdown */
-  .my-app-dark .p-select {
-    @apply !bg-slate-800/80 !border-slate-700/50 !backdrop-blur-md;
+  .my-app-dark .p-select,
+  .my-app-dark .p-select.p-component {
+    @apply !bg-slate-800 !border-slate-600 !backdrop-blur-md;
   }
 
   .my-app-dark .p-select .p-select-label {
     @apply !bg-transparent !text-slate-100;
   }
 
-  .my-app-dark .p-select-overlay {
-    @apply !bg-slate-800/90 !border-slate-700/50 !backdrop-blur-md !shadow-xl;
+  .my-app-dark .p-select .p-select-trigger {
+    @apply !text-slate-400;
+  }
+
+  .my-app-dark .p-select:hover,
+  .my-app-dark .p-select.p-component:hover {
+    @apply !border-blue-400;
+  }
+
+  .my-app-dark .p-select:focus-within,
+  .my-app-dark .p-select.p-component:focus-within {
+    @apply !border-blue-500 !shadow-[0_0_0_3px_rgba(59,130,246,0.2)];
+  }
+
+  .my-app-dark .p-select-overlay,
+  .my-app-dark .p-select-panel {
+    @apply !bg-slate-800 !border-slate-600 !backdrop-blur-md !shadow-xl !z-[9999];
+  }
+
+  .my-app-dark .p-select-overlay .p-select-list,
+  .my-app-dark .p-select-panel .p-select-list {
+    @apply !bg-transparent;
   }
 
   .my-app-dark .p-select-overlay .p-select-item,
-  .my-app-dark .p-select-overlay .p-select-option {
-    @apply !text-slate-50 !bg-transparent hover:!bg-blue-500/20 hover:!text-blue-500 hover:!backdrop-blur-sm;
+  .my-app-dark .p-select-overlay .p-select-option,
+  .my-app-dark .p-select-panel .p-select-item,
+  .my-app-dark .p-select-panel .p-select-option {
+    @apply !text-slate-200 !bg-transparent hover:!bg-blue-500/20 hover:!text-blue-300;
   }
 
   .my-app-dark .p-select-overlay .p-select-item.p-highlight,
-  .my-app-dark .p-select-overlay .p-select-option.p-highlight {
-    @apply !bg-blue-500/20 !text-blue-500 !font-semibold;
+  .my-app-dark .p-select-overlay .p-select-option.p-highlight,
+  .my-app-dark .p-select-panel .p-select-item.p-highlight,
+  .my-app-dark .p-select-panel .p-select-option.p-highlight,
+  .my-app-dark .p-select-overlay .p-select-option.p-selected,
+  .my-app-dark .p-select-panel .p-select-option.p-selected {
+    @apply !bg-blue-500/30 !text-blue-300 !font-semibold;
+  }
+
+  .my-app-dark .p-select-overlay .p-select-option:focus,
+  .my-app-dark .p-select-panel .p-select-option:focus {
+    @apply !bg-blue-500/20;
   }
 
   /* Dialogs */
@@ -295,7 +327,7 @@
   }
 
   .p-select-overlay {
-    @apply !rounded-xl !shadow-xl !border !border-gray-200 !mt-2 !bg-white !z-[1000] !overflow-hidden;
+    @apply !rounded-xl !shadow-xl !border !border-gray-200 !mt-2 !bg-white !z-[9999] !overflow-hidden;
   }
 
   .p-select-overlay .p-select-item,
