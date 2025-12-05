@@ -40,7 +40,6 @@ import { PersianValidationService } from '../../../core/services/persian-validat
   ],
   providers: [MessageService, ConfirmationService],
   templateUrl: './addresses.component.html',
-  styleUrls: ['./addresses.component.css'],
 })
 export class UserAddressesComponent implements OnInit {
   private addressService = inject(AddressService);

@@ -1,19 +1,29 @@
-<div class="addresses-container">
+<div
+  class="max-w-7xl mx-auto p-4 md:p-8 font-['Vazirmatn'] rtl min-h-[calc(100vh-4rem)] bg-gradient-to-b from-slate-50 to-white dark:from-transparent dark:to-transparent"
+>
   <!-- Header Section -->
-  <div class="header-section">
-    <div class="header-content">
-      <div class="header-title">
-        <i class="pi pi-map-marker header-icon"></i>
+  <div class="mb-8">
+    <div
+      class="flex flex-col sm:flex-row justify-between items-start sm:items-center gap-4"
+    >
+      <div class="flex items-center gap-4">
+        <i
+          class="pi pi-map-marker text-3xl text-blue-500 bg-blue-100 dark:bg-blue-500/20 dark:text-blue-400 p-3 rounded-xl shadow-sm"
+        ></i>
         <div>
-          <h1 class="page-title">آدرس‌های من</h1>
-          <p class="page-subtitle">مدیریت آدرس‌های ارسال سفارش‌ها</p>
+          <h1 class="text-3xl font-bold text-gray-800 dark:text-white mb-1">
+            آدرس‌های من
+          </h1>
+          <p class="text-sm text-gray-500 dark:text-gray-400">
+            مدیریت آدرس‌های ارسال سفارش‌ها
+          </p>
         </div>
       </div>
       <p-button
         label="افزودن آدرس جدید"
         icon="pi pi-plus"
         (click)="openCreateModal()"
-        styleClass="add-button"
+        styleClass="!bg-gradient-to-r !from-blue-500 !to-blue-600 !border-none !shadow-lg !shadow-blue-500/30 hover:!shadow-blue-500/40 !rounded-xl !px-6 !py-3 !transition-all hover:!-translate-y-0.5"
         [loading]="loading()"
       ></p-button>
     </div>
@@ -21,45 +31,71 @@
 
   <!-- Loading State -->
   @if (loading() && addresses().length === 0) {
-  <div class="loading-container">
-    <div class="loading-spinner">
-      <i class="pi pi-spin pi-spinner text-4xl text-blue-500"></i>
-      <p class="loading-text">در حال بارگذاری آدرس‌ها...</p>
+  <div class="flex flex-col items-center justify-center min-h-[400px]">
+    <div class="text-center">
+      <i
+        class="pi pi-spin pi-spinner text-4xl text-blue-500 dark:text-blue-400 mb-4"
+      ></i>
+      <p class="text-gray-500 dark:text-gray-400">در حال بارگذاری آدرس‌ها...</p>
     </div>
   </div>
   }
 
   <!-- Empty State -->
   @if (!loading() && addresses().length === 0) {
-  <div class="empty-state">
-    <div class="empty-state-icon">
-      <i class="pi pi-map-marker"></i>
+  <div
+    class="text-center py-16 px-8 bg-white dark:bg-slate-800/50 rounded-2xl border border-gray-100 dark:border-slate-700 shadow-sm backdrop-blur-sm"
+  >
+    <div class="mb-6">
+      <i
+        class="pi pi-map-marker text-6xl text-gray-300 dark:text-slate-600"
+      ></i>
     </div>
-    <h3 class="empty-state-title">هنوز آدرسی ثبت نکرده‌اید</h3>
-    <p class="empty-state-description">
+    <h3 class="text-2xl font-bold text-gray-800 dark:text-white mb-2">
+      هنوز آدرسی ثبت نکرده‌اید
+    </h3>
+    <p class="text-gray-500 dark:text-gray-400 mb-8 max-w-md mx-auto">
       برای ثبت سفارش، ابتدا یک آدرس اضافه کنید
     </p>
     <p-button
       label="افزودن اولین آدرس"
       icon="pi pi-plus"
       (click)="openCreateModal()"
-      styleClass="p-button-primary"
+      styleClass="!rounded-xl"
     ></p-button>
   </div>
   }
 
   <!-- Addresses Grid -->
   @if (addresses().length > 0) {
-  <div class="addresses-grid">
+  <div class="grid grid-cols-1 md:grid-cols-2 xl:grid-cols-3 gap-6">
     @for (address of addresses(); track address._id || address.id) {
-    <div class="address-card" [class.default-address]="address.isDefault">
+    <div
+      class="group relative bg-white dark:bg-slate-800 rounded-2xl border-2 transition-all duration-300 hover:-translate-y-1 hover:shadow-xl overflow-hidden"
+      [class.border-blue-500]="address.isDefault"
+      [class.dark:border-blue-500]="address.isDefault"
+      [class.bg-blue-50]="address.isDefault"
+      [class.dark:bg-slate-800]="address.isDefault"
+      [class.border-transparent]="!address.isDefault"
+      [class.shadow-sm]="!address.isDefault"
+      [class.hover:border-blue-200]="!address.isDefault"
+      [class.dark:hover:border-slate-600]="!address.isDefault"
+    >
       <!-- Card Header -->
-      <div class="card-header">
-        <div class="card-title-section">
-          <i class="pi pi-home card-icon"></i>
-          <h3 class="card-title">{{ address.title }}</h3>
+      <div
+        class="flex justify-between items-center p-5 border-b border-gray-100 dark:border-slate-700/50"
+      >
+        <div class="flex items-center gap-3">
+          <i
+            class="pi pi-home text-xl text-blue-500 bg-blue-100 dark:bg-blue-500/20 dark:text-blue-400 p-2 rounded-lg"
+          ></i>
+          <h3 class="font-bold text-lg text-gray-800 dark:text-white m-0">
+            {{ address.title }}
+          </h3>
         </div>
-        <div class="card-actions">
+        <div
+          class="flex gap-2 opacity-0 group-hover:opacity-100 transition-opacity"
+        >
           <p-button
             icon="pi pi-pencil"
             [text]="true"
@@ -69,6 +105,7 @@
             (click)="openEditModal(address)"
             pTooltip="ویرایش"
             tooltipPosition="top"
+            styleClass="!w-8 !h-8 !bg-gray-100 dark:!bg-slate-700 hover:!bg-gray-200 dark:hover:!bg-slate-600 !text-gray-600 dark:!text-gray-300"
           ></p-button>
           <p-button
             icon="pi pi-trash"
@@ -79,51 +116,75 @@
             (click)="deleteAddress(address)"
             pTooltip="حذف"
             tooltipPosition="top"
+            styleClass="!w-8 !h-8 !bg-red-50 dark:!bg-red-900/20 hover:!bg-red-100 dark:hover:!bg-red-900/30 !text-red-500"
           ></p-button>
         </div>
       </div>
 
       <!-- Card Body -->
-      <div class="card-body">
-        <div class="address-info">
-          <div class="info-row">
-            <i class="pi pi-user info-icon"></i>
-            <span class="info-label">گیرنده:</span>
-            <span class="info-value">{{ address.recipientName }}</span>
-          </div>
-          <div class="info-row">
-            <i class="pi pi-phone info-icon"></i>
-            <span class="info-label">شماره تماس:</span>
-            <span class="info-value phone-value">{{
-              formatPhone(address.recipientPhone)
-            }}</span>
-          </div>
-          <div class="info-row">
-            <i class="pi pi-map info-icon"></i>
-            <span class="info-label">آدرس:</span>
-            <span class="info-value">{{ address.fullAddress }}</span>
-          </div>
-          <div class="info-row">
-            <i class="pi pi-building info-icon"></i>
-            <span class="info-label">شهر:</span>
-            <span class="info-value"
-              >{{ address.city }}، {{ address.province }}</span
-            >
-          </div>
-          <div class="info-row">
-            <i class="pi pi-inbox info-icon"></i>
-            <span class="info-label">کد پستی:</span>
-            <span class="info-value postal-code-value">{{
-              address.postalCode
-            }}</span>
-          </div>
+      <div class="p-5 flex flex-col gap-4">
+        <div class="flex items-start gap-3 text-sm">
+          <i class="pi pi-user mt-1 text-gray-400 dark:text-gray-500"></i>
+          <span
+            class="font-medium text-gray-500 dark:text-gray-400 min-w-[80px]"
+            >گیرنده:</span
+          >
+          <span class="text-gray-800 dark:text-gray-200 font-medium">{{
+            address.recipientName
+          }}</span>
+        </div>
+        <div class="flex items-start gap-3 text-sm">
+          <i class="pi pi-phone mt-1 text-gray-400 dark:text-gray-500"></i>
+          <span
+            class="font-medium text-gray-500 dark:text-gray-400 min-w-[80px]"
+            >شماره تماس:</span
+          >
+          <span
+            class="text-gray-800 dark:text-gray-200 font-medium ltr text-right"
+            >{{ formatPhone(address.recipientPhone) }}</span
+          >
+        </div>
+        <div class="flex items-start gap-3 text-sm">
+          <i class="pi pi-map mt-1 text-gray-400 dark:text-gray-500"></i>
+          <span
+            class="font-medium text-gray-500 dark:text-gray-400 min-w-[80px]"
+            >آدرس:</span
+          >
+          <span class="text-gray-800 dark:text-gray-200 leading-relaxed">{{
+            address.fullAddress
+          }}</span>
+        </div>
+        <div class="flex items-start gap-3 text-sm">
+          <i class="pi pi-building mt-1 text-gray-400 dark:text-gray-500"></i>
+          <span
+            class="font-medium text-gray-500 dark:text-gray-400 min-w-[80px]"
+            >شهر:</span
+          >
+          <span class="text-gray-800 dark:text-gray-200"
+            >{{ address.city }}، {{ address.province }}</span
+          >
+        </div>
+        <div class="flex items-start gap-3 text-sm">
+          <i class="pi pi-inbox mt-1 text-gray-400 dark:text-gray-500"></i>
+          <span
+            class="font-medium text-gray-500 dark:text-gray-400 min-w-[80px]"
+            >کد پستی:</span
+          >
+          <span
+            class="text-gray-800 dark:text-gray-200 font-medium ltr text-right"
+            >{{ address.postalCode }}</span
+          >
         </div>
       </div>
 
       <!-- Card Footer -->
-      <div class="card-footer">
+      <div
+        class="p-4 bg-gray-50 dark:bg-slate-800/50 border-t border-gray-100 dark:border-slate-700/50 flex justify-center"
+      >
         @if (address.isDefault) {
-        <div class="default-badge">
+        <div
+          class="flex items-center gap-2 text-blue-600 dark:text-blue-400 font-bold text-sm bg-blue-100 dark:bg-blue-500/10 px-4 py-2 rounded-lg w-full justify-center"
+        >
           <i class="pi pi-check-circle"></i>
           <span>آدرس پیش‌فرض</span>
         </div>
@@ -134,7 +195,7 @@
           [text]="true"
           size="small"
           (click)="setDefaultAddress(address)"
-          styleClass="set-default-button"
+          styleClass="!w-full !text-blue-500 hover:!bg-blue-50 dark:hover:!bg-blue-500/10"
         ></p-button>
         }
       </div>
@@ -152,14 +213,17 @@
     [draggable]="false"
     [resizable]="false"
     (onHide)="showCreateModal.set(false)"
-    styleClass="address-dialog"
+    styleClass="!rounded-2xl overflow-hidden [&_.p-dialog-header]:!bg-gradient-to-r [&_.p-dialog-header]:!from-blue-500 [&_.p-dialog-header]:!to-blue-600 [&_.p-dialog-header]:!text-white [&_.p-dialog-header-icon]:!text-white/80 hover:[&_.p-dialog-header-icon]:!text-white [&_.p-dialog-content]:!p-6 dark:[&_.p-dialog-content]:!bg-slate-800 [&_.p-dialog-footer]:!border-t [&_.p-dialog-footer]:!border-gray-100 dark:[&_.p-dialog-footer]:!border-slate-700 dark:[&_.p-dialog-footer]:!bg-slate-800"
   >
     <form [formGroup]="createForm" (ngSubmit)="createAddress()">
-      <div class="form-container">
+      <div class="flex flex-col gap-5 py-2">
         <!-- Title -->
-        <div class="form-group">
-          <label for="create-title" class="form-label">
-            عنوان آدرس <span class="required">*</span>
+        <div class="flex flex-col gap-2">
+          <label
+            for="create-title"
+            class="font-semibold text-sm text-gray-700 dark:text-gray-300"
+          >
+            عنوان آدرس <span class="text-red-500">*</span>
           </label>
           <input
             id="create-title"
@@ -167,20 +231,24 @@
             pInputText
             formControlName="title"
             placeholder="مثال: خانه، محل کار"
-            [class.p-invalid]="hasFieldError(createForm, 'title')"
-            class="form-input"
+            [class.ng-invalid]="hasFieldError(createForm, 'title')"
+            [class.ng-dirty]="hasFieldError(createForm, 'title')"
+            class="w-full !rounded-xl !border-gray-300 dark:!border-slate-600 dark:!bg-slate-700 dark:!text-white focus:!border-blue-500 dark:focus:!border-blue-400"
           />
           @if (hasFieldError(createForm, 'title')) {
-          <small class="p-error">{{
+          <small class="text-red-500 text-xs">{{
             getFieldError(createForm, "title")
           }}</small>
           }
         </div>
 
         <!-- Recipient Name -->
-        <div class="form-group">
-          <label for="create-recipientName" class="form-label">
-            نام گیرنده <span class="required">*</span>
+        <div class="flex flex-col gap-2">
+          <label
+            for="create-recipientName"
+            class="font-semibold text-sm text-gray-700 dark:text-gray-300"
+          >
+            نام گیرنده <span class="text-red-500">*</span>
           </label>
           <input
             id="create-recipientName"
@@ -188,20 +256,24 @@
             pInputText
             formControlName="recipientName"
             placeholder="نام و نام خانوادگی گیرنده"
-            [class.p-invalid]="hasFieldError(createForm, 'recipientName')"
-            class="form-input"
+            [class.ng-invalid]="hasFieldError(createForm, 'recipientName')"
+            [class.ng-dirty]="hasFieldError(createForm, 'recipientName')"
+            class="w-full !rounded-xl !border-gray-300 dark:!border-slate-600 dark:!bg-slate-700 dark:!text-white focus:!border-blue-500 dark:focus:!border-blue-400"
           />
           @if (hasFieldError(createForm, 'recipientName')) {
-          <small class="p-error">{{
+          <small class="text-red-500 text-xs">{{
             getFieldError(createForm, "recipientName")
           }}</small>
           }
         </div>
 
         <!-- Recipient Phone -->
-        <div class="form-group">
-          <label for="create-recipientPhone" class="form-label">
-            شماره تماس گیرنده <span class="required">*</span>
+        <div class="flex flex-col gap-2">
+          <label
+            for="create-recipientPhone"
+            class="font-semibold text-sm text-gray-700 dark:text-gray-300"
+          >
+            شماره تماس گیرنده <span class="text-red-500">*</span>
           </label>
           <input
             id="create-recipientPhone"
@@ -209,21 +281,25 @@
             pInputText
             formControlName="recipientPhone"
             placeholder="09123456789"
-            [class.p-invalid]="hasFieldError(createForm, 'recipientPhone')"
-            class="form-input"
+            [class.ng-invalid]="hasFieldError(createForm, 'recipientPhone')"
+            [class.ng-dirty]="hasFieldError(createForm, 'recipientPhone')"
+            class="w-full !rounded-xl !border-gray-300 dark:!border-slate-600 dark:!bg-slate-700 dark:!text-white focus:!border-blue-500 dark:focus:!border-blue-400 ltr text-left"
           />
           @if (hasFieldError(createForm, 'recipientPhone')) {
-          <small class="p-error">{{
+          <small class="text-red-500 text-xs">{{
             getFieldError(createForm, "recipientPhone")
           }}</small>
           }
         </div>
 
         <!-- Province and City Row -->
-        <div class="form-row">
-          <div class="form-group">
-            <label for="create-province" class="form-label">
-              استان <span class="required">*</span>
+        <div class="grid grid-cols-1 sm:grid-cols-2 gap-4">
+          <div class="flex flex-col gap-2">
+            <label
+              for="create-province"
+              class="font-semibold text-sm text-gray-700 dark:text-gray-300"
+            >
+              استان <span class="text-red-500">*</span>
             </label>
             <input
               id="create-province"
@@ -231,19 +307,23 @@
               pInputText
               formControlName="province"
               placeholder="مثال: تهران"
-              [class.p-invalid]="hasFieldError(createForm, 'province')"
-              class="form-input"
+              [class.ng-invalid]="hasFieldError(createForm, 'province')"
+              [class.ng-dirty]="hasFieldError(createForm, 'province')"
+              class="w-full !rounded-xl !border-gray-300 dark:!border-slate-600 dark:!bg-slate-700 dark:!text-white focus:!border-blue-500 dark:focus:!border-blue-400"
             />
             @if (hasFieldError(createForm, 'province')) {
-            <small class="p-error">{{
+            <small class="text-red-500 text-xs">{{
               getFieldError(createForm, "province")
             }}</small>
             }
           </div>
 
-          <div class="form-group">
-            <label for="create-city" class="form-label">
-              شهر <span class="required">*</span>
+          <div class="flex flex-col gap-2">
+            <label
+              for="create-city"
+              class="font-semibold text-sm text-gray-700 dark:text-gray-300"
+            >
+              شهر <span class="text-red-500">*</span>
             </label>
             <input
               id="create-city"
@@ -251,11 +331,12 @@
               pInputText
               formControlName="city"
               placeholder="مثال: تهران"
-              [class.p-invalid]="hasFieldError(createForm, 'city')"
-              class="form-input"
+              [class.ng-invalid]="hasFieldError(createForm, 'city')"
+              [class.ng-dirty]="hasFieldError(createForm, 'city')"
+              class="w-full !rounded-xl !border-gray-300 dark:!border-slate-600 dark:!bg-slate-700 dark:!text-white focus:!border-blue-500 dark:focus:!border-blue-400"
             />
             @if (hasFieldError(createForm, 'city')) {
-            <small class="p-error">{{
+            <small class="text-red-500 text-xs">{{
               getFieldError(createForm, "city")
             }}</small>
             }
@@ -263,9 +344,12 @@
         </div>
 
         <!-- Full Address -->
-        <div class="form-group">
-          <label for="create-fullAddress" class="form-label">
-            آدرس کامل <span class="required">*</span>
+        <div class="flex flex-col gap-2">
+          <label
+            for="create-fullAddress"
+            class="font-semibold text-sm text-gray-700 dark:text-gray-300"
+          >
+            آدرس کامل <span class="text-red-500">*</span>
           </label>
           <textarea
             id="create-fullAddress"
@@ -274,20 +358,24 @@
             placeholder="خیابان، پلاک، طبقه، واحد و..."
             rows="3"
             [autoResize]="true"
-            [class.p-invalid]="hasFieldError(createForm, 'fullAddress')"
-            class="form-textarea"
+            [class.ng-invalid]="hasFieldError(createForm, 'fullAddress')"
+            [class.ng-dirty]="hasFieldError(createForm, 'fullAddress')"
+            class="w-full !rounded-xl !border-gray-300 dark:!border-slate-600 dark:!bg-slate-700 dark:!text-white focus:!border-blue-500 dark:focus:!border-blue-400"
           ></textarea>
           @if (hasFieldError(createForm, 'fullAddress')) {
-          <small class="p-error">{{
+          <small class="text-red-500 text-xs">{{
             getFieldError(createForm, "fullAddress")
           }}</small>
           }
         </div>
 
         <!-- Postal Code -->
-        <div class="form-group">
-          <label for="create-postalCode" class="form-label">
-            کد پستی <span class="required">*</span>
+        <div class="flex flex-col gap-2">
+          <label
+            for="create-postalCode"
+            class="font-semibold text-sm text-gray-700 dark:text-gray-300"
+          >
+            کد پستی <span class="text-red-500">*</span>
           </label>
           <input
             id="create-postalCode"
@@ -296,43 +384,44 @@
             formControlName="postalCode"
             placeholder="1234567890"
             maxlength="10"
-            [class.p-invalid]="hasFieldError(createForm, 'postalCode')"
-            class="form-input"
+            [class.ng-invalid]="hasFieldError(createForm, 'postalCode')"
+            [class.ng-dirty]="hasFieldError(createForm, 'postalCode')"
+            class="w-full !rounded-xl !border-gray-300 dark:!border-slate-600 dark:!bg-slate-700 dark:!text-white focus:!border-blue-500 dark:focus:!border-blue-400 ltr text-left"
           />
           @if (hasFieldError(createForm, 'postalCode')) {
-          <small class="p-error">{{
+          <small class="text-red-500 text-xs">{{
             getFieldError(createForm, "postalCode")
           }}</small>
           }
         </div>
 
         <!-- Is Default -->
-        <div class="form-group checkbox-group">
+        <div class="flex items-center mt-2">
           <p-toggleButton
             formControlName="isDefault"
             onLabel="آدرس پیش‌فرض"
             offLabel="آدرس پیش‌فرض نیست"
-            styleClass="toggle-button"
+            styleClass="!w-full !rounded-xl"
           ></p-toggleButton>
         </div>
       </div>
     </form>
 
     <ng-template pTemplate="footer">
-      <div class="dialog-footer">
+      <div class="flex justify-end gap-3 pt-4">
         <p-button
           label="انصراف"
           icon="pi pi-times"
           [text]="true"
           (click)="showCreateModal.set(false)"
-          styleClass="cancel-button"
+          styleClass="!text-gray-500 dark:!text-gray-400 hover:!bg-gray-100 dark:hover:!bg-slate-700 !rounded-xl"
         ></p-button>
         <p-button
           label="ذخیره آدرس"
           icon="pi pi-check"
           (click)="createAddress()"
           [loading]="loading()"
-          styleClass="save-button"
+          styleClass="!bg-blue-600 !border-blue-600 hover:!bg-blue-700 !rounded-xl"
         ></p-button>
       </div>
     </ng-template>
@@ -347,111 +436,138 @@
     [draggable]="false"
     [resizable]="false"
     (onHide)="showEditModal.set(false)"
-    styleClass="address-dialog"
+    styleClass="!rounded-2xl overflow-hidden [&_.p-dialog-header]:!bg-gradient-to-r [&_.p-dialog-header]:!from-blue-500 [&_.p-dialog-header]:!to-blue-600 [&_.p-dialog-header]:!text-white [&_.p-dialog-header-icon]:!text-white/80 hover:[&_.p-dialog-header-icon]:!text-white [&_.p-dialog-content]:!p-6 dark:[&_.p-dialog-content]:!bg-slate-800 [&_.p-dialog-footer]:!border-t [&_.p-dialog-footer]:!border-gray-100 dark:[&_.p-dialog-footer]:!border-slate-700 dark:[&_.p-dialog-footer]:!bg-slate-800"
   >
     <form [formGroup]="editForm" (ngSubmit)="updateAddress()">
-      <div class="form-container">
+      <div class="flex flex-col gap-5 py-2">
         <!-- Title -->
-        <div class="form-group">
-          <label for="edit-title" class="form-label">
-            عنوان آدرس <span class="required">*</span>
+        <div class="flex flex-col gap-2">
+          <label
+            for="edit-title"
+            class="font-semibold text-sm text-gray-700 dark:text-gray-300"
+          >
+            عنوان آدرس <span class="text-red-500">*</span>
           </label>
           <input
             id="edit-title"
             type="text"
             pInputText
             formControlName="title"
-            [class.p-invalid]="hasFieldError(editForm, 'title')"
-            class="form-input"
+            [class.ng-invalid]="hasFieldError(editForm, 'title')"
+            [class.ng-dirty]="hasFieldError(editForm, 'title')"
+            class="w-full !rounded-xl !border-gray-300 dark:!border-slate-600 dark:!bg-slate-700 dark:!text-white focus:!border-blue-500 dark:focus:!border-blue-400"
           />
           @if (hasFieldError(editForm, 'title')) {
-          <small class="p-error">{{ getFieldError(editForm, "title") }}</small>
+          <small class="text-red-500 text-xs">{{
+            getFieldError(editForm, "title")
+          }}</small>
           }
         </div>
 
         <!-- Recipient Name -->
-        <div class="form-group">
-          <label for="edit-recipientName" class="form-label">
-            نام گیرنده <span class="required">*</span>
+        <div class="flex flex-col gap-2">
+          <label
+            for="edit-recipientName"
+            class="font-semibold text-sm text-gray-700 dark:text-gray-300"
+          >
+            نام گیرنده <span class="text-red-500">*</span>
           </label>
           <input
             id="edit-recipientName"
             type="text"
             pInputText
             formControlName="recipientName"
-            [class.p-invalid]="hasFieldError(editForm, 'recipientName')"
-            class="form-input"
+            [class.ng-invalid]="hasFieldError(editForm, 'recipientName')"
+            [class.ng-dirty]="hasFieldError(editForm, 'recipientName')"
+            class="w-full !rounded-xl !border-gray-300 dark:!border-slate-600 dark:!bg-slate-700 dark:!text-white focus:!border-blue-500 dark:focus:!border-blue-400"
           />
           @if (hasFieldError(editForm, 'recipientName')) {
-          <small class="p-error">{{
+          <small class="text-red-500 text-xs">{{
             getFieldError(editForm, "recipientName")
           }}</small>
           }
         </div>
 
         <!-- Recipient Phone -->
-        <div class="form-group">
-          <label for="edit-recipientPhone" class="form-label">
-            شماره تماس گیرنده <span class="required">*</span>
+        <div class="flex flex-col gap-2">
+          <label
+            for="edit-recipientPhone"
+            class="font-semibold text-sm text-gray-700 dark:text-gray-300"
+          >
+            شماره تماس گیرنده <span class="text-red-500">*</span>
           </label>
           <input
             id="edit-recipientPhone"
             type="tel"
             pInputText
             formControlName="recipientPhone"
-            [class.p-invalid]="hasFieldError(editForm, 'recipientPhone')"
-            class="form-input"
+            [class.ng-invalid]="hasFieldError(editForm, 'recipientPhone')"
+            [class.ng-dirty]="hasFieldError(editForm, 'recipientPhone')"
+            class="w-full !rounded-xl !border-gray-300 dark:!border-slate-600 dark:!bg-slate-700 dark:!text-white focus:!border-blue-500 dark:focus:!border-blue-400 ltr text-left"
           />
           @if (hasFieldError(editForm, 'recipientPhone')) {
-          <small class="p-error">{{
+          <small class="text-red-500 text-xs">{{
             getFieldError(editForm, "recipientPhone")
           }}</small>
           }
         </div>
 
         <!-- Province and City Row -->
-        <div class="form-row">
-          <div class="form-group">
-            <label for="edit-province" class="form-label">
-              استان <span class="required">*</span>
+        <div class="grid grid-cols-1 sm:grid-cols-2 gap-4">
+          <div class="flex flex-col gap-2">
+            <label
+              for="edit-province"
+              class="font-semibold text-sm text-gray-700 dark:text-gray-300"
+            >
+              استان <span class="text-red-500">*</span>
             </label>
             <input
               id="edit-province"
               type="text"
               pInputText
               formControlName="province"
-              [class.p-invalid]="hasFieldError(editForm, 'province')"
-              class="form-input"
+              [class.ng-invalid]="hasFieldError(editForm, 'province')"
+              [class.ng-dirty]="hasFieldError(editForm, 'province')"
+              class="w-full !rounded-xl !border-gray-300 dark:!border-slate-600 dark:!bg-slate-700 dark:!text-white focus:!border-blue-500 dark:focus:!border-blue-400"
             />
             @if (hasFieldError(editForm, 'province')) {
-            <small class="p-error">{{
+            <small class="text-red-500 text-xs">{{
               getFieldError(editForm, "province")
             }}</small>
             }
           </div>
 
-          <div class="form-group">
-            <label for="edit-city" class="form-label">
-              شهر <span class="required">*</span>
+          <div class="flex flex-col gap-2">
+            <label
+              for="edit-city"
+              class="font-semibold text-sm text-gray-700 dark:text-gray-300"
+            >
+              شهر <span class="text-red-500">*</span>
             </label>
             <input
               id="edit-city"
               type="text"
               pInputText
               formControlName="city"
-              [class.p-invalid]="hasFieldError(editForm, 'city')"
-              class="form-input"
+              [class.ng-invalid]="hasFieldError(editForm, 'city')"
+              [class.ng-dirty]="hasFieldError(editForm, 'city')"
+              class="w-full !rounded-xl !border-gray-300 dark:!border-slate-600 dark:!bg-slate-700 dark:!text-white focus:!border-blue-500 dark:focus:!border-blue-400"
             />
             @if (hasFieldError(editForm, 'city')) {
-            <small class="p-error">{{ getFieldError(editForm, "city") }}</small>
+            <small class="text-red-500 text-xs">{{
+              getFieldError(editForm, "city")
+            }}</small>
             }
           </div>
         </div>
 
         <!-- Full Address -->
-        <div class="form-group">
-          <label for="edit-fullAddress" class="form-label">
-            آدرس کامل <span class="required">*</span>
+        <div class="flex flex-col gap-2">
+          <label
+            for="edit-fullAddress"
+            class="font-semibold text-sm text-gray-700 dark:text-gray-300"
+          >
+            آدرس کامل <span class="text-red-500">*</span>
           </label>
           <textarea
             id="edit-fullAddress"
@@ -459,20 +575,24 @@
             formControlName="fullAddress"
             rows="3"
             [autoResize]="true"
-            [class.p-invalid]="hasFieldError(editForm, 'fullAddress')"
-            class="form-textarea"
+            [class.ng-invalid]="hasFieldError(editForm, 'fullAddress')"
+            [class.ng-dirty]="hasFieldError(editForm, 'fullAddress')"
+            class="w-full !rounded-xl !border-gray-300 dark:!border-slate-600 dark:!bg-slate-700 dark:!text-white focus:!border-blue-500 dark:focus:!border-blue-400"
           ></textarea>
           @if (hasFieldError(editForm, 'fullAddress')) {
-          <small class="p-error">{{
+          <small class="text-red-500 text-xs">{{
             getFieldError(editForm, "fullAddress")
           }}</small>
           }
         </div>
 
         <!-- Postal Code -->
-        <div class="form-group">
-          <label for="edit-postalCode" class="form-label">
-            کد پستی <span class="required">*</span>
+        <div class="flex flex-col gap-2">
+          <label
+            for="edit-postalCode"
+            class="font-semibold text-sm text-gray-700 dark:text-gray-300"
+          >
+            کد پستی <span class="text-red-500">*</span>
           </label>
           <input
             id="edit-postalCode"
@@ -480,43 +600,44 @@
             pInputText
             formControlName="postalCode"
             maxlength="10"
-            [class.p-invalid]="hasFieldError(editForm, 'postalCode')"
-            class="form-input"
+            [class.ng-invalid]="hasFieldError(editForm, 'postalCode')"
+            [class.ng-dirty]="hasFieldError(editForm, 'postalCode')"
+            class="w-full !rounded-xl !border-gray-300 dark:!border-slate-600 dark:!bg-slate-700 dark:!text-white focus:!border-blue-500 dark:focus:!border-blue-400 ltr text-left"
           />
           @if (hasFieldError(editForm, 'postalCode')) {
-          <small class="p-error">{{
+          <small class="text-red-500 text-xs">{{
             getFieldError(editForm, "postalCode")
           }}</small>
           }
         </div>
 
         <!-- Is Default -->
-        <div class="form-group checkbox-group">
+        <div class="flex items-center mt-2">
           <p-toggleButton
             formControlName="isDefault"
             onLabel="آدرس پیش‌فرض"
             offLabel="آدرس پیش‌فرض نیست"
-            styleClass="toggle-button"
+            styleClass="!w-full !rounded-xl"
           ></p-toggleButton>
         </div>
       </div>
     </form>
 
     <ng-template pTemplate="footer">
-      <div class="dialog-footer">
+      <div class="flex justify-end gap-3 pt-4">
         <p-button
           label="انصراف"
           icon="pi pi-times"
           [text]="true"
           (click)="showEditModal.set(false)"
-          styleClass="cancel-button"
+          styleClass="!text-gray-500 dark:!text-gray-400 hover:!bg-gray-100 dark:hover:!bg-slate-700 !rounded-xl"
         ></p-button>
         <p-button
           label="ذخیره تغییرات"
           icon="pi pi-check"
           (click)="updateAddress()"
           [loading]="loading()"
-          styleClass="save-button"
+          styleClass="!bg-blue-600 !border-blue-600 hover:!bg-blue-700 !rounded-xl"
         ></p-button>
       </div>
     </ng-template>

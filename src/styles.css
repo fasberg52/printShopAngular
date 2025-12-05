@@ -1,723 +1,587 @@
-/* You can add global styles to this file, and also import other style files */
-
-/* Vazir Matn Font Import - Must be first */
-/* @import url('https://fonts.googleapis.com/css2?family=Vazirmatn:wght@100;200;300;400;500;600;700;800;900&display=swap'); */
-
 @import "tailwindcss";
 @import "tailwindcss-primeui";
 @import "primeicons/primeicons.css";
+
+/* Custom variant for dark mode */
 @custom-variant dark (&:where(.my-app-dark, .my-app-dark *));
 
-/* ========= CSS Variables ========= */
-:root {
-  --color-card-bg: #ffffff;
-}
-
-.my-app-dark {
-  --color-card-bg: color-mix(in oklab, #1e293b 80%, transparent);
-}
-
-/* ========= Dark Mode Styles ========= */
-
-/* Dark mode base styles - now using Tailwind dark variant */
 @layer base {
+  :root {
+    --color-card-bg: #ffffff;
+  }
+
   .my-app-dark {
+    --color-card-bg: color-mix(in oklab, #1e293b 80%, transparent);
     color-scheme: dark;
   }
 
+  html {
+    @apply text-right;
+    direction: rtl;
+  }
+
+  body {
+    @apply font-['Vazirmatn'] text-right bg-white text-gray-900;
+    direction: rtl;
+  }
+
   .my-app-dark body {
-    background-color: #0f172a;
-    color: #f1f5f9;
+    @apply bg-slate-900 text-slate-100;
+  }
+
+  /* Reset button styles for non-PrimeNG buttons */
+  button:not(.p-button):not([class*="p-"]) {
+    @apply bg-transparent border-0 p-0;
   }
 }
 
-/* Dark mode for user layout - using Tailwind dark variant */
-.my-app-dark .user-layout-container {
-  background: #0f172a;
-}
-
-.my-app-dark .mobile-header {
-  background: #1e293b;
-  border-bottom: 1px solid #334155;
-}
-
-.my-app-dark .sidebar-container {
-  background: #1e293b;
-  border-left: 1px solid #334155;
-}
-
-.my-app-dark .sidebar-content {
-  background: #1e293b;
-}
-
-.my-app-dark .brand-section {
-  border-bottom: 1px solid #334155;
-}
-
-.my-app-dark .brand-section .flex.items-center.gap-3.p-4 h2 {
-  color: #f1f5f9;
-}
-
-.my-app-dark .brand-section .flex.items-center.gap-3.p-4 p {
-  color: #94a3b8;
-}
-
-.my-app-dark .navigation-menu {
-  background: #1e293b;
-}
-
-.my-app-dark .menu-list {
-  background: #1e293b;
-}
-
-.my-app-dark .menu-link {
-  color: #cbd5e1;
-}
-
-.my-app-dark .menu-link:hover {
-  background: color-mix(in oklab, #334155 50%, transparent) !important;
-  color: #f1f5f9 !important;
-  backdrop-filter: blur(8px) !important;
-}
-
-.my-app-dark .menu-link.active {
-  background: color-mix(in oklab, #2196f3 12%, transparent) !important;
-  color: #dbeafe !important;
-  backdrop-filter: blur(12px) !important;
-  border: 1px solid color-mix(in oklab, #2196f3 30%, transparent) !important;
-}
-
-.my-app-dark .menu-link.active .menu-icon {
-  color: #dbeafe !important;
-}
-
-.my-app-dark .menu-button {
-  color: #cbd5e1;
-}
-
-.my-app-dark .menu-button:hover {
-  background: color-mix(in oklab, #334155 50%, transparent) !important;
-  color: #f1f5f9 !important;
-  backdrop-filter: blur(8px) !important;
-}
-
-.my-app-dark .menu-button.active {
-  background: color-mix(in oklab, #2196f3 12%, transparent) !important;
-  color: #dbeafe !important;
-  backdrop-filter: blur(12px) !important;
-  border: 1px solid color-mix(in oklab, #2196f3 30%, transparent) !important;
-}
-
-.my-app-dark .menu-button.active .menu-icon {
-  color: #dbeafe !important;
-}
-
-.my-app-dark .menu-section-title span {
-  color: #94a3b8;
-}
-
-.my-app-dark .user-profile-section {
-  border-top: 1px solid #334155;
-}
-
-.my-app-dark .user-profile-card {
-  background: color-mix(in oklab, #334155 70%, transparent) !important;
-  backdrop-filter: blur(12px) !important;
-}
-
-.my-app-dark .user-profile-card .font-medium {
-  color: #f1f5f9;
-}
-
-.my-app-dark .user-profile-card .text-gray-600 {
-  color: #94a3b8;
-}
-
-.my-app-dark .user-profile-card .text-xs.text-gray-500 {
-  color: #64748b;
-}
-
-.my-app-dark .user-profile-card .border-t {
-  border-color: #475569;
-}
-
-.my-app-dark .user-profile-card .text-xs.text-gray-600 {
-  color: #94a3b8;
-}
-
-.my-app-dark .user-profile-card .font-semibold.text-gray-900 {
-  color: #f1f5f9;
-}
-
-.my-app-dark .user-profile-card .text-green-600 {
-  color: #10b981;
-}
-
-.my-app-dark .mobile-sidebar {
-  background: #1e293b;
-}
-
-.my-app-dark .mobile-sidebar-header {
-  background: #334155;
-}
-
-.my-app-dark .mobile-menu-link {
-  color: #cbd5e1;
-}
-
-.my-app-dark .mobile-menu-link:hover {
-  background: color-mix(in oklab, #334155 50%, transparent) !important;
-  color: #f1f5f9 !important;
-  backdrop-filter: blur(8px) !important;
-}
-
-.my-app-dark .mobile-menu-link.active {
-  background: color-mix(in oklab, #2196f3 12%, transparent) !important;
-  color: #dbeafe !important;
-  backdrop-filter: blur(12px) !important;
-  border: 1px solid color-mix(in oklab, #2196f3 30%, transparent) !important;
-}
-
-.my-app-dark .mobile-user-profile {
-  background: #334155;
-}
-
-.my-app-dark .mobile-user-profile .flex.items-center.gap-3.p-4 {
-  background: #475569;
-}
-
-.my-app-dark .mobile-user-profile .text-sm.font-medium {
-  color: #f1f5f9;
-}
-
-.my-app-dark .mobile-user-profile .text-xs {
-  color: #94a3b8;
-}
-
-.my-app-dark .mobile-user-profile .w-full button {
-  color: #ef4444 !important;
-}
-
-.my-app-dark .mobile-user-profile .w-full button:hover {
-  background: color-mix(in oklab, #ef4444 15%, transparent) !important;
-  backdrop-filter: blur(8px) !important;
-}
-
-/* Dark mode toggle button styles */
-.dark-mode-toggle {
-  position: relative;
-  display: inline-flex;
-  align-items: center;
-  justify-content: center;
-  width: 2.5rem;
-  height: 2.5rem;
-  border-radius: 0.5rem;
-  color: #cbd5e1;
-  transition: all 0.2s ease;
-  cursor: pointer;
-  border: none;
-  background: transparent;
-}
-
-.dark-mode-toggle:hover {
-  background: color-mix(in oklab, #334155 50%, transparent) !important;
-  color: #f1f5f9 !important;
-  backdrop-filter: blur(8px) !important;
-}
-
-.my-app-dark .dark-mode-toggle {
-  color: #f1f5f9;
-}
-
-.my-app-dark .dark-mode-toggle:hover {
-  background: color-mix(in oklab, #475569 60%, transparent) !important;
-  backdrop-filter: blur(10px) !important;
-}
-
-/* ========= Global Dark Mode Styles for PrimeNG & Tailwind ========= */
-
-/* Cards and Panels - با افکت شیشه‌ای */
-.my-app-dark .p-card {
-  background: color-mix(in oklab, #1e293b 70%, transparent) !important;
-  border-color: color-mix(in oklab, #334155 40%, transparent) !important;
-  color: #f1f5f9 !important;
-  backdrop-filter: blur(12px) !important;
-  box-shadow: 0 4px 16px rgba(0, 0, 0, 0.3) !important;
-}
-
-.my-app-dark .p-card .p-card-header {
-  color: #f1f5f9 !important;
-  background: color-mix(in oklab, #334155 50%, transparent) !important;
-  backdrop-filter: blur(8px) !important;
-}
-
-.my-app-dark .p-card .p-card-content {
-  color: #cbd5e1 !important;
-}
-
-.my-app-dark .p-card .p-card-footer {
-  color: #cbd5e1 !important;
-}
-
-/* Buttons - با افکت شیشه‌ای */
-.my-app-dark .p-button {
-  background: color-mix(in oklab, #334155 60%, transparent) !important;
-  border-color: color-mix(in oklab, #475569 40%, transparent) !important;
-  color: #cbd5e1 !important;
-  backdrop-filter: blur(8px) !important;
-}
-
-.my-app-dark .p-button:hover {
-  background: color-mix(in oklab, #475569 70%, transparent) !important;
-  border-color: color-mix(in oklab, #64748b 50%, transparent) !important;
-  color: #f1f5f9 !important;
-  backdrop-filter: blur(10px) !important;
-}
-
-.my-app-dark .p-button.p-button-primary {
-  background: color-mix(in oklab, #2196f3 20%, transparent) !important;
-  border-color: color-mix(in oklab, #2196f3 40%, transparent) !important;
-  color: #dbeafe !important;
-  backdrop-filter: blur(12px) !important;
-}
-
-.my-app-dark .p-button.p-button-primary:hover {
-  background: color-mix(in oklab, #2196f3 30%, transparent) !important;
-  border-color: color-mix(in oklab, #2196f3 50%, transparent) !important;
-  backdrop-filter: blur(14px) !important;
-}
-
-.my-app-dark .p-button.p-button-secondary {
-  background: color-mix(in oklab, #6c757d 20%, transparent) !important;
-  border-color: color-mix(in oklab, #6c757d 40%, transparent) !important;
-  color: #cbd5e1 !important;
-  backdrop-filter: blur(10px) !important;
-}
-
-.my-app-dark .p-button.p-button-success {
-  background: color-mix(in oklab, #4caf50 20%, transparent) !important;
-  border-color: color-mix(in oklab, #4caf50 40%, transparent) !important;
-  color: #d1fae5 !important;
-  backdrop-filter: blur(10px) !important;
-}
-
-.my-app-dark .p-button.p-button-info {
-  background: color-mix(in oklab, #2196f3 20%, transparent) !important;
-  border-color: color-mix(in oklab, #2196f3 40%, transparent) !important;
-  color: #dbeafe !important;
-  backdrop-filter: blur(10px) !important;
-}
-
-.my-app-dark .p-button.p-button-help {
-  background: color-mix(in oklab, #ba68c8 20%, transparent) !important;
-  border-color: color-mix(in oklab, #ba68c8 40%, transparent) !important;
-  color: #fce7f3 !important;
-  backdrop-filter: blur(10px) !important;
-}
-
-/* Input Fields - با افکت شیشه‌ای */
-.my-app-dark .p-inputtext,
-.my-app-dark .p-inputnumber-input,
-.my-app-dark .p-textarea {
-  background: color-mix(in oklab, #1e293b 60%, transparent) !important;
-  border-color: color-mix(in oklab, #334155 50%, transparent) !important;
-  color: #f1f5f9 !important;
-  backdrop-filter: blur(10px) !important;
-}
-
-.my-app-dark .p-inputtext:focus,
-.my-app-dark .p-inputnumber-input:focus,
-.my-app-dark .p-textarea:focus {
-  border-color: color-mix(in oklab, #2196f3 60%, transparent) !important;
-  box-shadow: 0 0 0 3px color-mix(in oklab, #2196f3 15%, transparent) !important;
-  backdrop-filter: blur(12px) !important;
-}
-
-/* Dropdown/Select - با افکت شیشه‌ای */
-.my-app-dark .p-select {
-  background: color-mix(in oklab, #1e293b 80%, transparent) !important;
-  border-color: color-mix(in oklab, #334155 50%, transparent) !important;
-  backdrop-filter: blur(12px) !important;
-}
-
-.my-app-dark .p-select .p-select-label {
-  background: transparent !important;
-  color: #f1f5f9 !important;
-}
-
-.my-app-dark .p-select-overlay {
-  background: color-mix(in oklab, #1e293b 90%, transparent) !important;
-  border-color: color-mix(in oklab, #334155 50%, transparent) !important;
-  backdrop-filter: blur(16px) !important;
-  box-shadow: 0 8px 32px rgba(0, 0, 0, 0.4) !important;
-}
-
-.my-app-dark .p-select-overlay .p-select-item,
-.my-app-dark .p-select-overlay .p-select-option {
-  color: #f8fafc !important;
-  background: transparent !important;
-}
-
-.my-app-dark .p-select-overlay .p-select-item:hover,
-.my-app-dark .p-select-overlay .p-select-option:hover,
-.my-app-dark .p-select-overlay .p-select-item.p-focus,
-.my-app-dark .p-select-overlay .p-select-option.p-focus,
-.my-app-dark .p-select-overlay .p-select-item[data-p-focused="true"],
-.my-app-dark .p-select-overlay .p-select-option[data-p-focused="true"] {
-  background-color: #2196f338 !important;
-  color: #2196f3 !important;
-  backdrop-filter: blur(8px) !important;
-}
-
-.my-app-dark .p-select-overlay .p-select-item.p-highlight,
-.my-app-dark .p-select-overlay .p-select-option.p-highlight,
-.my-app-dark .p-select-overlay .p-select-item[data-p-highlight="true"],
-.my-app-dark .p-select-overlay .p-select-option[data-p-highlight="true"] {
-  background-color: #2196f338 !important;
-  color: #2196f3 !important;
-  font-weight: 600 !important;
-}
-
-.my-app-dark .p-select-overlay .p-select-item.p-highlight:hover,
-.my-app-dark .p-select-overlay .p-select-option.p-highlight:hover,
-.my-app-dark .p-select-overlay .p-select-item.p-highlight.p-focus,
-.my-app-dark .p-select-overlay .p-select-option.p-highlight.p-focus,
-.my-app-dark .p-select-overlay .p-select-item[data-p-highlight="true"]:hover,
-.my-app-dark .p-select-overlay .p-select-option[data-p-highlight="true"]:hover {
-  background-color: #2196f350 !important;
-  color: #60a5fa !important;
-}
-
-/* Dialogs - با افکت شیشه‌ای */
-.my-app-dark .p-dialog {
-  background: color-mix(in oklab, #1e293b 80%, transparent) !important;
-  border-color: color-mix(in oklab, #334155 50%, transparent) !important;
-  color: #f1f5f9 !important;
-  backdrop-filter: blur(16px) !important;
-  box-shadow: 0 12px 48px rgba(0, 0, 0, 0.5) !important;
-}
-
-.my-app-dark .p-dialog .p-dialog-header {
-  background: color-mix(in oklab, #334155 60%, transparent) !important;
-  border-bottom-color: color-mix(in oklab, #334155 40%, transparent) !important;
-  color: #f1f5f9 !important;
-  backdrop-filter: blur(10px) !important;
-}
-
-.my-app-dark .p-dialog .p-dialog-content {
-  background: transparent !important;
-  color: #cbd5e1 !important;
-}
-
-/* Toast Messages - با افکت شیشه‌ای */
-.my-app-dark .p-toast {
-  background: transparent !important;
-}
-
-.my-app-dark .p-toast .p-toast-message {
-  background: color-mix(in oklab, #334155 80%, transparent) !important;
-  border-color: color-mix(in oklab, #475569 50%, transparent) !important;
-  color: #f1f5f9 !important;
-  backdrop-filter: blur(16px) !important;
-  box-shadow: 0 8px 32px rgba(0, 0, 0, 0.4) !important;
-}
-
-/* Tables - با افکت شیشه‌ای */
-.my-app-dark .p-datatable {
-  background: color-mix(in oklab, #1e293b 60%, transparent) !important;
-  color: #f1f5f9 !important;
-  backdrop-filter: blur(10px) !important;
-}
-
-.my-app-dark .p-datatable .p-datatable-thead > tr > th {
-  background: color-mix(in oklab, #334155 70%, transparent) !important;
-  border-color: color-mix(in oklab, #475569 40%, transparent) !important;
-  color: #f1f5f9 !important;
-  backdrop-filter: blur(8px) !important;
-}
-
-.my-app-dark .p-datatable .p-datatable-tbody > tr > td {
-  background: color-mix(in oklab, #1e293b 40%, transparent) !important;
-  border-color: color-mix(in oklab, #334155 30%, transparent) !important;
-  color: #cbd5e1 !important;
-}
-
-.my-app-dark .p-datatable .p-datatable-tbody > tr:hover > td {
-  background: color-mix(in oklab, #334155 50%, transparent) !important;
-  color: #f1f5f9 !important;
-  backdrop-filter: blur(8px) !important;
-}
-
-/* Forms and Labels */
-.my-app-dark .p-field label {
-  color: #cbd5e1;
-}
-
-.my-app-dark .p-field .p-help-text {
-  color: #94a3b8;
-}
-
-/* Tabs - با افکت شیشه‌ای */
-.my-app-dark .p-tabview .p-tabview-nav {
-  background: color-mix(in oklab, #1e293b 60%, transparent) !important;
-  border-color: color-mix(in oklab, #334155 40%, transparent) !important;
-  backdrop-filter: blur(10px) !important;
-}
-
-.my-app-dark .p-tabview .p-tabview-nav li .p-tabview-nav-link {
-  color: #cbd5e1 !important;
-}
-
-.my-app-dark .p-tabview .p-tabview-nav li .p-tabview-nav-link:hover {
-  background: color-mix(in oklab, #334155 40%, transparent) !important;
-  color: #f1f5f9 !important;
-  backdrop-filter: blur(8px) !important;
-}
-
-.my-app-dark .p-tabview .p-tabview-nav li.p-highlight .p-tabview-nav-link {
-  background: color-mix(in oklab, #2196f3 20%, transparent) !important;
-  color: #dbeafe !important;
-  backdrop-filter: blur(12px) !important;
-  border: 1px solid color-mix(in oklab, #2196f3 30%, transparent) !important;
-}
-
-/* Sidebar */
-.my-app-dark .p-sidebar {
-  background: #1e293b;
-  border-color: #334155;
-  color: #f1f5f9;
-}
-
-.my-app-dark .p-sidebar .p-sidebar-header {
-  background: #334155;
-  border-bottom-color: #475569;
-  color: #f1f5f9;
-}
-
-/* Generic dark backgrounds for containers - با افکت شیشه‌ای */
-.my-app-dark .bg-white {
-  background-color: color-mix(in oklab, #1e293b 70%, transparent) !important;
-  backdrop-filter: blur(10px) !important;
-}
-
-.my-app-dark .bg-gray-50 {
-  background-color: color-mix(in oklab, #334155 60%, transparent) !important;
-  backdrop-filter: blur(8px) !important;
-}
-
-.my-app-dark .bg-gray-100 {
-  background-color: color-mix(in oklab, #334155 60%, transparent) !important;
-  backdrop-filter: blur(8px) !important;
-}
-
-.my-app-dark .bg-gray-200 {
-  background-color: color-mix(in oklab, #475569 60%, transparent) !important;
-  backdrop-filter: blur(8px) !important;
-}
-
-/* Hover states for backgrounds */
-.my-app-dark .hover\:bg-gray-50:hover,
-.my-app-dark .hover\:bg-gray-100:hover {
-  background-color: color-mix(in oklab, #334155 70%, transparent) !important;
-  backdrop-filter: blur(10px) !important;
-}
-
-.my-app-dark .hover\:bg-blue-50:hover {
-  background-color: color-mix(in oklab, #2196f3 15%, transparent) !important;
-  backdrop-filter: blur(10px) !important;
-}
-
-.my-app-dark .hover\:bg-red-50:hover {
-  background-color: color-mix(in oklab, #ef4444 15%, transparent) !important;
-  backdrop-filter: blur(10px) !important;
-}
-
-/* Main content area */
-.my-app-dark .main-content {
-  background: #0f172a !important;
-}
-
-.my-app-dark .main-content-container {
-  background: #0f172a !important;
-}
-
-/* Pricing Display Component */
-.my-app-dark .pricing-container {
-  background: #0f172a !important;
-  color: #f1f5f9 !important;
-}
-
-.my-app-dark .pricing-header h2 {
-  color: #f1f5f9 !important;
-}
-
-.my-app-dark .pricing-header p {
-  color: #94a3b8 !important;
-}
-
-.my-app-dark .filters-section {
-  background: color-mix(in oklab, #1e293b 60%, transparent) !important;
-  border-color: color-mix(in oklab, #475569 40%, transparent) !important;
-  box-shadow: 0 8px 24px rgba(0, 0, 0, 0.4) !important;
-  backdrop-filter: blur(16px) !important;
-}
-
-.my-app-dark .filter-label {
-  color: #cbd5e1 !important;
-}
-
-.my-app-dark .products-display {
-  background: transparent !important;
-}
-
-.my-app-dark .product-section {
-  background: transparent !important;
-}
-
-.my-app-dark .section-title {
-  color: #f1f5f9 !important;
-}
-
-.my-app-dark .product-card {
-  background: color-mix(in oklab, #1e293b 70%, transparent) !important;
-  border-color: color-mix(in oklab, #334155 40%, transparent) !important;
-  box-shadow: 0 8px 24px rgba(0, 0, 0, 0.4) !important;
-  backdrop-filter: blur(12px) !important;
-}
-
-.my-app-dark .product-card:hover {
-  background: color-mix(in oklab, #1e293b 80%, transparent) !important;
-  border-color: color-mix(in oklab, #2196f3 40%, transparent) !important;
-  box-shadow: 0 12px 32px rgba(0, 0, 0, 0.5) !important;
-  backdrop-filter: blur(16px) !important;
-  transform: translateY(-4px) !important;
-}
-
-.my-app-dark .product-card .card-header {
-  background: color-mix(in oklab, #334155 60%, transparent) !important;
-  color: #f1f5f9 !important;
-  border-bottom-color: color-mix(in oklab, #475569 40%, transparent) !important;
-  backdrop-filter: blur(8px) !important;
-}
-
-.my-app-dark .product-card .price-table,
-.my-app-dark .pricing-table {
-  background: color-mix(in oklab, #1e293b 80%, transparent) !important;
-  backdrop-filter: blur(12px) !important;
-  border: 1px solid color-mix(in oklab, #334155 40%, transparent) !important;
-  border-radius: 8px !important;
-  overflow: hidden !important;
-}
-
-.my-app-dark .product-card .price-table th,
-.my-app-dark .pricing-table th {
-  background: color-mix(in oklab, #334155 85%, transparent) !important;
-  color: #ffffff !important;
-  border-color: color-mix(in oklab, #475569 60%, transparent) !important;
-  font-weight: 700 !important;
-  backdrop-filter: blur(12px) !important;
-  font-size: 0.95rem !important;
-  text-shadow: 0 1px 2px rgba(0, 0, 0, 0.3) !important;
-}
-
-.my-app-dark .product-card .price-table td,
-.my-app-dark .pricing-table td {
-  background: color-mix(in oklab, #1e293b 70%, transparent) !important;
-  color: #f8fafc !important;
-  border-color: color-mix(in oklab, #334155 50%, transparent) !important;
-  backdrop-filter: blur(10px) !important;
-  font-size: 0.95rem !important;
-  font-weight: 500 !important;
-}
-
-.my-app-dark .product-card .price-table tbody tr:hover td,
-.my-app-dark .pricing-table tbody tr:hover td {
-  background: color-mix(in oklab, #334155 70%, transparent) !important;
-  color: #ffffff !important;
-  backdrop-filter: blur(12px) !important;
-  box-shadow: inset 0 0 0 1px color-mix(in oklab, #2196f3 30%, transparent) !important;
-}
-
-.my-app-dark .price-cell {
-  color: #fbbf24 !important;
-  font-weight: 700 !important;
-  font-size: 1.05rem !important;
-  text-shadow: 0 1px 3px rgba(0, 0, 0, 0.4) !important;
-}
-
-.my-app-dark .unavailable-message {
-  background: color-mix(in oklab, #334155 50%, transparent) !important;
-  color: #94a3b8 !important;
-  backdrop-filter: blur(8px) !important;
-}
-
-.my-app-dark .empty-state {
-  color: #94a3b8 !important;
-}
-
-.my-app-dark .empty-state i {
-  color: #475569 !important;
-}
-
-/* Text colors */
-.my-app-dark .text-gray-900 {
-  color: #f1f5f9 !important;
-}
-
-.my-app-dark .text-gray-800 {
-  color: #e2e8f0 !important;
-}
-
-.my-app-dark .text-gray-700 {
-  color: #cbd5e1 !important;
-}
-
-.my-app-dark .text-gray-600 {
-  color: #94a3b8 !important;
-}
-
-.my-app-dark .text-gray-500 {
-  color: #64748b !important;
-}
-
-.my-app-dark .text-gray-400 {
-  color: #475569 !important;
-}
-
-/* Border colors */
-.my-app-dark .border-gray-200 {
-  border-color: #334155 !important;
-}
-
-.my-app-dark .border-gray-300 {
-  border-color: #475569 !important;
-}
-
-/* Shadows - adjust for dark mode */
-.my-app-dark .shadow-sm {
-  box-shadow: 0 1px 2px 0 rgba(0, 0, 0, 0.5) !important;
-}
-
-.my-app-dark .shadow {
-  box-shadow: 0 1px 3px 0 rgba(0, 0, 0, 0.5), 0 1px 2px 0 rgba(0, 0, 0, 0.5) !important;
-}
-
-.my-app-dark .shadow-md {
-  box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.5),
-    0 2px 4px -1px rgba(0, 0, 0, 0.5) !important;
-}
-
-.my-app-dark .shadow-lg {
-  box-shadow: 0 10px 15px -3px rgba(0, 0, 0, 0.5),
-    0 4px 6px -2px rgba(0, 0, 0, 0.5) !important;
-}
-
-/* ========= PrimeIcons Base Styles ========= */
-
-/* Ensure PrimeIcons work properly */
+@layer components {
+  /* ========= Dark Mode Layout Overrides ========= */
+  .my-app-dark .user-layout-container {
+    @apply bg-slate-900;
+  }
+
+  .my-app-dark .mobile-header {
+    @apply bg-slate-800 border-b border-slate-700;
+  }
+
+  .my-app-dark .sidebar-container {
+    @apply bg-slate-800 border-l border-slate-700;
+  }
+
+  .my-app-dark .sidebar-content {
+    @apply bg-slate-800;
+  }
+
+  .my-app-dark .brand-section {
+    @apply border-b border-slate-700;
+  }
+
+  .my-app-dark .brand-section .flex.items-center.gap-3.p-4 h2 {
+    @apply text-slate-100;
+  }
+
+  .my-app-dark .brand-section .flex.items-center.gap-3.p-4 p {
+    @apply text-slate-400;
+  }
+
+  .my-app-dark .navigation-menu,
+  .my-app-dark .menu-list {
+    @apply bg-slate-800;
+  }
+
+  .my-app-dark .menu-link {
+    @apply text-slate-300;
+  }
+
+  .my-app-dark .menu-link:hover {
+    @apply bg-slate-700/50 text-slate-100 backdrop-blur-sm;
+  }
+
+  .my-app-dark .menu-link.active {
+    @apply bg-blue-500/10 text-blue-100 backdrop-blur-md border border-blue-500/30;
+  }
+
+  .my-app-dark .menu-link.active .menu-icon {
+    @apply text-blue-100;
+  }
+
+  .my-app-dark .menu-button {
+    @apply text-slate-300;
+  }
+
+  .my-app-dark .menu-button:hover {
+    @apply bg-slate-700/50 text-slate-100 backdrop-blur-sm;
+  }
+
+  .my-app-dark .menu-button.active {
+    @apply bg-blue-500/10 text-blue-100 backdrop-blur-md border border-blue-500/30;
+  }
+
+  .my-app-dark .menu-section-title span {
+    @apply text-slate-400;
+  }
+
+  .my-app-dark .user-profile-section {
+    @apply border-t border-slate-700;
+  }
+
+  .my-app-dark .user-profile-card {
+    @apply bg-slate-700/70 backdrop-blur-md;
+  }
+
+  .my-app-dark .user-profile-card .font-medium {
+    @apply text-slate-100;
+  }
+
+  .my-app-dark .user-profile-card .text-gray-600,
+  .my-app-dark .user-profile-card .text-xs.text-gray-600 {
+    @apply text-slate-400;
+  }
+
+  .my-app-dark .user-profile-card .text-xs.text-gray-500 {
+    @apply text-slate-500;
+  }
+
+  .my-app-dark .user-profile-card .border-t {
+    @apply border-slate-600;
+  }
+
+  .my-app-dark .user-profile-card .text-green-600 {
+    @apply text-emerald-500;
+  }
+
+  /* ========= PrimeNG Dark Mode Overrides (Glassmorphism) ========= */
+  .my-app-dark .p-card {
+    @apply !bg-slate-800/70 !border-slate-700/40 !text-slate-100 !backdrop-blur-md !shadow-lg;
+  }
+
+  .my-app-dark .p-card .p-card-header {
+    @apply !bg-slate-700/50 !text-slate-100 !backdrop-blur-sm;
+  }
+
+  .my-app-dark .p-card .p-card-content,
+  .my-app-dark .p-card .p-card-footer {
+    @apply !text-slate-300;
+  }
+
+  /* Buttons */
+  .my-app-dark .p-button {
+    @apply !bg-slate-700/60 !border-slate-600/40 !text-slate-300 !backdrop-blur-sm hover:!bg-slate-600/70 hover:!border-slate-500/50 hover:!text-slate-100;
+  }
+
+  .my-app-dark .p-button.p-button-primary {
+    @apply !bg-blue-500/20 !border-blue-500/40 !text-blue-100 !backdrop-blur-md hover:!bg-blue-500/30 hover:!border-blue-500/50 hover:!backdrop-blur-xl;
+  }
+
+  .my-app-dark .p-button.p-button-secondary {
+    @apply !bg-gray-500/20 !border-gray-500/40 !text-slate-300 !backdrop-blur-sm;
+  }
+
+  .my-app-dark .p-button.p-button-success {
+    @apply !bg-green-500/20 !border-green-500/40 !text-green-100 !backdrop-blur-sm;
+  }
+
+  .my-app-dark .p-button.p-button-info {
+    @apply !bg-blue-500/20 !border-blue-500/40 !text-blue-100 !backdrop-blur-sm;
+  }
+
+  .my-app-dark .p-button.p-button-help {
+    @apply !bg-purple-500/20 !border-purple-500/40 !text-purple-100 !backdrop-blur-sm;
+  }
+
+  /* Inputs */
+  .my-app-dark .p-inputtext,
+  .my-app-dark .p-inputnumber-input,
+  .my-app-dark .p-textarea {
+    @apply !bg-slate-800/60 !border-slate-700/50 !text-slate-100 !backdrop-blur-sm focus:!border-blue-500/60 focus:!shadow-[0_0_0_3px_rgba(33,150,243,0.15)] focus:!backdrop-blur-md;
+  }
+
+  /* Select/Dropdown */
+  .my-app-dark .p-select {
+    @apply !bg-slate-800/80 !border-slate-700/50 !backdrop-blur-md;
+  }
+
+  .my-app-dark .p-select .p-select-label {
+    @apply !bg-transparent !text-slate-100;
+  }
+
+  .my-app-dark .p-select-overlay {
+    @apply !bg-slate-800/90 !border-slate-700/50 !backdrop-blur-md !shadow-xl;
+  }
+
+  .my-app-dark .p-select-overlay .p-select-item,
+  .my-app-dark .p-select-overlay .p-select-option {
+    @apply !text-slate-50 !bg-transparent hover:!bg-blue-500/20 hover:!text-blue-500 hover:!backdrop-blur-sm;
+  }
+
+  .my-app-dark .p-select-overlay .p-select-item.p-highlight,
+  .my-app-dark .p-select-overlay .p-select-option.p-highlight {
+    @apply !bg-blue-500/20 !text-blue-500 !font-semibold;
+  }
+
+  /* Dialogs */
+  .my-app-dark .p-dialog {
+    @apply !bg-slate-800/80 !border-slate-700/50 !text-slate-100 !backdrop-blur-md !shadow-2xl;
+  }
+
+  .my-app-dark .p-dialog .p-dialog-header {
+    @apply !bg-slate-700/60 !border-b-slate-700/40 !text-slate-100 !backdrop-blur-sm;
+  }
+
+  .my-app-dark .p-dialog .p-dialog-content {
+    @apply !bg-transparent !text-slate-300;
+  }
+
+  /* Tables */
+  .my-app-dark .p-datatable {
+    @apply !bg-slate-800/60 !text-slate-100 !backdrop-blur-sm;
+  }
+
+  .my-app-dark .p-datatable .p-datatable-thead > tr > th {
+    @apply !bg-slate-700/70 !border-slate-600/40 !text-slate-100 !backdrop-blur-sm;
+  }
+
+  .my-app-dark .p-datatable .p-datatable-tbody > tr > td {
+    @apply !bg-slate-800/40 !border-slate-700/30 !text-slate-300;
+  }
+
+  .my-app-dark .p-datatable .p-datatable-tbody > tr:hover > td {
+    @apply !bg-slate-700/50 !text-slate-100 !backdrop-blur-sm;
+  }
+
+  /* Toast */
+  .my-app-dark .p-toast .p-toast-message {
+    @apply !bg-slate-700/80 !border-slate-600/50 !text-slate-100 !backdrop-blur-md !shadow-xl;
+  }
+
+  /* Tabs */
+  .my-app-dark .p-tabview .p-tabview-nav {
+    @apply !bg-slate-800/60 !border-slate-700/40 !backdrop-blur-sm;
+  }
+
+  .my-app-dark .p-tabview .p-tabview-nav li .p-tabview-nav-link {
+    @apply !text-slate-300 hover:!bg-slate-700/40 hover:!text-slate-100 hover:!backdrop-blur-sm;
+  }
+
+  .my-app-dark .p-tabview .p-tabview-nav li.p-highlight .p-tabview-nav-link {
+    @apply !bg-blue-500/20 !text-blue-200 !backdrop-blur-md !border-blue-500/30;
+  }
+
+  /* ========= PrimeNG Component Base Styles (Refactored) ========= */
+
+  /* Buttons */
+  .p-button {
+    @apply !inline-flex !items-center !justify-center !cursor-pointer !select-none !border !border-transparent !font-medium !text-center !align-middle !relative !overflow-hidden !px-5 !py-2.5 !rounded-md !transition-all !duration-200;
+  }
+
+  .p-button.p-button-primary {
+    @apply !bg-blue-500 !border-blue-500 !text-white hover:!bg-blue-600 hover:!border-blue-600 focus:!ring-4 focus:!ring-blue-500/30;
+  }
+
+  .p-button.p-button-secondary {
+    @apply !bg-gray-500 !border-gray-500 !text-white hover:!bg-gray-600 hover:!border-gray-600;
+  }
+
+  .p-button.p-button-secondary.p-button-outlined {
+    @apply !bg-transparent !border-gray-500 !text-gray-500 hover:!bg-gray-500 hover:!text-white;
+  }
+
+  .p-button.p-button-text {
+    @apply !bg-transparent !border-transparent !text-gray-500 hover:!bg-gray-100 hover:!text-gray-700;
+  }
+
+  .p-button:disabled {
+    @apply !opacity-60 !cursor-not-allowed;
+  }
+
+  /* Inputs */
+  .p-inputtext,
+  .p-inputnumber-input {
+    @apply !block !w-full !bg-white !text-gray-900 !border-2 !border-gray-200 !rounded-lg !px-4 !py-3 !text-sm !transition-all !duration-200 placeholder:!text-gray-400 enabled:hover:!border-gray-300 enabled:hover:!bg-gray-50 enabled:focus:!outline-none enabled:focus:!border-blue-500 enabled:focus:!bg-white enabled:focus:!shadow-[0_0_0_4px_rgba(33,150,243,0.1)] disabled:!opacity-60 disabled:!cursor-not-allowed disabled:!bg-gray-100 disabled:!border-gray-200 disabled:!text-gray-400;
+  }
+
+  /* Select */
+  .p-select.p-component {
+    @apply !bg-white !border !border-gray-300 !rounded-md !transition-all !duration-200 !min-h-[42px] !flex !items-center !relative hover:!border-gray-400 focus-within:!border-blue-500 focus-within:!shadow-[0_0_0_3px_rgba(33,150,243,0.1)];
+  }
+
+  .p-select .p-select-label {
+    @apply !text-gray-800 !py-2.5 !pr-10 !pl-3.5 !text-sm !flex-1 !text-right !block !w-full;
+  }
+
+  .p-select .p-select-trigger {
+    @apply !text-gray-500 !w-10 !absolute !left-0 !top-1/2 !-translate-y-1/2 !flex !items-center !justify-center !pointer-events-none;
+  }
+
+  .p-select-overlay {
+    @apply !rounded-xl !shadow-xl !border !border-gray-200 !mt-2 !bg-white !z-[1000] !overflow-hidden;
+  }
+
+  .p-select-overlay .p-select-item,
+  .p-select-overlay .p-select-option {
+    @apply !py-3.5 !px-5 !my-1 !mx-2 !rounded-lg !text-gray-900 !text-sm !transition-all !duration-200 !cursor-pointer !bg-transparent !border-0 !block !w-[calc(100%-1rem)] !text-right !relative hover:!bg-gray-100 hover:!text-gray-900;
+  }
+
+  .p-select-overlay .p-select-item.p-highlight,
+  .p-select-overlay .p-select-option.p-highlight {
+    @apply !bg-blue-500 !text-white !font-medium hover:!bg-blue-600 hover:!text-white;
+  }
+
+  /* Checkbox */
+  .p-checkbox {
+    @apply !inline-flex !items-center !cursor-pointer;
+  }
+
+  .p-checkbox .p-checkbox-box {
+    @apply !w-5 !h-5 !border-2 !border-gray-300 !rounded !bg-white !transition-all !duration-200 hover:!border-blue-500;
+  }
+
+  .p-checkbox.p-checkbox-checked .p-checkbox-box {
+    @apply !bg-blue-500 !border-blue-500;
+  }
+
+  .p-checkbox .p-checkbox-icon {
+    @apply !text-white;
+  }
+
+  /* Toast */
+  .p-toast {
+    @apply !z-[9999];
+  }
+
+  .p-toast .p-toast-message {
+    @apply !min-w-[300px] !max-w-[500px] !mb-4 !shadow-lg !rounded-xl !border-l-4 !overflow-hidden;
+  }
+
+  .p-toast .p-toast-message-content {
+    @apply !py-4 !px-6;
+  }
+
+  .p-toast .p-toast-message.p-toast-message-error {
+    @apply !bg-red-50 !border-l-red-600 !border !border-red-200;
+  }
+
+  .p-toast .p-toast-message.p-toast-message-error .p-toast-message-icon,
+  .p-toast .p-toast-message.p-toast-message-error .p-toast-icon-close {
+    @apply !text-red-600;
+  }
+
+  .p-toast .p-toast-message.p-toast-message-error .p-toast-summary {
+    @apply !text-red-800 !font-bold;
+  }
+
+  .p-toast .p-toast-message.p-toast-message-error .p-toast-detail {
+    @apply !text-red-900;
+  }
+
+  .p-toast .p-toast-message.p-toast-message-success {
+    @apply !bg-green-50 !border-l-green-600 !border !border-green-200;
+  }
+
+  .p-toast .p-toast-message.p-toast-message-success .p-toast-message-icon,
+  .p-toast .p-toast-message.p-toast-message-success .p-toast-icon-close {
+    @apply !text-green-600;
+  }
+
+  .p-toast .p-toast-message.p-toast-message-success .p-toast-summary {
+    @apply !text-green-800 !font-bold;
+  }
+
+  /* ========= RTL Overrides ========= */
+  /* RTL Float Label */
+  .p-float-label > label {
+    @apply !right-3 !left-auto origin-top-right;
+  }
+
+  .p-float-label > .p-placeholder,
+  .p-float-label > input::placeholder,
+  .p-float-label > .p-inputtext::placeholder {
+    text-align: right;
+  }
+
+  /* RTL Input Components */
+  .p-inputtext,
+  .p-inputnumber-input,
+  .p-textarea {
+    @apply !text-right;
+    direction: rtl !important;
+  }
+
+  /* RTL Select Component */
+  .p-select .p-select-label {
+    @apply !text-right !pr-3.5 !pl-10;
+  }
+
+  .p-select .p-select-trigger {
+    @apply !left-3 !right-auto;
+  }
+
+  /* RTL Dropdown Panel */
+  .p-select-overlay .p-select-item,
+  .p-select-overlay .p-select-option {
+    @apply !text-right;
+    direction: rtl !important;
+  }
+
+  /* RTL Button Styles */
+  .p-button .p-button-icon-left {
+    @apply !mr-2 !ml-0 order-2;
+  }
+
+  .p-button .p-button-icon-right {
+    @apply !ml-2 !mr-0 -order-1;
+  }
+
+  .p-button .p-button-label {
+    @apply order-1;
+  }
+
+  /* RTL Table Styles */
+  .p-datatable .p-datatable-thead > tr > th,
+  .p-datatable .p-datatable-tbody > tr > td,
+  .p-datatable .p-datatable-tfoot > tr > td {
+    @apply !text-right;
+  }
+
+  .p-datatable .p-column-header-content {
+    @apply !justify-end;
+  }
+
+  .p-datatable .p-sortable-column-icon {
+    @apply !ml-2 !mr-0;
+  }
+
+  /* RTL Menu Styles */
+  .p-menu .p-menuitem-link {
+    @apply !justify-end !text-right;
+  }
+
+  .p-menu .p-menuitem-icon {
+    @apply !ml-2 !mr-0 order-2;
+  }
+
+  .p-menu .p-menuitem-text {
+    @apply order-1;
+  }
+
+  /* RTL Sidebar */
+  .p-sidebar-right {
+    @apply !right-0 !left-auto;
+  }
+
+  /* RTL Toast Positioning */
+  .p-toast.p-toast-top-right {
+    @apply !top-5 !left-5 !right-auto;
+  }
+
+  .p-toast.p-toast-top-left {
+    @apply !top-5 !right-5 !left-auto;
+  }
+
+  /* RTL Dialog */
+  .p-dialog .p-dialog-header,
+  .p-dialog .p-dialog-content {
+    @apply !text-right;
+  }
+
+  .p-dialog .p-dialog-footer {
+    @apply !justify-start;
+  }
+
+  .p-dialog .p-dialog-footer .p-button {
+    @apply !ml-2 !mr-0;
+  }
+
+  .p-dialog .p-dialog-footer .p-button:first-child {
+    @apply !ml-0;
+  }
+
+  .p-dialog .p-dialog-header-icon {
+    @apply !ml-2 !mr-0;
+  }
+
+  /* RTL Tabs */
+  .p-tabview .p-tabview-nav {
+    direction: rtl !important;
+  }
+
+  .p-tabview .p-tabview-nav li {
+    @apply !ml-1 !mr-0;
+  }
+
+  .p-tabview .p-tabview-nav li:first-child {
+    @apply !ml-0;
+  }
+
+  .p-tabview .p-tabview-nav li .p-tabview-nav-link {
+    @apply !text-right;
+  }
+
+  /* RTL Toolbar */
+  .p-toolbar {
+    @apply !justify-between;
+  }
+
+  .p-toolbar .p-toolbar-group-start {
+    @apply order-2;
+  }
+
+  .p-toolbar .p-toolbar-group-end {
+    @apply order-1;
+  }
+
+  /* RTL Card */
+  .p-card .p-card-header,
+  .p-card .p-card-content,
+  .p-card .p-card-footer {
+    @apply !text-right;
+  }
+
+  /* RTL Pagination */
+  .p-paginator {
+    direction: rtl !important;
+  }
+
+  .p-paginator .p-paginator-pages {
+    direction: ltr !important;
+  }
+
+  /* RTL Checkbox and Radio */
+  .p-checkbox .p-checkbox-box,
+  .p-radiobutton .p-radiobutton-box {
+    @apply !ml-2 !mr-0;
+  }
+
+  /* RTL Form Layout */
+  .p-field {
+    @apply !text-right;
+  }
+
+  .p-field > label {
+    @apply !text-right !block !mb-2;
+  }
+
+  /* ========= Custom Menu Styles (Price Rules) ========= */
+  .p-connected-overlay {
+    @apply !z-[10050];
+  }
+
+  .price-rule-menu.p-menu {
+    @apply !w-[200px] !bg-white !rounded-lg !shadow-xl !border !border-gray-100 !p-2 !mt-2;
+  }
+
+  .price-rule-menu .p-menuitem {
+    @apply mb-1 last:mb-0;
+  }
+
+  .price-rule-menu .p-menuitem-link,
+  .price-rule-menu .p-menu-item-link {
+    @apply !py-3.5 !px-4 !rounded-md !transition-all !duration-200 !text-gray-800 !font-medium !bg-transparent !border-0 !flex !items-center !gap-2 !cursor-pointer !no-underline hover:!bg-gray-100 hover:!text-gray-900;
+  }
+
+  .price-rule-menu .p-menuitem-icon,
+  .price-rule-menu .p-menu-item-icon {
+    @apply !text-gray-500 !ml-2 !opacity-100 !visible;
+  }
+
+  .price-rule-menu .p-menuitem-link:hover .p-menuitem-icon {
+    @apply !text-gray-700;
+  }
+
+  /* Red/Danger Menu Items */
+  .price-rule-menu .p-menuitem-link.text-red-500 {
+    @apply !text-red-500 hover:!text-red-600 hover:!bg-red-50;
+  }
+
+  .price-rule-menu .p-menuitem-link.text-red-500 .p-menuitem-icon {
+    @apply !text-red-500;
+  }
+}
+
+/* PrimeIcons Fixes */
 .pi {
   font-family: "primeicons" !important;
-  speak: none;
   font-style: normal;
   font-weight: normal;
   font-variant: normal;
@@ -726,1403 +590,4 @@
   display: inline-block;
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
-}
-
-.pi::before {
-  --webkit-backface-visibility: hidden;
-  backface-visibility: hidden;
-}
-
-/* Ensure specific PrimeIcon classes work */
-[class*="pi-"] {
-  font-family: "primeicons" !important;
-}
-
-[class*="pi-"]::before {
-  font-family: "primeicons" !important;
-}
-
-/* Force PrimeIcons content for specific icons */
-.pi-home::before {
-  content: "\e925" !important;
-}
-.pi-shopping-cart::before {
-  content: "\e932" !important;
-}
-.pi-list::before {
-  content: "\e956" !important;
-}
-.pi-user::before {
-  content: "\ea70" !important;
-}
-.pi-print::before {
-  content: "\e9ba" !important;
-}
-.pi-credit-card::before {
-  content: "\e979" !important;
-}
-.pi-map-marker::before {
-  content: "\e96e" !important;
-}
-.pi-bars::before {
-  content: "\e917" !important;
-}
-.pi-bell::before {
-  content: "\e91f" !important;
-}
-.pi-question-circle::before {
-  content: "\e9c4" !important;
-}
-.pi-sign-out::before {
-  content: "\ea14" !important;
-}
-.pi-cog::before {
-  content: "\e94a" !important;
-}
-.pi-user-edit::before {
-  content: "\ea71" !important;
-}
-.pi-times::before {
-  content: "\ea36" !important;
-}
-
-/* ========= RTL Foundation & Typography System ========= */
-
-/* RTL Base Styles */
-* {
-  direction: rtl;
-}
-
-html {
-  direction: rtl;
-  text-align: right;
-}
-
-body {
-  font-family: "Vazirmatn", "Segoe UI", Tahoma, Geneva, Verdana, sans-serif;
-  direction: rtl;
-  text-align: right;
-}
-
-/* RTL Layout Utilities */
-.rtl-container {
-  direction: rtl;
-  text-align: right;
-}
-
-.rtl-flex {
-  display: flex;
-  flex-direction: row-reverse;
-}
-
-.rtl-flex-col {
-  display: flex;
-  flex-direction: column;
-}
-
-.rtl-grid {
-  display: grid;
-  direction: rtl;
-}
-
-/* RTL Spacing Utilities */
-.mr-auto-rtl {
-  margin-left: auto;
-  margin-right: 0;
-}
-
-.ml-auto-rtl {
-  margin-right: auto;
-  margin-left: 0;
-}
-
-/* RTL Text Alignment */
-.text-right-rtl {
-  text-align: right;
-}
-
-.text-left-rtl {
-  text-align: left;
-}
-
-/* Persian Typography */
-.persian-text {
-  font-family: "Vazirmatn", sans-serif;
-  direction: rtl;
-  text-align: right;
-}
-
-.persian-numbers {
-  font-variant-numeric: normal;
-  direction: rtl;
-}
-
-/* RTL Form Styles */
-.rtl-form .p-float-label > label {
-  right: 0.75rem;
-  left: auto;
-  transform-origin: top right;
-}
-
-.rtl-form .p-inputtext,
-.rtl-form .p-inputnumber-input,
-.rtl-form .p-select-label {
-  text-align: right;
-  direction: rtl;
-}
-
-/* RTL Button Icon Positioning */
-.rtl-button .p-button-icon-left {
-  margin-right: 0.5rem;
-  margin-left: 0;
-  order: 2;
-}
-
-.rtl-button .p-button-icon-right {
-  margin-left: 0.5rem;
-  margin-right: 0;
-  order: -1;
-}
-
-.rtl-button .p-button-label {
-  order: 1;
-}
-
-/* RTL Sidebar Positioning */
-.rtl-sidebar {
-  right: 0;
-  left: auto;
-}
-
-.rtl-sidebar.p-sidebar-right {
-  right: 0;
-  left: auto;
-}
-
-/* RTL Table Styles */
-.rtl-table .p-datatable-thead > tr > th {
-  text-align: right;
-}
-
-.rtl-table .p-datatable-tbody > tr > td {
-  text-align: right;
-}
-
-/* RTL Menu Styles */
-.rtl-menu .p-menuitem-link {
-  justify-content: flex-end;
-  text-align: right;
-}
-
-.rtl-menu .p-menuitem-icon {
-  margin-left: 0.5rem;
-  margin-right: 0;
-  order: 2;
-}
-
-.rtl-menu .p-menuitem-text {
-  order: 1;
-}
-
-/* RTL Toast Positioning */
-.p-toast.p-toast-top-right {
-  top: 20px;
-  left: 20px;
-  right: auto;
-}
-
-.p-toast.p-toast-top-left {
-  top: 20px;
-  right: 20px;
-  left: auto;
-}
-
-/* RTL Dialog Styles */
-.rtl-dialog .p-dialog-header {
-  text-align: right;
-}
-
-.rtl-dialog .p-dialog-content {
-  text-align: right;
-}
-
-.rtl-dialog .p-dialog-footer {
-  justify-content: flex-start;
-}
-
-.rtl-dialog .p-dialog-footer .p-button {
-  margin-left: 0.5rem;
-  margin-right: 0;
-}
-
-.rtl-dialog .p-dialog-footer .p-button:first-child {
-  margin-left: 0;
-}
-
-/* RTL Tabs */
-.rtl-tabs .p-tabview-nav {
-  direction: rtl;
-}
-
-.rtl-tabs .p-tabview-nav li {
-  margin-left: 0.25rem;
-  margin-right: 0;
-}
-
-.rtl-tabs .p-tabview-nav li:first-child {
-  margin-left: 0;
-}
-
-/* RTL Breadcrumb */
-.rtl-breadcrumb .p-breadcrumb-list {
-  direction: rtl;
-}
-
-.rtl-breadcrumb .p-breadcrumb-separator {
-  transform: scaleX(-1);
-}
-
-/* ========= PrimeNG RTL Theme Configuration ========= */
-
-/* RTL Float Label */
-.p-float-label > label {
-  right: 0.75rem !important;
-  left: auto !important;
-  transform-origin: top right !important;
-}
-
-.p-float-label > .p-placeholder,
-.p-float-label > input::placeholder,
-.p-float-label > .p-inputtext::placeholder {
-  text-align: right;
-}
-
-/* RTL Input Components */
-.p-inputtext,
-.p-inputnumber-input,
-.p-textarea {
-  text-align: right !important;
-  direction: rtl !important;
-}
-
-/* RTL Select Component */
-.p-select .p-select-label {
-  text-align: right !important;
-  padding-right: 0.875rem !important;
-  padding-left: 2.5rem !important;
-}
-
-.p-select .p-select-trigger {
-  left: 0.75rem !important;
-  right: auto !important;
-}
-
-/* RTL Dropdown Panel */
-.p-select-overlay .p-select-item,
-.p-select-overlay .p-select-option {
-  text-align: right !important;
-  direction: rtl !important;
-}
-
-/* RTL Button Styles */
-.p-button .p-button-icon-left {
-  margin-right: 0.5rem !important;
-  margin-left: 0 !important;
-  order: 2;
-}
-
-.p-button .p-button-icon-right {
-  margin-left: 0.5rem !important;
-  margin-right: 0 !important;
-  order: -1;
-}
-
-.p-button .p-button-label {
-  order: 1;
-}
-
-/* RTL Table Styles */
-.p-datatable .p-datatable-thead > tr > th,
-.p-datatable .p-datatable-tbody > tr > td,
-.p-datatable .p-datatable-tfoot > tr > td {
-  text-align: right !important;
-}
-
-.p-datatable .p-column-header-content {
-  justify-content: flex-end !important;
-}
-
-.p-datatable .p-sortable-column-icon {
-  margin-left: 0.5rem !important;
-  margin-right: 0 !important;
-}
-
-/* RTL Menu Styles */
-.p-menu .p-menuitem-link {
-  justify-content: flex-end !important;
-  text-align: right !important;
-}
-
-.p-menu .p-menuitem-icon {
-  margin-left: 0.5rem !important;
-  margin-right: 0 !important;
-  order: 2;
-}
-
-.p-menu .p-menuitem-text {
-  order: 1;
-}
-
-/* RTL Sidebar */
-.p-sidebar-right {
-  right: 0 !important;
-  left: auto !important;
-}
-
-/* RTL Toast Positioning for Persian UI */
-.p-toast.p-toast-top-right {
-  top: 20px !important;
-  left: 20px !important;
-  right: auto !important;
-}
-
-.p-toast.p-toast-top-left {
-  top: 20px !important;
-  right: 20px !important;
-  left: auto !important;
-}
-
-.p-toast.p-toast-bottom-right {
-  bottom: 20px !important;
-  left: 20px !important;
-  right: auto !important;
-}
-
-.p-toast.p-toast-bottom-left {
-  bottom: 20px !important;
-  right: 20px !important;
-  left: auto !important;
-}
-
-/* RTL Dialog */
-.p-dialog .p-dialog-header {
-  text-align: right !important;
-}
-
-.p-dialog .p-dialog-content {
-  text-align: right !important;
-}
-
-.p-dialog .p-dialog-footer {
-  justify-content: flex-start !important;
-}
-
-.p-dialog .p-dialog-footer .p-button {
-  margin-left: 0.5rem !important;
-  margin-right: 0 !important;
-}
-
-.p-dialog .p-dialog-footer .p-button:first-child {
-  margin-left: 0 !important;
-}
-
-.p-dialog .p-dialog-header-icon {
-  margin-left: 0.5rem !important;
-  margin-right: 0 !important;
-}
-
-/* RTL Tabs */
-.p-tabview .p-tabview-nav {
-  direction: rtl !important;
-}
-
-.p-tabview .p-tabview-nav li {
-  margin-left: 0.25rem !important;
-  margin-right: 0 !important;
-}
-
-.p-tabview .p-tabview-nav li:first-child {
-  margin-left: 0 !important;
-}
-
-.p-tabview .p-tabview-nav li .p-tabview-nav-link {
-  text-align: right !important;
-}
-
-/* RTL Toolbar */
-.p-toolbar {
-  justify-content: space-between !important;
-}
-
-.p-toolbar .p-toolbar-group-start {
-  order: 2;
-}
-
-.p-toolbar .p-toolbar-group-end {
-  order: 1;
-}
-
-/* RTL Card */
-.p-card .p-card-header {
-  text-align: right !important;
-}
-
-.p-card .p-card-content {
-  text-align: right !important;
-}
-
-.p-card .p-card-footer {
-  text-align: right !important;
-}
-
-/* RTL Pagination */
-.p-paginator {
-  direction: rtl !important;
-}
-
-.p-paginator .p-paginator-pages {
-  direction: ltr !important;
-}
-
-/* RTL Checkbox and Radio */
-.p-checkbox .p-checkbox-box {
-  margin-left: 0.5rem !important;
-  margin-right: 0 !important;
-}
-
-.p-radiobutton .p-radiobutton-box {
-  margin-left: 0.5rem !important;
-  margin-right: 0 !important;
-}
-
-/* RTL Form Layout */
-.p-field {
-  text-align: right !important;
-}
-
-.p-field > label {
-  text-align: right !important;
-  display: block !important;
-  margin-bottom: 0.5rem !important;
-}
-
-/* RTL Specific Utility Classes */
-.rtl-text {
-  direction: rtl !important;
-  text-align: right !important;
-}
-
-.rtl-flex-reverse {
-  flex-direction: row-reverse !important;
-}
-
-.rtl-justify-start {
-  justify-content: flex-start !important;
-}
-
-.rtl-justify-end {
-  justify-content: flex-end !important;
-}
-
-/* Persian Font Weight Classes */
-.persian-light {
-  font-weight: 300;
-}
-
-.persian-regular {
-  font-weight: 400;
-}
-
-.persian-medium {
-  font-weight: 500;
-}
-
-.persian-semibold {
-  font-weight: 600;
-}
-
-.persian-bold {
-  font-weight: 700;
-}
-
-/* ========= Additional RTL Utilities ========= */
-
-/* RTL Icon Positioning */
-.rtl-icon-left {
-  margin-right: 0.5rem;
-  margin-left: 0;
-}
-
-.rtl-icon-right {
-  margin-left: 0.5rem;
-  margin-right: 0;
-}
-
-/* RTL Border Utilities */
-.rtl-border-left {
-  border-right: 1px solid #e5e7eb;
-  border-left: none;
-}
-
-.rtl-border-right {
-  border-left: 1px solid #e5e7eb;
-  border-right: none;
-}
-
-/* RTL Shadow Utilities */
-.rtl-shadow-left {
-  box-shadow: -2px 0 4px rgba(0, 0, 0, 0.1);
-}
-
-.rtl-shadow-right {
-  box-shadow: 2px 0 4px rgba(0, 0, 0, 0.1);
-}
-
-/* RTL Position Utilities */
-.rtl-left-0 {
-  right: 0;
-  left: auto;
-}
-
-.rtl-right-0 {
-  left: 0;
-  right: auto;
-}
-
-/* RTL Transform Utilities */
-.rtl-transform-x {
-  transform: scaleX(-1);
-}
-
-/* RTL Specific Component Overrides */
-.rtl-layout .p-inputgroup .p-inputgroup-addon:first-child {
-  border-radius: 0 6px 6px 0;
-}
-
-.rtl-layout .p-inputgroup .p-inputgroup-addon:last-child {
-  border-radius: 6px 0 0 6px;
-}
-
-.rtl-layout .p-inputgroup .p-inputtext:first-child {
-  border-radius: 0 6px 6px 0;
-}
-
-.rtl-layout .p-inputgroup .p-inputtext:last-child {
-  border-radius: 6px 0 0 6px;
-}
-
-/* RTL Dropdown Arrow */
-.rtl-layout .p-select .p-select-trigger .p-select-trigger-icon {
-  transform: rotate(180deg);
-}
-
-/* RTL Calendar */
-.rtl-layout .p-datepicker .p-datepicker-header {
-  direction: rtl;
-}
-
-.rtl-layout .p-datepicker .p-datepicker-next {
-  order: -1;
-}
-
-.rtl-layout .p-datepicker .p-datepicker-prev {
-  order: 1;
-}
-
-/* RTL Steps */
-.rtl-layout .p-steps .p-steps-item {
-  direction: rtl;
-}
-
-.rtl-layout .p-steps .p-steps-item .p-steps-number {
-  margin-left: 0.5rem;
-  margin-right: 0;
-}
-
-/* RTL Accordion */
-.rtl-layout .p-accordion .p-accordion-header .p-accordion-header-link {
-  text-align: right;
-}
-
-.rtl-layout .p-accordion .p-accordion-toggle-icon {
-  margin-left: 0.5rem;
-  margin-right: 0;
-  order: -1;
-}
-
-/* RTL Panel */
-.rtl-layout .p-panel .p-panel-header {
-  text-align: right;
-}
-
-.rtl-layout .p-panel .p-panel-header-icon {
-  margin-left: 0.5rem;
-  margin-right: 0;
-}
-
-/* RTL Fieldset */
-.rtl-layout .p-fieldset .p-fieldset-legend {
-  text-align: right;
-}
-
-.rtl-layout .p-fieldset .p-fieldset-toggler {
-  margin-left: 0.5rem;
-  margin-right: 0;
-}
-
-/* RTL Splitter */
-.rtl-layout .p-splitter .p-splitter-gutter {
-  cursor: ew-resize;
-}
-
-/* RTL Responsive Utilities */
-@media (max-width: 768px) {
-  .rtl-layout .p-sidebar-right {
-    width: 100% !important;
-  }
-
-  .rtl-layout .p-dialog {
-    width: 95% !important;
-    margin: 0 auto !important;
-  }
-
-  .rtl-layout .p-datatable .p-datatable-wrapper {
-    overflow-x: auto;
-    direction: rtl;
-  }
-}
-
-/* RTL Print Styles */
-@media print {
-  .rtl-layout {
-    direction: rtl !important;
-  }
-
-  .rtl-layout * {
-    text-align: right !important;
-  }
-}
-
-/* Reset button styles for non-PrimeNG buttons */
-button:not(.p-button):not([class*="p-"]) {
-  background-color: transparent;
-  border: 0;
-  padding: 0;
-}
-
-/* Custom styles for PrimeNG Toast */
-.p-toast {
-  z-index: 9999 !important;
-}
-
-/* Toast container styling */
-.p-toast .p-toast-message {
-  min-width: 300px !important;
-  max-width: 500px !important;
-  margin: 0 0 16px 0 !important;
-  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.15), 0 4px 16px rgba(0, 0, 0, 0.1) !important;
-  border-radius: 12px !important;
-  border-left-width: 4px !important;
-  border-left-style: solid !important;
-  overflow: hidden !important;
-}
-
-/* Error Toast - Danger/Severe style */
-.p-toast .p-toast-message.p-toast-message-error {
-  background: linear-gradient(135deg, #fee2e2 0%, #fecaca 100%) !important;
-  border-left-color: #dc2626 !important;
-  border: 1px solid #fca5a5 !important;
-}
-
-.p-toast .p-toast-message.p-toast-message-error .p-toast-message-icon,
-.p-toast .p-toast-message.p-toast-message-error .p-toast-icon-close {
-  color: #dc2626 !important;
-}
-
-.p-toast
-  .p-toast-message.p-toast-message-error
-  .p-toast-message-text
-  .p-toast-summary {
-  color: #991b1b !important;
-  font-weight: 700 !important;
-}
-
-.p-toast
-  .p-toast-message.p-toast-message-error
-  .p-toast-message-text
-  .p-toast-detail {
-  color: #7f1d1d !important;
-}
-
-/* Success Toast */
-.p-toast .p-toast-message.p-toast-message-success {
-  background: linear-gradient(135deg, #dcfce7 0%, #bbf7d0 100%) !important;
-  border-left-color: #16a34a !important;
-  border: 1px solid #86efac !important;
-}
-
-.p-toast .p-toast-message.p-toast-message-success .p-toast-message-icon,
-.p-toast .p-toast-message.p-toast-message-success .p-toast-icon-close {
-  color: #16a34a !important;
-}
-
-.p-toast
-  .p-toast-message.p-toast-message-success
-  .p-toast-message-text
-  .p-toast-summary {
-  color: #166534 !important;
-  font-weight: 700 !important;
-}
-
-.p-toast
-  .p-toast-message.p-toast-message-success
-  .p-toast-message-text
-  .p-toast-detail {
-  color: #14532d !important;
-}
-
-/* Info Toast */
-.p-toast .p-toast-message.p-toast-message-info {
-  background: linear-gradient(135deg, #dbeafe 0%, #bfdbfe 100%) !important;
-  border-left-color: #2563eb !important;
-  border: 1px solid #93c5fd !important;
-}
-
-.p-toast .p-toast-message.p-toast-message-info .p-toast-message-icon,
-.p-toast .p-toast-message.p-toast-message-info .p-toast-icon-close {
-  color: #2563eb !important;
-}
-
-.p-toast
-  .p-toast-message.p-toast-message-info
-  .p-toast-message-text
-  .p-toast-summary {
-  color: #1e40af !important;
-  font-weight: 700 !important;
-}
-
-.p-toast
-  .p-toast-message.p-toast-message-info
-  .p-toast-message-text
-  .p-toast-detail {
-  color: #1e3a8a !important;
-}
-
-/* Warning Toast */
-.p-toast .p-toast-message.p-toast-message-warn {
-  background: linear-gradient(135deg, #fef3c7 0%, #fde68a 100%) !important;
-  border-left-color: #d97706 !important;
-  border: 1px solid #fde047 !important;
-}
-
-.p-toast .p-toast-message.p-toast-message-warn .p-toast-message-icon,
-.p-toast .p-toast-message.p-toast-message-warn .p-toast-icon-close {
-  color: #d97706 !important;
-}
-
-.p-toast
-  .p-toast-message.p-toast-message-warn
-  .p-toast-message-text
-  .p-toast-summary {
-  color: #92400e !important;
-  font-weight: 700 !important;
-}
-
-.p-toast
-  .p-toast-message.p-toast-message-warn
-  .p-toast-message-text
-  .p-toast-detail {
-  color: #78350f !important;
-}
-
-/* Toast content padding */
-.p-toast .p-toast-message-content {
-  padding: 1rem 1.5rem !important;
-}
-
-.p-toast .p-toast-icon-close {
-  opacity: 0.7 !important;
-  transition: opacity 0.2s ease !important;
-}
-
-.p-toast .p-toast-icon-close:hover {
-  opacity: 1 !important;
-}
-
-/* ========= Price Rules actions menu (global, stronger than theme/Tailwind) ========= */
-.p-connected-overlay {
-  /* Force all PrimeNG connected overlays (menus, dropdowns, calendars) above tables/layout */
-  z-index: 10050 !important;
-}
-
-.price-rule-menu.p-menu {
-  z-index: 10050 !important;
-  width: 200px;
-  background: #ffffff !important;
-  border-radius: 8px;
-  box-shadow: 0 10px 25px rgba(0, 0, 0, 0.15), 0 4px 10px rgba(0, 0, 0, 0.1);
-  border: 1px solid rgba(0, 0, 0, 0.08);
-  padding: 0.5rem;
-}
-
-.price-rule-menu .p-menuitem-link,
-.price-rule-menu .p-menu-item-link {
-  padding: 0.875rem 1rem !important;
-  border-radius: 6px !important;
-  transition: all 0.2s ease;
-  color: #1f2937 !important; /* override Tailwind link/reset */
-  font-weight: 500;
-  background-color: transparent !important;
-  border: none !important;
-  cursor: pointer !important;
-  pointer-events: auto !important;
-  display: flex !important;
-  align-items: center !important;
-  text-decoration: none !important;
-}
-
-.price-rule-menu .p-menuitem-text {
-  color: #1f2937 !important;
-  opacity: 1 !important;
-}
-
-.price-rule-menu .p-menu-item-label,
-.price-rule-menu .p-menuitem-label {
-  color: #1f2937 !important;
-  opacity: 1 !important;
-}
-
-.price-rule-menu .p-menuitem-link:hover,
-.price-rule-menu .p-menu-item-link:hover {
-  background-color: #f3f4f6 !important;
-  color: #111827 !important;
-  cursor: pointer !important;
-}
-
-.price-rule-menu .p-menuitem-link:hover .p-menu-item-label,
-.price-rule-menu .p-menuitem-link:hover .p-menuitem-label,
-.price-rule-menu .p-menu-item-link:hover .p-menu-item-label,
-.price-rule-menu .p-menu-item-link:hover .p-menuitem-label {
-  color: #111827 !important;
-}
-
-.price-rule-menu .p-menuitem-icon,
-.price-rule-menu .p-menu-item-icon,
-.price-rule-menu [class*="p-menu-item-icon"],
-.price-rule-menu [class*="p-menuitem-icon"] {
-  color: #6b7280 !important;
-  margin-left: 0.5rem;
-  opacity: 1 !important;
-  visibility: visible !important;
-}
-
-.price-rule-menu .p-menuitem-link:hover .p-menuitem-icon,
-.price-rule-menu .p-menuitem-link:hover .p-menu-item-icon,
-.price-rule-menu .p-menuitem-link:hover [class*="p-menu-item-icon"],
-.price-rule-menu .p-menuitem-link:hover [class*="p-menuitem-icon"] {
-  color: #374151 !important;
-}
-
-/* Danger action coloring */
-.price-rule-menu .p-menuitem-link.text-red-500,
-.price-rule-menu .p-menu-item-link.text-red-500 {
-  color: #ef4444 !important;
-}
-
-.price-rule-menu .p-menuitem-link.text-red-500:hover,
-.price-rule-menu .p-menu-item-link.text-red-500:hover {
-  color: #dc2626 !important;
-  background-color: #fef2f2 !important;
-  cursor: pointer !important;
-}
-
-.price-rule-menu .p-menuitem-link.text-red-500 .p-menuitem-icon,
-.price-rule-menu .p-menuitem-link.text-red-500 .p-menu-item-icon,
-.price-rule-menu .p-menu-item-link.text-red-500 .p-menuitem-icon,
-.price-rule-menu .p-menu-item-link.text-red-500 .p-menu-item-icon,
-.price-rule-menu .p-menuitem-link.text-red-500 [class*="p-menu-item-icon"],
-.price-rule-menu .p-menuitem-link.text-red-500 [class*="p-menuitem-icon"],
-.price-rule-menu .p-menu-item-link.text-red-500 [class*="p-menu-item-icon"],
-.price-rule-menu .p-menu-item-link.text-red-500 [class*="p-menuitem-icon"] {
-  color: inherit !important;
-}
-
-.price-rule-menu .p-menuitem-link.text-red-500:active .p-menuitem-icon,
-.price-rule-menu .p-menuitem-link.text-red-500:active .p-menu-item-icon,
-.price-rule-menu .p-menu-item-link.text-red-500:active .p-menuitem-icon,
-.price-rule-menu .p-menu-item-link.text-red-500:active .p-menu-item-icon,
-.price-rule-menu
-  .p-menuitem-link.text-red-500:active
-  [class*="p-menu-item-icon"],
-.price-rule-menu
-  .p-menuitem-link.text-red-500:active
-  [class*="p-menuitem-icon"],
-.price-rule-menu
-  .p-menu-item-link.text-red-500:active
-  [class*="p-menu-item-icon"],
-.price-rule-menu
-  .p-menu-item-link.text-red-500:active
-  [class*="p-menuitem-icon"] {
-  color: #dc2626 !important;
-}
-
-/* src/styles.css (این را به انتهای فایل اضافه کنید) */
-
-/* --- استایل سفارشی برای منوی عملیات جدول (Price Rules Menu) --- */
-/* (باید سراسری باشد چون از appendTo="body" استفاده شده) */
-
-/* ۱. بدنه اصلی منو و فاصله استاندارد آیتم‌ها */
-.p-menu.price-rule-menu {
-  width: 200px; /* عرض منو */
-  background: #ffffff !important;
-  border-radius: 8px;
-  box-shadow: 0 10px 25px rgba(0, 0, 0, 0.15), 0 4px 10px rgba(0, 0, 0, 0.1);
-  border: 1px solid rgba(0, 0, 0, 0.08);
-  padding: 0.5rem; /* ایجاد فاصله در کل منو */
-  margin-top: 0.5rem;
-}
-
-.p-menu.price-rule-menu .p-menuitem {
-  margin-bottom: 0.25rem; /* فاصله بین هر آیتم */
-}
-.p-menu.price-rule-menu .p-menuitem:last-child {
-  margin-bottom: 0;
-}
-
-/* ۳. بک‌گراند هاور کمرنگ (حل شد) */
-.p-menu.price-rule-menu .p-menuitem-link,
-.p-menu.price-rule-menu .p-menu-item-link {
-  padding: 0.875rem 1rem !important; /* پدینگ داخلی هر آیتم */
-  border-radius: 6px !important;
-  transition: all 0.2s ease;
-  color: #1f2937 !important; /* رنگ متن پیش‌فرض */
-  font-weight: 500;
-  background-color: transparent !important;
-  border: none !important;
-  display: flex !important;
-  align-items: center !important;
-  gap: 0.5rem !important; /* فاصله استاندارد بین آیکون و متن */
-  cursor: pointer !important;
-  pointer-events: auto !important;
-  text-decoration: none !important;
-}
-
-.p-menu.price-rule-menu .p-menuitem-link:hover,
-.p-menu.price-rule-menu .p-menu-item-link:hover {
-  background-color: #f3f4f6 !important; /* پس‌زمینه هاور */
-  color: #111827 !important;
-  cursor: pointer !important;
-}
-
-/* ۲. فاصله آیکون از متن (حل شد) */
-.p-menu.price-rule-menu .p-menuitem-icon,
-.p-menu.price-rule-menu .p-menu-item-icon,
-.p-menu.price-rule-menu [class*="p-menu-item-icon"],
-.p-menu.price-rule-menu [class*="p-menuitem-icon"] {
-  color: #6b7280 !important;
-  margin-left: 0.5rem; /* فاصله آیکون از متن */
-  opacity: 1 !important;
-  visibility: visible !important;
-}
-
-.p-menu.price-rule-menu .p-menuitem-link:hover .p-menuitem-icon,
-.p-menu.price-rule-menu .p-menuitem-link:hover .p-menu-item-icon,
-.p-menu.price-rule-menu .p-menuitem-link:hover [class*="p-menu-item-icon"],
-.p-menu.price-rule-menu .p-menuitem-link:hover [class*="p-menuitem-icon"] {
-  color: #374151 !important; /* رنگ آیکون در هاور */
-}
-
-/* استایل‌های مربوط به آیتم قرمز (حذف) */
-.p-menu.price-rule-menu .p-menuitem-link.text-red-500,
-.p-menu.price-rule-menu .p-menu-item-link.text-red-500 {
-  color: #ef4444 !important;
-}
-.p-menu.price-rule-menu .p-menuitem-link.text-red-500 .p-menuitem-icon,
-.p-menu.price-rule-menu .p-menuitem-link.text-red-500 .p-menu-item-icon,
-.p-menu.price-rule-menu .p-menu-item-link.text-red-500 .p-menuitem-icon,
-.p-menu.price-rule-menu .p-menu-item-link.text-red-500 .p-menu-item-icon,
-.p-menu.price-rule-menu
-  .p-menuitem-link.text-red-500
-  [class*="p-menu-item-icon"],
-.p-menu.price-rule-menu
-  .p-menuitem-link.text-red-500
-  [class*="p-menuitem-icon"],
-.p-menu.price-rule-menu
-  .p-menu-item-link.text-red-500
-  [class*="p-menu-item-icon"],
-.p-menu.price-rule-menu
-  .p-menu-item-link.text-red-500
-  [class*="p-menuitem-icon"] {
-  color: inherit !important;
-}
-.p-menu.price-rule-menu .p-menuitem-link.text-red-500:hover,
-.p-menu.price-rule-menu .p-menu-item-link.text-red-500:hover {
-  color: #dc2626 !important;
-  background-color: #fef2f2 !important; /* پس‌زمینه هاور قرمز */
-  cursor: pointer !important;
-}
-
-/* PrimeNG Button Styles - Ensure buttons have proper backgrounds */
-.p-button {
-  display: inline-flex !important;
-  align-items: center !important;
-  justify-content: center !important;
-  cursor: pointer !important;
-  user-select: none !important;
-  border: 1px solid transparent !important;
-  font-weight: 500 !important;
-  text-align: center !important;
-  vertical-align: middle !important;
-  position: relative !important;
-  overflow: hidden !important;
-  padding: 0.625rem 1.25rem !important;
-  border-radius: 0.375rem !important;
-  transition: all 0.2s ease !important;
-}
-
-/* Primary Button - Blue background */
-.p-button.p-button-primary {
-  background-color: #2196f3 !important;
-  border-color: #2196f3 !important;
-  color: #ffffff !important;
-}
-
-.p-button.p-button-primary:hover:not(:disabled) {
-  background-color: #1976d2 !important;
-  border-color: #1976d2 !important;
-}
-
-.p-button.p-button-primary:focus:not(:disabled) {
-  box-shadow: 0 0 0 0.2rem rgba(33, 150, 243, 0.3) !important;
-}
-
-/* Secondary Button - Gray background */
-.p-button.p-button-secondary {
-  background-color: #6c757d !important;
-  border-color: #6c757d !important;
-  color: #ffffff !important;
-}
-
-.p-button.p-button-secondary:hover:not(:disabled) {
-  background-color: #5a6268 !important;
-  border-color: #5a6268 !important;
-}
-
-/* Outlined Secondary Button */
-.p-button.p-button-secondary.p-button-outlined {
-  background-color: transparent !important;
-  border-color: #6c757d !important;
-  color: #6c757d !important;
-}
-
-.p-button.p-button-secondary.p-button-outlined:hover:not(:disabled) {
-  background-color: #6c757d !important;
-  color: #ffffff !important;
-}
-
-/* Text Button */
-.p-button.p-button-text {
-  background-color: transparent !important;
-  border-color: transparent !important;
-  color: #6b7280 !important;
-}
-
-.p-button.p-button-text:hover:not(:disabled) {
-  background-color: #f3f4f6 !important;
-  color: #374151 !important;
-}
-
-/* Disabled state */
-.p-button:disabled {
-  opacity: 0.6 !important;
-  cursor: not-allowed !important;
-}
-
-/* Button Icons - RTL support */
-.p-button .p-button-icon-left {
-  margin-left: 0.5rem !important;
-  margin-right: 0 !important;
-}
-
-.p-button .p-button-icon-right {
-  margin-right: 0.5rem !important;
-  margin-left: 0 !important;
-}
-
-/* Ensure buttons in dialog footer have proper backgrounds - Higher specificity */
-.dialog-footer .p-button.p-button-primary {
-  background-color: #2196f3 !important;
-  border-color: #2196f3 !important;
-  color: #ffffff !important;
-  min-width: 120px;
-}
-
-.dialog-footer .p-button.p-button-secondary.p-button-outlined {
-  background-color: transparent !important;
-  border-color: #6c757d !important;
-  color: #6c757d !important;
-  min-width: 120px;
-}
-
-/* ========= PrimeNG Input Components Protection & Styling ========= */
-/* Modern PrimeNG InputText Styling */
-.p-inputtext,
-input.p-inputtext {
-  display: block !important;
-  width: 100% !important;
-  appearance: auto !important;
-  -webkit-appearance: auto !important;
-  background-color: #ffffff !important;
-  color: #111827 !important;
-  border: 2px solid #e5e7eb !important;
-  border-radius: 8px !important;
-  padding: 0.75rem 1rem !important;
-  font-size: 0.9375rem !important;
-  line-height: 1.5 !important;
-  transition: all 0.2s cubic-bezier(0.4, 0, 0.2, 1) !important;
-  box-sizing: border-box !important;
-}
-
-.p-inputtext::placeholder {
-  color: #9ca3af !important;
-  opacity: 1 !important;
-}
-
-.p-inputtext:enabled:hover {
-  border-color: #d1d5db !important;
-  background-color: #fafafa !important;
-}
-
-.p-inputtext:enabled:focus {
-  outline: none !important;
-  border-color: #2196f3 !important;
-  background-color: #ffffff !important;
-  box-shadow: 0 0 0 4px rgba(33, 150, 243, 0.1), 0 1px 2px 0 rgba(0, 0, 0, 0.05) !important;
-}
-
-.p-inputtext:disabled {
-  opacity: 0.6 !important;
-  cursor: not-allowed !important;
-  background-color: #f3f4f6 !important;
-  border-color: #e5e7eb !important;
-  color: #9ca3af !important;
-}
-
-/* Modern PrimeNG InputNumber Styling */
-.p-inputnumber {
-  display: block !important;
-  width: 100% !important;
-}
-
-.p-inputnumber-input {
-  display: block !important;
-  width: 100% !important;
-  appearance: auto !important;
-  -webkit-appearance: auto !important;
-  background-color: #ffffff !important;
-  color: #111827 !important;
-  border: 2px solid #e5e7eb !important;
-  border-radius: 8px !important;
-  padding: 0.75rem 1rem !important;
-  font-size: 0.9375rem !important;
-  line-height: 1.5 !important;
-  transition: all 0.2s cubic-bezier(0.4, 0, 0.2, 1) !important;
-  box-sizing: border-box !important;
-}
-
-.p-inputnumber-input::placeholder {
-  color: #9ca3af !important;
-  opacity: 1 !important;
-}
-
-.p-inputnumber-input:enabled:hover {
-  border-color: #d1d5db !important;
-  background-color: #fafafa !important;
-}
-
-.p-inputnumber-input:enabled:focus {
-  outline: none !important;
-  border-color: #2196f3 !important;
-  background-color: #ffffff !important;
-  box-shadow: 0 0 0 4px rgba(33, 150, 243, 0.1), 0 1px 2px 0 rgba(0, 0, 0, 0.05) !important;
-}
-
-.p-inputnumber-input:disabled {
-  opacity: 0.6 !important;
-  cursor: not-allowed !important;
-  background-color: #f3f4f6 !important;
-  border-color: #e5e7eb !important;
-  color: #9ca3af !important;
-}
-
-/* PrimeNG Select/Dropdown protection and styling */
-.p-select {
-  display: block !important;
-  width: 100% !important;
-  position: relative !important;
-}
-
-.p-select.p-component {
-  background-color: #ffffff;
-  border: 1px solid #d1d5db !important;
-  border-radius: 6px !important;
-  transition: all 0.2s ease !important;
-  min-height: 42px !important;
-  display: flex !important;
-  align-items: center !important;
-  position: relative !important;
-}
-
-.p-select.p-component:not(.p-disabled):hover {
-  border-color: #9ca3af !important;
-}
-
-.p-select.p-component:not(.p-disabled).p-focus {
-  border-color: #2196f3 !important;
-  box-shadow: 0 0 0 3px rgba(33, 150, 243, 0.1) !important;
-}
-
-.p-select .p-select-label {
-  color: #1f2937 !important;
-  padding: 0.625rem 2.5rem 0.625rem 0.875rem !important;
-  font-size: 0.875rem !important;
-  line-height: 1.5 !important;
-  flex: 1 !important;
-  text-align: right !important;
-  display: block !important;
-  width: 100% !important;
-}
-
-.p-select .p-select-label.p-placeholder {
-  color: #9ca3af !important;
-}
-
-.p-select .p-select-trigger {
-  color: #6b7280 !important;
-  width: 2.5rem !important;
-  position: absolute !important;
-  left: 0 !important;
-  top: 50% !important;
-  transform: translateY(-50%) !important;
-  display: flex !important;
-  align-items: center !important;
-  justify-content: center !important;
-  pointer-events: none !important;
-}
-
-.p-select.p-disabled {
-  opacity: 0.6 !important;
-  cursor: not-allowed !important;
-  background-color: #f3f4f6 !important;
-}
-
-/* Modern Select Overlay (Dropdown Panel) */
-.p-select-overlay {
-  border-radius: 12px !important;
-  box-shadow: 0 10px 25px rgba(0, 0, 0, 0.15), 0 4px 10px rgba(0, 0, 0, 0.1) !important;
-  border: 1px solid #e5e7eb !important;
-  margin-top: 0.5rem !important;
-  background-color: #ffffff !important;
-  z-index: 1000 !important;
-  overflow: hidden !important;
-}
-
-.p-select-overlay .p-select-list {
-  padding: 0.5rem !important;
-}
-
-/* Modern Select Option (li) Styling - Consistent with PrimeNG inputs */
-.p-select-overlay .p-select-item,
-.p-select-overlay .p-select-option {
-  padding: 0.875rem 1.25rem !important;
-  margin: 0.25rem 0.5rem !important;
-  border-radius: 8px !important;
-  color: #111827 !important;
-  font-size: 0.9375rem !important;
-  line-height: 1.5 !important;
-  transition: all 0.2s cubic-bezier(0.4, 0, 0.2, 1) !important;
-  cursor: pointer !important;
-  background-color: transparent !important;
-  border: none !important;
-  display: block !important;
-  width: calc(100% - 1rem) !important;
-  box-sizing: border-box !important;
-  text-align: right !important;
-  position: relative !important;
-}
-
-.p-select-overlay .p-select-item:first-child,
-.p-select-overlay .p-select-option:first-child {
-  margin-top: 0.5rem !important;
-}
-
-.p-select-overlay .p-select-item:last-child,
-.p-select-overlay .p-select-option:last-child {
-  margin-bottom: 0.5rem !important;
-}
-
-/* Hover state - like PrimeNG inputs */
-.p-select-overlay .p-select-item:hover,
-.p-select-overlay .p-select-option:hover,
-.p-select-overlay .p-select-item.p-focus,
-.p-select-overlay .p-select-option.p-focus {
-  background-color: #f3f4f6 !important;
-  color: #111827 !important;
-}
-
-/* Active/Highlighted state */
-.p-select-overlay .p-select-item.p-highlight,
-.p-select-overlay .p-select-option.p-highlight,
-.p-select-overlay .p-select-item[data-p-highlight="true"],
-.p-select-overlay .p-select-option[data-p-highlight="true"] {
-  background-color: #2196f3 !important;
-  color: #ffffff !important;
-  font-weight: 500 !important;
-}
-
-.p-select-overlay .p-select-item.p-highlight:hover,
-.p-select-overlay .p-select-option.p-highlight:hover,
-.p-select-overlay .p-select-item.p-highlight.p-focus,
-.p-select-overlay .p-select-option.p-highlight.p-focus {
-  background-color: #1976d2 !important;
-  color: #ffffff !important;
-}
-
-/* Disabled state */
-.p-select-overlay .p-select-item.p-disabled,
-.p-select-overlay .p-select-option.p-disabled,
-.p-select-overlay .p-select-item[data-p-disabled="true"],
-.p-select-overlay .p-select-option[data-p-disabled="true"] {
-  opacity: 0.5 !important;
-  cursor: not-allowed !important;
-  background-color: transparent !important;
-}
-
-/* PrimeNG Checkbox protection */
-.p-checkbox {
-  display: inline-flex !important;
-  align-items: center !important;
-  cursor: pointer !important;
-}
-
-.p-checkbox .p-checkbox-box {
-  width: 1.25rem !important;
-  height: 1.25rem !important;
-  border: 2px solid #d1d5db !important;
-  border-radius: 4px !important;
-  background-color: #ffffff !important;
-  transition: all 0.2s ease !important;
-}
-
-.p-checkbox .p-checkbox-box:hover {
-  border-color: #2196f3 !important;
-}
-
-.p-checkbox.p-checkbox-checked .p-checkbox-box {
-  background-color: #2196f3 !important;
-  border-color: #2196f3 !important;
-}
-
-.p-checkbox .p-checkbox-icon {
-  color: #ffffff !important;
 }

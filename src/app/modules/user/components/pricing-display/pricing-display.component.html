@@ -1,214 +1,317 @@
-<div class="pricing-container">
+<div class="max-w-7xl mx-auto p-4 md:p-8 font-['Vazirmatn'] rtl">
   <!-- Loading State -->
   @if (isLoading()) {
-  <div class="loading-state">
-    <p-skeleton width="100%" height="200px"></p-skeleton>
-    <p-skeleton width="100%" height="200px"></p-skeleton>
-    <p-skeleton width="100%" height="200px"></p-skeleton>
+  <div class="flex flex-col gap-4">
+    <p-skeleton
+      width="100%"
+      height="200px"
+      styleClass="rounded-xl"
+    ></p-skeleton>
+    <p-skeleton
+      width="100%"
+      height="200px"
+      styleClass="rounded-xl"
+    ></p-skeleton>
+    <p-skeleton
+      width="100%"
+      height="200px"
+      styleClass="rounded-xl"
+    ></p-skeleton>
   </div>
   }
 
   <!-- Error State -->
   @if (errorMessage() && !isLoading()) {
-  <p-message severity="error" [text]="errorMessage()"></p-message>
+  <p-message
+    severity="error"
+    [text]="errorMessage()"
+    styleClass="w-full"
+  ></p-message>
   }
 
   <!-- Main Content -->
   @if (!isLoading() && !errorMessage()) {
-  <div class="pricing-content">
-
+  <div class="flex flex-col gap-8">
     <!-- Header -->
-    <div class="pricing-header">
-      <h2>لیست قیمت‌های خدمات</h2>
-      <p>قیمت‌ها بر اساس تعداد و نوع محصول محاسبه می‌شوند</p>
+    <div class="text-center mb-4">
+      <h2 class="text-3xl font-bold text-gray-900 dark:text-white mb-2">
+        لیست قیمت‌های خدمات
+      </h2>
+      <p class="text-lg text-gray-600 dark:text-gray-400">
+        قیمت‌ها بر اساس تعداد و نوع محصول محاسبه می‌شوند
+      </p>
     </div>
 
     <!-- Filters -->
-    <div class="filters-section">
-      <div class="filters-grid">
-
+    <div
+      class="bg-gradient-to-br from-gray-50 to-white dark:from-slate-800 dark:to-slate-900 rounded-2xl p-6 md:p-8 border border-gray-200 dark:border-slate-700 shadow-sm"
+    >
+      <div
+        class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6 items-end"
+      >
         <!-- Product Type Filter -->
-        <div class="filter-group">
-          <label class="filter-label">نوع خدمات</label>
+        <div class="flex flex-col gap-2">
+          <label
+            class="font-semibold text-gray-800 dark:text-gray-200 text-sm flex items-center gap-2"
+          >
+            <span class="text-blue-500 text-xs">●</span> نوع خدمات
+          </label>
           <p-select
             [options]="productTypeFilters"
             optionLabel="label"
             optionValue="value"
             [(ngModel)]="selectedProductType"
             placeholder="انتخاب کنید"
-            class="modern-select"
+            styleClass="w-full !rounded-xl !border-2 !border-gray-200 dark:!border-slate-600 !bg-white dark:!bg-slate-800 hover:!border-blue-500 dark:hover:!border-blue-400 focus:!border-blue-500 dark:focus:!border-blue-400 !shadow-sm transition-all"
             (onChange)="onProductTypeChange()"
           ></p-select>
         </div>
 
         <!-- Size Filter -->
-        <div class="filter-group">
-          <label class="filter-label">سایز کاغذ</label>
+        <div class="flex flex-col gap-2">
+          <label
+            class="font-semibold text-gray-800 dark:text-gray-200 text-sm flex items-center gap-2"
+          >
+            <span class="text-blue-500 text-xs">●</span> سایز کاغذ
+          </label>
           <p-select
             [options]="sizeFilters"
             optionLabel="label"
             optionValue="value"
             [(ngModel)]="selectedSize"
             placeholder="انتخاب کنید"
-            class="modern-select"
+            styleClass="w-full !rounded-xl !border-2 !border-gray-200 dark:!border-slate-600 !bg-white dark:!bg-slate-800 hover:!border-blue-500 dark:hover:!border-blue-400 focus:!border-blue-500 dark:focus:!border-blue-400 !shadow-sm transition-all"
           ></p-select>
         </div>
 
         <!-- Color Filter (only show for print or all) -->
         @if (selectedProductType() !== 'binding') {
-        <div class="filter-group">
-          <label class="filter-label">نوع رنگ</label>
+        <div class="flex flex-col gap-2">
+          <label
+            class="font-semibold text-gray-800 dark:text-gray-200 text-sm flex items-center gap-2"
+          >
+            <span class="text-blue-500 text-xs">●</span> نوع رنگ
+          </label>
           <p-select
             [options]="colorFilters"
             optionLabel="label"
             optionValue="value"
             [(ngModel)]="selectedColor"
             placeholder="انتخاب کنید"
-            class="modern-select"
+            styleClass="w-full !rounded-xl !border-2 !border-gray-200 dark:!border-slate-600 !bg-white dark:!bg-slate-800 hover:!border-blue-500 dark:hover:!border-blue-400 focus:!border-blue-500 dark:focus:!border-blue-400 !shadow-sm transition-all"
           ></p-select>
         </div>
         }
 
         <!-- Clear Filters -->
-        @if (selectedSize() !== 'all' || selectedColor() !== 'all' || selectedProductType() !== 'all') {
-        <div class="filter-group">
-          <label class="filter-label">&nbsp;</label>
+        @if (selectedSize() !== 'all' || selectedColor() !== 'all' ||
+        selectedProductType() !== 'all') {
+        <div class="flex flex-col gap-2">
+          <label class="font-semibold text-transparent text-sm">&nbsp;</label>
           <p-button
             label="پاک کردن فیلترها"
             icon="pi pi-times"
-            severity="secondary"
+            severity="danger"
             size="small"
             (onClick)="clearFilters()"
-            class="clear-filters-btn"
+            styleClass="!w-full !rounded-xl !bg-red-500 !border-red-500 hover:!bg-red-600 hover:!border-red-600 !shadow-sm transition-all"
           ></p-button>
         </div>
         }
-
       </div>
     </div>
 
     <!-- Products Display -->
     @if (hasFilteredVariants()) {
-    <div class="products-display">
-
+    <div class="flex flex-col gap-12">
       <!-- Print Products Section -->
-      @if (selectedProductType() === 'all' || selectedProductType() === 'print') {
-        @if (hasPrintVariants()) {
-          <div class="product-section">
-            <h3 class="section-title">
-              <i class="pi pi-print"></i>
-              خدمات چاپ
-            </h3>
+      @if (selectedProductType() === 'all' || selectedProductType() === 'print')
+      { @if (hasPrintVariants()) {
+      <div class="flex flex-col gap-6">
+        <h3
+          class="flex items-center gap-3 text-2xl font-bold text-gray-800 dark:text-white border-b-2 border-blue-500 pb-2 w-fit"
+        >
+          <i class="pi pi-print text-blue-500"></i>
+          خدمات چاپ
+        </h3>
 
-            <div class="products-grid">
-              @for (variant of productVariants(); track variant.id) {
-                @if (variant.productType === 'print' && shouldShowVariant(variant)) {
-                  <p-card class="product-card" [class.available]="variant.rule" [class.unavailable]="!variant.rule" [@filterAnimation]>
-                    <ng-template pTemplate="header">
-                      <div class="card-header">
-                        <h4>{{ variant.name }}</h4>
-                        <p-tag [value]="getProductTypeLabel(variant.productType)" severity="success"></p-tag>
-                      </div>
-                    </ng-template>
+        <div class="grid grid-cols-1 md:grid-cols-2 xl:grid-cols-3 gap-6">
+          @for (variant of productVariants(); track variant.id) { @if
+          (variant.productType === 'print' && shouldShowVariant(variant)) {
+          <p-card
+            styleClass="h-full !rounded-xl overflow-hidden transition-all duration-300 hover:-translate-y-1 hover:shadow-xl dark:!bg-slate-800 dark:!border-slate-700"
+            [class.border-2]="true"
+            [class.border-green-500]="variant.rule"
+            [class.border-gray-200]="!variant.rule"
+            [class.dark:border-gray-700]="!variant.rule"
+            [class.opacity-70]="!variant.rule"
+            [@filterAnimation]
+          >
+            <ng-template pTemplate="header">
+              <div
+                class="flex justify-between items-center p-4 bg-gradient-to-br from-blue-500 to-blue-600 text-white"
+              >
+                <h4 class="m-0 text-lg font-semibold">{{ variant.name }}</h4>
+                <p-tag
+                  [value]="getProductTypeLabel(variant.productType)"
+                  severity="success"
+                  styleClass="!bg-white/20 !text-white"
+                ></p-tag>
+              </div>
+            </ng-template>
 
-                    @if (variant.rule && variant.prices) {
-                      <div class="pricing-table">
-                        <table>
-                          <thead>
-                            <tr>
-                              <th>تعداد</th>
-                              <th>قیمت (تومان)</th>
-                            </tr>
-                          </thead>
-                          <tbody>
-                            @for (price of variant.prices; track price.quantity) {
-                              <tr>
-                                <td>{{ price.range }}</td>
-                                <td class="price-cell">{{ price.price | persianCurrency }}</td>
-                              </tr>
-                            }
-                          </tbody>
-                        </table>
-                      </div>
-                    } @else {
-                      <div class="unavailable-message">
-                        <i class="pi pi-info-circle"></i>
-                        <p>قیمت‌گذاری برای این محصول تعریف نشده است</p>
-                      </div>
-                    }
-                  </p-card>
-                }
-              }
+            @if (variant.rule && variant.prices) {
+            <div class="p-4">
+              <table
+                class="w-full border-collapse rounded-lg overflow-hidden shadow-sm bg-white dark:bg-slate-900"
+              >
+                <thead class="bg-gray-50 dark:bg-slate-800">
+                  <tr>
+                    <th
+                      class="p-3 text-right text-sm font-semibold text-gray-700 dark:text-gray-300 border-b border-gray-200 dark:border-slate-700"
+                    >
+                      تعداد
+                    </th>
+                    <th
+                      class="p-3 text-right text-sm font-semibold text-gray-700 dark:text-gray-300 border-b border-gray-200 dark:border-slate-700"
+                    >
+                      قیمت (تومان)
+                    </th>
+                  </tr>
+                </thead>
+                <tbody>
+                  @for (price of variant.prices; track price.quantity) {
+                  <tr
+                    class="border-b border-gray-100 dark:border-slate-800 last:border-0 hover:bg-gray-50 dark:hover:bg-slate-800/50 transition-colors"
+                  >
+                    <td class="p-3 text-sm text-gray-800 dark:text-gray-300">
+                      {{ price.range }}
+                    </td>
+                    <td class="p-3 text-sm font-bold text-orange-500">
+                      {{ price.price | persianCurrency }}
+                    </td>
+                  </tr>
+                  }
+                </tbody>
+              </table>
             </div>
-          </div>
-        }
-      }
+            } @else {
+            <div
+              class="flex flex-col items-center justify-center p-8 text-gray-500 dark:text-gray-400 text-center"
+            >
+              <i
+                class="pi pi-info-circle text-4xl mb-2 text-gray-300 dark:text-gray-600"
+              ></i>
+              <p class="text-sm">قیمت‌گذاری برای این محصول تعریف نشده است</p>
+            </div>
+            }
+          </p-card>
+          } }
+        </div>
+      </div>
+      } }
 
       <!-- Binding Products Section -->
-      @if (selectedProductType() === 'all' || selectedProductType() === 'binding') {
-        @if (hasBindingVariants()) {
-          <div class="product-section">
-            <h3 class="section-title">
-              <i class="pi pi-book"></i>
-              خدمات صحافی
-            </h3>
+      @if (selectedProductType() === 'all' || selectedProductType() ===
+      'binding') { @if (hasBindingVariants()) {
+      <div class="flex flex-col gap-6">
+        <h3
+          class="flex items-center gap-3 text-2xl font-bold text-gray-800 dark:text-white border-b-2 border-blue-500 pb-2 w-fit"
+        >
+          <i class="pi pi-book text-blue-500"></i>
+          خدمات صحافی
+        </h3>
 
-            <div class="products-grid">
-              @for (variant of productVariants(); track variant.id) {
-                @if (variant.productType === 'binding' && shouldShowVariant(variant)) {
-                  <p-card class="product-card" [class.available]="variant.rule" [class.unavailable]="!variant.rule" [@filterAnimation]>
-                    <ng-template pTemplate="header">
-                      <div class="card-header">
-                        <h4>{{ variant.name }}</h4>
-                        <p-tag [value]="getProductTypeLabel(variant.productType)" severity="info"></p-tag>
-                      </div>
-                    </ng-template>
+        <div class="grid grid-cols-1 md:grid-cols-2 xl:grid-cols-3 gap-6">
+          @for (variant of productVariants(); track variant.id) { @if
+          (variant.productType === 'binding' && shouldShowVariant(variant)) {
+          <p-card
+            styleClass="h-full !rounded-xl overflow-hidden transition-all duration-300 hover:-translate-y-1 hover:shadow-xl dark:!bg-slate-800 dark:!border-slate-700"
+            [class.border-2]="true"
+            [class.border-green-500]="variant.rule"
+            [class.border-gray-200]="!variant.rule"
+            [class.dark:border-gray-700]="!variant.rule"
+            [class.opacity-70]="!variant.rule"
+            [@filterAnimation]
+          >
+            <ng-template pTemplate="header">
+              <div
+                class="flex justify-between items-center p-4 bg-gradient-to-br from-blue-500 to-blue-600 text-white"
+              >
+                <h4 class="m-0 text-lg font-semibold">{{ variant.name }}</h4>
+                <p-tag
+                  [value]="getProductTypeLabel(variant.productType)"
+                  severity="info"
+                  styleClass="!bg-white/20 !text-white"
+                ></p-tag>
+              </div>
+            </ng-template>
 
-                    @if (variant.rule && variant.prices) {
-                      <div class="pricing-table">
-                        <table>
-                          <thead>
-                            <tr>
-                              <th>تعداد</th>
-                              <th>قیمت (تومان)</th>
-                            </tr>
-                          </thead>
-                          <tbody>
-                            @for (price of variant.prices; track price.quantity) {
-                              <tr>
-                                <td>{{ price.range }}</td>
-                                <td class="price-cell">{{ price.price | persianCurrency }}</td>
-                              </tr>
-                            }
-                          </tbody>
-                        </table>
-                      </div>
-                    } @else {
-                      <div class="unavailable-message">
-                        <i class="pi pi-info-circle"></i>
-                        <p>قیمت‌گذاری برای این محصول تعریف نشده است</p>
-                      </div>
-                    }
-                  </p-card>
-                }
-              }
+            @if (variant.rule && variant.prices) {
+            <div class="p-4">
+              <table
+                class="w-full border-collapse rounded-lg overflow-hidden shadow-sm bg-white dark:bg-slate-900"
+              >
+                <thead class="bg-gray-50 dark:bg-slate-800">
+                  <tr>
+                    <th
+                      class="p-3 text-right text-sm font-semibold text-gray-700 dark:text-gray-300 border-b border-gray-200 dark:border-slate-700"
+                    >
+                      تعداد
+                    </th>
+                    <th
+                      class="p-3 text-right text-sm font-semibold text-gray-700 dark:text-gray-300 border-b border-gray-200 dark:border-slate-700"
+                    >
+                      قیمت (تومان)
+                    </th>
+                  </tr>
+                </thead>
+                <tbody>
+                  @for (price of variant.prices; track price.quantity) {
+                  <tr
+                    class="border-b border-gray-100 dark:border-slate-800 last:border-0 hover:bg-gray-50 dark:hover:bg-slate-800/50 transition-colors"
+                  >
+                    <td class="p-3 text-sm text-gray-800 dark:text-gray-300">
+                      {{ price.range }}
+                    </td>
+                    <td class="p-3 text-sm font-bold text-orange-500">
+                      {{ price.price | persianCurrency }}
+                    </td>
+                  </tr>
+                  }
+                </tbody>
+              </table>
             </div>
-          </div>
-        }
-      }
-
+            } @else {
+            <div
+              class="flex flex-col items-center justify-center p-8 text-gray-500 dark:text-gray-400 text-center"
+            >
+              <i
+                class="pi pi-info-circle text-4xl mb-2 text-gray-300 dark:text-gray-600"
+              ></i>
+              <p class="text-sm">قیمت‌گذاری برای این محصول تعریف نشده است</p>
+            </div>
+            }
+          </p-card>
+          } }
+        </div>
+      </div>
+      } }
     </div>
     }
 
     <!-- Empty State -->
     @if (productVariants().length === 0) {
-    <div class="empty-state">
-      <i class="pi pi-info-circle"></i>
-      <h3>اطلاعات قیمت‌گذاری یافت نشد</h3>
+    <div class="text-center py-12 text-gray-500 dark:text-gray-400">
+      <i
+        class="pi pi-info-circle text-6xl mb-4 text-gray-300 dark:text-gray-600"
+      ></i>
+      <h3 class="text-xl font-bold text-gray-700 dark:text-gray-300 mb-2">
+        اطلاعات قیمت‌گذاری یافت نشد
+      </h3>
       <p>در حال حاضر هیچ قانونی برای قیمت‌گذاری تعریف نشده است</p>
     </div>
     }
-
   </div>
   }
 </div>

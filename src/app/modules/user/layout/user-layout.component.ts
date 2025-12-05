@@ -48,7 +48,6 @@ import {
   ],
   providers: [MessageService, ConfirmationService],
   templateUrl: './user-layout.component.html',
-  styleUrls: ['./user-layout.component.css'],
 })
 export class UserLayoutComponent implements OnInit, OnDestroy {
   private authService = inject(AuthService);
